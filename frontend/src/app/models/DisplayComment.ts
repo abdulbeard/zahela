@@ -1,6 +1,7 @@
 export class DisplayComment{
     public user: User;
     public text: string;
+    public textIsHtml: boolean;
     public threadComments: Array<DisplayComment>;
     public timestamp: Date;
 }

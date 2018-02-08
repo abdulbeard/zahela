@@ -2,9 +2,14 @@ import { Http, RequestOptions, Headers, Response } from '@angular/http';
 import { Observable } from 'rxjs/Rx';
 import { Injectable } from '@angular/core';
 import { ThreadMessagesResponse } from '../models/ThreadMessages';
+import { environment } from '../../environments/environment';
 
 @Injectable()
 export class SlackMessagesService {
+    private static slackUrl: string = "https://slack.com/api/";
+    private static conversationsHistory: string = "conversations.history";
+    private static conversationsReplies: string = "conversations.replies"
+    private static defaultMessagesLimit: number = 100;
     constructor(private http: Http) {
 
     }
@@ -14,7 +19,7 @@ export class SlackMessagesService {
             "Accept": "application/json"
         });
         let options = new RequestOptions({ headers: headers });
-        return this.http.get("https://slack.com/api/conversations.history?token=xoxp-89114187346-89114187490-310258414081-4d4fc14b69639c7a003b231083073c13&channel=C2M99LPK4&pretty=1&limit=100", new RequestOptions())
+        return this.http.get(`${SlackMessagesService.slackUrl}${SlackMessagesService.conversationsHistory}?token=${environment.slackToken}&channel=C2M99LPK4&pretty=1&limit=${SlackMessagesService.defaultMessagesLimit}`, new RequestOptions())
             .map((res: Response) => Object.assign(new MessagesResponse(), res.json()))
             .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
     }
@@ -24,10 +29,9 @@ export class SlackMessagesService {
             "Accept": "application/json"
         });
         let options = new RequestOptions({ headers: headers });
-        return this.http.get("https://slack.com/api/conversations.replies?token=xoxp-89114187346-89114187490-310258414081-4d4fc14b69639c7a003b231083073c13&channel=C2M99LPK4&pretty=1&limit=100&ts=" + threadTimestamp, new RequestOptions())
+        return this.http.get(`${SlackMessagesService.slackUrl}${SlackMessagesService.conversationsReplies}?token=${environment.slackToken}&channel=C2M99LPK4&pretty=1&limit=${SlackMessagesService.defaultMessagesLimit}&ts=${threadTimestamp}`, new RequestOptions())
             .map((res: Response) => Object.assign(new ThreadMessagesResponse(), res.json()))
-            .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
-        
+            .catch((error: any) => Observable.throw(error.json().error || 'Server error'));        
     }
 }
 

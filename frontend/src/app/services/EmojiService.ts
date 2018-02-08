@@ -5,22 +5,31 @@ export class EmojiService {
     private static emojiRegex: RegExp = /:.*?:/g;
     private static emojisBaseUrl: string = "https://www.webpagefx.com/tools/emoji-cheat-sheet/graphics/emojis/";
 
+    static replaceEmojisWithHtml(text: string): string {
+        var emojiDefinitions = new EmojiDefinitions();
+        var regexMatches = text.match(this.emojiRegex);
+        if (regexMatches.length > 0) {
+            for (var i = 0; i < regexMatches.length; i++) {                
+                var emojiDef = emojiDefinitions[regexMatches[i].toString()];
+                if (emojiDef) {
+                    text = text.replace(regexMatches[i], this.getImgHtml(emojiDef));
+                }
+            }
+        }
+        return text;
+    }
+
+    private static getImgHtml(emojiDef: EmojiDefinition): string{
+        return `<img class='emoji_in_comment' src='${EmojiService.getEmojiImageUrl(emojiDef)}' />`;
+    }
+
     static getEmojiImageUrl(emojiDef: EmojiDefinition): string {
         return this.emojisBaseUrl + emojiDef.img;
     }
 
-    static textContainsEmoji(text: string): Array<EmojiDefinition> {
+    static textContainsEmoji(text: string): boolean {
         var regexMatches = text.match(this.emojiRegex);
-        var result = new Array<EmojiDefinition>();
-        if (regexMatches.length > 0) {
-            for (var i = 0; i < regexMatches.length; i++) {
-                var emojiDef = EmojiDefinitions[regexMatches[i]];
-                if (emojiDef) {
-                    result.push(emojiDef);
-                }
-            }
-        }
-        return result;
+        return (regexMatches && regexMatches.length > 0); 
     }
 }
 

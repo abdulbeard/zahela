@@ -1,1 +1,6 @@
 /* You can add global styles to this file, and also import other style files */
+.emoji_in_comment {
+    width:20px;
+    height:20px;
+    vertical-align: bottom;
+}

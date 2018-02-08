@@ -4,5 +4,6 @@
 // The list of which env maps to which file can be found in `.angular-cli.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  slackToken: "xoxp-89114187346-89114187490-311677944419-7a01ddf25175bdfa4e949f3b47e6b03e"
 };

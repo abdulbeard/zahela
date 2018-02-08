@@ -1,6 +1,3 @@
-<img [src]="emoji" />
-<div [innerHTML]="emojiImg"></div>
-
 <div class="ui small threaded comments" style="margin-left:10%">
   <h3 class="ui dividing header">Comments</h3>
   <div class="comment" *ngFor="let comment of comments;let i = index">
@@ -12,9 +9,8 @@
       <div class="metadata">
         <span class="date">{{comment.timestamp}}</span>
       </div>
-      <div class="text">
-        <p>{{comment.text}}</p>
-      </div>
+      <div class="text" *ngIf="comment.textIsHtml" [innerHTML]="comment.text | sanitizeHtml"></div>
+      <div class="text" *ngIf="!comment.textIsHtml"><p>{{comment.text}}</p></div>
       <div class="actions">
         <a class="reply">Reply</a>
       </div>
@@ -29,9 +25,8 @@
           <div class="metadata">
             <span class="date">{{nestedComment.timestamp}}</span>
           </div>
-          <div class="text">
-            {{nestedComment.text}}
-          </div>
+          <div class="text" *ngIf="nestedComment.textIsHtml" [innerHTML]="nestedComment.text | sanitizeHtml"></div>
+          <div class="text" *ngIf="!nestedComment.textIsHtml"><p>{{nestedComment.text}}</p></div>
           <div class="actions">
             <a class="reply">Reply</a>
           </div>

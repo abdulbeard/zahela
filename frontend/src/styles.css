@@ -4,3 +4,32 @@
     height:20px;
     vertical-align: bottom;
 }
+
+code {    
+    background-color: #f7f7f9;
+    border: 1px solid #e1e1e8;
+    color: #d72b3f;
+    font-size: .75rem;
+    padding-left: 0;
+    padding-right: 0;
+}
+
+pre.slackComment {
+    margin: .5rem 0 .2rem;
+    font-size: .75rem;
+    line-height: 1.15rem;
+    word-break: normal;
+    word-wrap: break-word;
+    background: #CCC;
+}
+
+a.user_tag {
+    background: #eaf5fc;
+    color: #0576b9;
+    text-decoration: none;
+}
+
+.at_mention {
+    background: #fff6d1;
+    font-weight: bold;
+}

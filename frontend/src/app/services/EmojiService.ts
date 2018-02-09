@@ -8,7 +8,7 @@ export class EmojiService {
     static replaceEmojisWithHtml(text: string): string {
         var emojiDefinitions = new EmojiDefinitions();
         var regexMatches = text.match(this.emojiRegex);
-        if (regexMatches.length > 0) {
+        if (regexMatches && regexMatches.length > 0) {
             for (var i = 0; i < regexMatches.length; i++) {                
                 var emojiDef = emojiDefinitions[regexMatches[i].toString()];
                 if (emojiDef) {

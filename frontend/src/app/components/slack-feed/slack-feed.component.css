@@ -1,0 +1,43 @@
+body, html {
+    font-family: Lato !important;
+}
+
+a .user_tag {
+    background: #eaf5fc;
+    color: #0576b9;
+    text-decoration: none;
+}
+
+.at_mention {
+    background: #fff6d1;
+    font-weight: bold;
+}
+
+span:before {
+    font-size: .75rem;
+}
+span:after {
+    font-size: .75rem;
+}
+
+
+/* .comment .content:nth-child(even) {background: #f2f2f2}
+.comment .content:nth-child(odd) {background: #FFF}
+
+.comment.nestedComment .content:nth-child(even) {background: #CCC !important}
+.comment.nestedComment .content:nth-child(odd) {background: #FFF !important} */
+
+/* .comment:hover {background-color: #f2f2f2} */
+.comment:hover {background-color: aliceblue}
+
+
+.comment.nestedComment:hover {background: #CCC !important}
+
+.comment.nestedComment .content {
+    margin-right: 5px;
+    padding-right: 5px;
+}
+
+.ui.compact.icon.button {
+    margin-bottom: 2px;
+}

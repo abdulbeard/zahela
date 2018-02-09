@@ -1,3 +1,25 @@
+<div class="ui vertical menu" style="height:75vh;">
+  <a class="active teal item">
+    Inbox
+    <div class="ui teal left pointing label">1</div>
+  </a>
+  <a class="item">
+    Spam
+    <div class="ui label">51</div>
+  </a>
+  <a class="item">
+    Updates
+    <div class="ui label">1</div>
+  </a>
+  <div class="item">
+    <div class="ui transparent icon input">
+      <input type="text" placeholder="Search mail...">
+      <i class="search icon"></i>
+    </div>
+  </div>
+</div>
+
+
 <div class="ui small threaded comments" style="margin-left:10%">
   <h3 class="ui dividing header">Comments</h3>
   <div class="comment" *ngFor="let comment of comments;let i = index">
@@ -13,10 +35,15 @@
       <div class="text" *ngIf="!comment.textIsHtml">
         <p>{{comment.text}}</p>
       </div>
+      <div class="ui blue basic image mini label" *ngFor="let reaction of comment.reactions;let i = index" [attr.data-tooltip]="reaction.text"
+        data-inverted="">
+        <img class="reaction" [src]="reaction.img">{{reaction.numOfUsers}}
+      </div>
+      <br/>
       <div class="actions">
-        <button class="ui inverted blue icon button" title="View on Slack">
+        <a class="ui inverted blue icon button viewOnSlack" title="View in Slack" [href]="comment.slackHref" target="_blank">
           <i class="slack icon"></i>
-        </button>
+        </a>
       </div>
     </div>
     <div class="comments" *ngIf="comment.threadComments">
@@ -33,10 +60,15 @@
           <div class="text" *ngIf="!nestedComment.textIsHtml">
             <p>{{nestedComment.text}}</p>
           </div>
+          <div class="ui blue basic image mini label" *ngFor="let reaction of nestedComment.reactions;let i = index" [attr.data-tooltip]="reaction.text"
+            data-inverted="">
+            <img class="reaction" [src]="reaction.img">{{reaction.numOfUsers}}
+          </div>
+          <br/>
           <div class="actions">
-            <button class="ui inverted blue icon button" title="View on Slack">
+            <a class="ui inverted blue icon button viewOnSlack" title="View in Slack" [href]="nestedComment.slackHref">
               <i class="slack icon"></i>
-            </button>
+            </a>
           </div>
         </div>
       </div>

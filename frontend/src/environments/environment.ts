@@ -5,5 +5,5 @@
 
 export const environment = {
   production: false,
-  slackToken: "xoxp-89114187346-89114187490-312191972805-702d5252d17e18f285b09bce04b0ef83"
+  slackToken: "xoxp-89114187346-89114187490-313588687302-738a30c05e6f88781641ec62d5cb47f9"
 };

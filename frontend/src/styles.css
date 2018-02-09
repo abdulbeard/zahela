@@ -27,6 +27,7 @@ a.user_tag {
     background: #eaf5fc;
     color: #0576b9;
     text-decoration: none;
+    font-weight: bold;
 }
 
 .at_mention {

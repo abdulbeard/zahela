@@ -1,3 +1,5 @@
+import { Reaction } from "../services/SlackMessagesService";
+
 export class ThreadMessagesResponse {
     messages: Message[];
     has_more: boolean;
@@ -9,6 +11,7 @@ export class ThreadMessagesResponse {
     user: string;
     text: string;
     thread_ts: string;
+    reactions?: Reaction[];
     reply_count?: number;
     replies?: Reply[];
     subscribed?: boolean;

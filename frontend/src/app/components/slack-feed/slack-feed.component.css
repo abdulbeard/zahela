@@ -15,9 +15,29 @@ a .user_tag {
 
 span:before {
     font-size: .75rem;
+    transition-delay:.5s
 }
 span:after {
     font-size: .75rem;
+    transition-delay:.5s;
+}
+
+div.basic.mini.label:before {
+    font-size: .75rem;
+    transition-delay:.5s
+}
+div.basic.mini.label:after {
+    font-size: .75rem;
+    transition-delay:.5s
+}
+
+.viewOnSlack {
+    margin-top: 5px;
+    margin-bottom: 15px;
+}
+
+.reaction {
+    margin: 0 !important;
 }
 
 
@@ -28,10 +48,10 @@ span:after {
 .comment.nestedComment .content:nth-child(odd) {background: #FFF !important} */
 
 /* .comment:hover {background-color: #f2f2f2} */
-.comment:hover {background-color: aliceblue}
+.comment:hover {background-color: #d9f1fc}
 
 
-.comment.nestedComment:hover {background: #CCC !important}
+.comment.nestedComment:hover {background: #b3d2fc !important}
 
 .comment.nestedComment .content {
     margin-right: 5px;

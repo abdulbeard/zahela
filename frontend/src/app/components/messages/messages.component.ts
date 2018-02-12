@@ -9,34 +9,50 @@ import { SlackReactionsService } from '../../services/SlackReactionsService';
 import { DisplayChannel } from '../../models/DisplayChannel';
 
 @Component({
-  selector: 'app-slack-feed',
-  templateUrl: './slack-feed.component.html',
-  styleUrls: ['./slack-feed.component.css'],
+  selector: 'app-messages',
+  templateUrl: './messages.component.html',
+  styleUrls: ['./messages.component.css'],
   providers: [EmojiDefinitions, EmojiService, SlackMessagesService, UserService,
     SlackMessageParsingService, SlackReactionsService]
 })
-export class SlackFeedComponent implements AfterViewInit {
+export class MessagesComponent implements AfterViewInit {
   ngAfterViewInit(): void {
   }
   constructor(private emojiDefinitions: EmojiDefinitions, private emojiService: EmojiService,
     private slackMessagesService: SlackMessagesService, private userService: UserService,
     private slackMessageParsingService: SlackMessageParsingService) {
-    this.slackMessagesService.getMessages().subscribe((result) => {
-      console.log(result);
-      this.comments = this.slackMessageParsingService.parseSlackMessages(result);
-    }, (Error) => {
-      console.log(Error);
-    })
   }
-  title = 'app';
-  messages: MessagesResponse;
 
-  emoji = EmojiService.getEmojiImageUrl(this.emojiDefinitions[":smile:"]);
-  emojiImg = "<img src='https://www.webpagefx.com/tools/emoji-cheat-sheet/graphics/emojis/bowtie.png' />"
+  channels: DisplayChannel[] = [
+    new DisplayChannel("#random", "random", true),
+    new DisplayChannel("#general", "general", false)
+  ]
 
-  comments: Array<DisplayComment> = [];
+  channelSelected(channel: DisplayChannel) {
+    var htmlElement = document.getElementById(channel.id);
+    this.changeActiveItemOnMenu(htmlElement);
+    this.showContent(channel);
+  }
 
-  openInNewTab(url: string) {
-    window.open(url)
+  private showContent(channel: DisplayChannel){
+    var allChannelContents = $('.channelContent').toArray();
+    allChannelContents.forEach(element => {
+      if(element.id === channel.channelContentId()){
+        $(element).show();
+      }
+      else{
+        $(element).hide();
+      }
+    });
+  }
+
+  private changeActiveItemOnMenu(item: HTMLElement) {
+    $(item)
+      .addClass('active')
+      .closest('.ui.menu')
+      .find('.item')
+      .not($(item))
+      .removeClass('active')
+      ;
   }
 }

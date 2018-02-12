@@ -5,10 +5,11 @@ import { HtmlSanitizer } from './pipes/HtmlSanitizer'
 
 import { AppComponent } from './app.component';
 import { SlackFeedComponent } from './components/slack-feed/slack-feed.component';
+import { MessagesComponent } from './components/messages/messages.component';
 
 @NgModule({
   declarations: [
-    AppComponent, HtmlSanitizer, SlackFeedComponent
+    AppComponent, HtmlSanitizer, SlackFeedComponent, MessagesComponent
   ],
   imports: [
     BrowserModule, HttpModule

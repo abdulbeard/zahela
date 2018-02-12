@@ -1,26 +1,4 @@
-<div class="ui vertical menu" style="height:75vh;">
-  <a class="active teal item">
-    Inbox
-    <div class="ui teal left pointing label">1</div>
-  </a>
-  <a class="item">
-    Spam
-    <div class="ui label">51</div>
-  </a>
-  <a class="item">
-    Updates
-    <div class="ui label">1</div>
-  </a>
-  <div class="item">
-    <div class="ui transparent icon input">
-      <input type="text" placeholder="Search mail...">
-      <i class="search icon"></i>
-    </div>
-  </div>
-</div>
-
-
-<div class="ui small threaded comments" style="margin-left:10%">
+<div class="ui small threaded comments">
   <h3 class="ui dividing header">Comments</h3>
   <div class="comment" *ngFor="let comment of comments;let i = index">
     <a class="avatar">
@@ -75,6 +53,67 @@
     </div>
   </div>
 </div>
+
+
+
+
+
+
+<!-- <div class="ui small threaded comments" style="margin-left:10%">
+  <h3 class="ui dividing header">Comments</h3>
+  <div class="comment" *ngFor="let comment of comments;let i = index">
+    <a class="avatar">
+      <img [src]="comment.user.img">
+    </a>
+    <div class="content">
+      <a class="author">{{comment.user.name}}</a>
+      <div class="metadata">
+        <span class="date" [attr.data-tooltip]="comment.timestamp | date: 'MMMM d, y, h:mm:ss a z'" data-inverted="">{{comment.timestamp | date:'shortTime'}}</span>
+      </div>
+      <div class="text" *ngIf="comment.textIsHtml" [innerHTML]="comment.text | sanitizeHtml"></div>
+      <div class="text" *ngIf="!comment.textIsHtml">
+        <p>{{comment.text}}</p>
+      </div>
+      <div class="ui blue basic image mini label" *ngFor="let reaction of comment.reactions;let i = index" [attr.data-tooltip]="reaction.text"
+        data-inverted="">
+        <img class="reaction" [src]="reaction.img">{{reaction.numOfUsers}}
+      </div>
+      <br/>
+      <div class="actions">
+        <a class="ui inverted blue icon button viewOnSlack" title="View in Slack" [href]="comment.slackHref" target="_blank">
+          <i class="slack icon"></i>
+        </a>
+      </div>
+    </div>
+    <div class="comments" *ngIf="comment.threadComments">
+      <div class="comment nestedComment" *ngFor="let nestedComment of comment.threadComments;let i = index">
+        <a class="avatar">
+          <img [src]="nestedComment.user.img">
+        </a>
+        <div class="content">
+          <a class="author">{{nestedComment.user.name}}</a>
+          <div class="metadata">
+            <span class="date" [attr.data-tooltip]="nestedComment.timestamp | date: 'MMMM d, y, h:mm:ss a z'" data-inverted="">{{nestedComment.timestamp | date:'shortTime'}}</span>
+          </div>
+          <div class="text" *ngIf="nestedComment.textIsHtml" [innerHTML]="nestedComment.text | sanitizeHtml"></div>
+          <div class="text" *ngIf="!nestedComment.textIsHtml">
+            <p>{{nestedComment.text}}</p>
+          </div>
+          <div class="ui blue basic image mini label" *ngFor="let reaction of nestedComment.reactions;let i = index" [attr.data-tooltip]="reaction.text"
+            data-inverted="">
+            <img class="reaction" [src]="reaction.img">{{reaction.numOfUsers}}
+          </div>
+          <br/>
+          <div class="actions">
+            <a class="ui inverted blue icon button viewOnSlack" title="View in Slack" [href]="nestedComment.slackHref">
+              <i class="slack icon"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div> -->
 
 <!-- 
 <div class="ui small minimal threaded comments" style="margin-left:10%">

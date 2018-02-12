@@ -40,6 +40,10 @@ div.basic.mini.label:after {
     margin: 0 !important;
 }
 
+.ui.segment::-webkit-scrollbar-thumb {
+    background: #888; 
+    border-radius: 0;
+}
 
 /* .comment .content:nth-child(even) {background: #f2f2f2}
 .comment .content:nth-child(odd) {background: #FFF}

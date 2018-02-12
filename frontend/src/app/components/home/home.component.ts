@@ -7,33 +7,20 @@ import { DisplayComment } from '../../models/DisplayComment';
 import * as $ from 'jquery';
 import { SlackReactionsService } from '../../services/SlackReactionsService';
 import { DisplayChannel } from '../../models/DisplayChannel';
-import { ActivatedRoute, ParamMap } from '@angular/router';
-import { convertToParamMap } from '@angular/router/src/shared';
 
 @Component({
-  selector: 'app-messages',
-  templateUrl: './messages.component.html',
-  styleUrls: ['./messages.component.css'],
+  selector: 'app-home',
+  templateUrl: './home.component.html',
+  styleUrls: ['./home.component.css'],
   providers: [EmojiDefinitions, EmojiService, SlackMessagesService, UserService,
     SlackMessageParsingService, SlackReactionsService]
 })
-export class MessagesComponent implements AfterViewInit {
+export class HomeComponent implements AfterViewInit {
   ngAfterViewInit(): void {
-    if(this.channelFromUrl){
-      this.channelSelected(this.channelFromUrl);
-    }
   }
   constructor(private emojiDefinitions: EmojiDefinitions, private emojiService: EmojiService,
     private slackMessagesService: SlackMessagesService, private userService: UserService,
-    private slackMessageParsingService: SlackMessageParsingService,
-    private route: ActivatedRoute) {
-    console.log(this.route.params);
-    this.route.params.subscribe(x=>{
-      var channel = x["channel"];
-      this.channelFromUrl = new DisplayChannel(`#${channel}`, `${channel}`, true);
-    }, (Error)=>{
-      console.log(Error);
-    })
+    private slackMessageParsingService: SlackMessageParsingService) {
   }
 
   channels: DisplayChannel[] = [
@@ -41,21 +28,19 @@ export class MessagesComponent implements AfterViewInit {
     new DisplayChannel("#general", "general", false)
   ]
 
-  channelFromUrl: DisplayChannel;
-
   channelSelected(channel: DisplayChannel) {
     var htmlElement = document.getElementById(channel.id);
     this.changeActiveItemOnMenu(htmlElement);
     this.showContent(channel);
   }
 
-  private showContent(channel: DisplayChannel) {
+  private showContent(channel: DisplayChannel){
     var allChannelContents = $('.channelContent').toArray();
     allChannelContents.forEach(element => {
-      if (element.id === channel.channelContentId()) {
+      if(element.id === channel.channelContentId()){
         $(element).show();
       }
-      else {
+      else{
         $(element).hide();
       }
     });

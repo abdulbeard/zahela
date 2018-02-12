@@ -26,6 +26,7 @@
         </div>
       </div>
       <div class="comments" *ngIf="comment.threadComments">
+        <a style="display:none;" id="older"></a>
         <div class="comment nestedComment" *ngFor="let nestedComment of comment.threadComments;let i = index">
           <a class="avatar">
             <img [src]="nestedComment.user.img">
@@ -53,5 +54,26 @@
         </div>
       </div>
     </div>
+    <br/>
+    <br/>
+    <a id="latest">End of messages</a>
   </div>
 </div>
+<script type="text/javascript">
+  $(document).ready(function () {
+    console.log('raw document ready');
+    $('#latest')
+      .visibility({
+        once: false,
+        observeChanges: true,
+        onTopVisible: function (calculations) {
+          console.log("on top visible");
+          console.log(calculations);
+        },
+        onBottomVisible: function (calculations) {
+          console.log("on bottom visible");
+          console.log(calculations);
+        }
+      });  
+})
+</script>

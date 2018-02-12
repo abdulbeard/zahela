@@ -24,7 +24,8 @@
       ],
       "scripts": [
         "../node_modules/jquery/dist/jquery.min.js",
-        "../src/assets/semantic/dist/semantic.min.js"
+        "../src/assets/semantic/dist/semantic.min.js",
+        "../src/assets/semantic/dist/components/visibility.min.js"
       ],
       "environmentSource": "environments/environment.ts",
       "environments": {

@@ -45,6 +45,10 @@ div.basic.mini.label:after {
     border-radius: 0;
 }
 
+.slack.icon{
+    color: #2185d0;
+}
+
 /* .comment .content:nth-child(even) {background: #f2f2f2}
 .comment .content:nth-child(odd) {background: #FFF}
 

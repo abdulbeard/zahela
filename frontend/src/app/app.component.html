@@ -1,8 +1,8 @@
 <div class="ui huge secondary pointing menu">
-    <a class="active item">
+    <a class="item" routerLink="/home" routerLinkActive="active">
         Home
     </a>
-    <a class="item">
+    <a class="item" routerLink="/messages" routerLinkActive="active">
         Messages
     </a>
     <a class="item">
@@ -16,5 +16,6 @@
 </div>
 
 <div style="background-color: #eaf1f9 ">
-    <app-messages></app-messages>
+        <router-outlet></router-outlet>
+<!-- <app-messages></app-messages> -->
 </div>

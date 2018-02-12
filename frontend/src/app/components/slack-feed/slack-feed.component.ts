@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit, OnChanges } from '@angular/core';
 import { EmojiDefinitions, EmojiService } from '../../services/EmojiService';
 import { SlackMessageParsingService } from '../../services/SlackMessageParsingService';
 import { SlackMessagesService, MessagesResponse } from '../../services/SlackMessagesService';
@@ -7,6 +7,8 @@ import { DisplayComment } from '../../models/DisplayComment';
 import * as $ from 'jquery';
 import { SlackReactionsService } from '../../services/SlackReactionsService';
 import { DisplayChannel } from '../../models/DisplayChannel';
+import { } from 'semantic-ui-visibility';
+import { AfterViewChecked } from '@angular/core/src/metadata/lifecycle_hooks';
 
 @Component({
   selector: 'app-slack-feed',
@@ -15,8 +17,9 @@ import { DisplayChannel } from '../../models/DisplayChannel';
   providers: [EmojiDefinitions, EmojiService, SlackMessagesService, UserService,
     SlackMessageParsingService, SlackReactionsService]
 })
-export class SlackFeedComponent implements AfterViewInit {
-  ngAfterViewInit(): void {
+export class SlackFeedComponent implements AfterViewChecked {
+  ngAfterViewChecked(): void {
+      this.navigateToBottom();
   }
   constructor(private emojiDefinitions: EmojiDefinitions, private emojiService: EmojiService,
     private slackMessagesService: SlackMessagesService, private userService: UserService,
@@ -38,5 +41,9 @@ export class SlackFeedComponent implements AfterViewInit {
 
   openInNewTab(url: string) {
     window.open(url)
+  }
+
+  navigateToBottom() {
+    document.getElementById('latest').scrollIntoView();
   }
 }

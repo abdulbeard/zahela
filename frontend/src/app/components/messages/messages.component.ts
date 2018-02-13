@@ -7,8 +7,9 @@ import { DisplayComment } from '../../models/DisplayComment';
 import * as $ from 'jquery';
 import { SlackReactionsService } from '../../services/SlackReactionsService';
 import { DisplayChannel } from '../../models/DisplayChannel';
-import { ActivatedRoute, ParamMap } from '@angular/router';
+import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { convertToParamMap } from '@angular/router/src/shared';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-messages',
@@ -19,34 +20,54 @@ import { convertToParamMap } from '@angular/router/src/shared';
 })
 export class MessagesComponent implements AfterViewInit {
   ngAfterViewInit(): void {
-    if(this.channelFromUrl){
+    if (this.channelFromUrl) {
       this.channelSelected(this.channelFromUrl);
     }
   }
   constructor(private emojiDefinitions: EmojiDefinitions, private emojiService: EmojiService,
     private slackMessagesService: SlackMessagesService, private userService: UserService,
     private slackMessageParsingService: SlackMessageParsingService,
-    private route: ActivatedRoute) {
+    private route: ActivatedRoute, private router: Router, private location: Location) {
     console.log(this.route.params);
-    this.route.params.subscribe(x=>{
-      var channel = x["channel"];
-      this.channelFromUrl = new DisplayChannel(`#${channel}`, `${channel}`, true);
-    }, (Error)=>{
+    this.route.params.subscribe(param => {
+      var channel = param["channel"];
+      console.log(channel);
+      this.channelFromUrl = this.lookupChannel(channel);
+      console.log('param retrieved successfully');
+      console.log(this.channelFromUrl);
+    }, (Error) => {
       console.log(Error);
     })
   }
 
   channels: DisplayChannel[] = [
-    new DisplayChannel("#random", "random", true),
-    new DisplayChannel("#general", "general", false)
+    new DisplayChannel("C2M99LPK4", "primingham_manor", true),
+    new DisplayChannel("general", "general", false)
   ]
+
+  private lookupChannel(channelId: string): DisplayChannel {
+    for (var i = 0; i < this.channels.length; i++) {
+      var channel = this.channels[i];
+      if (channel.id === channelId) {
+        return channel;
+      }
+    }
+    return null;
+  }
 
   channelFromUrl: DisplayChannel;
 
   channelSelected(channel: DisplayChannel) {
+    //this.router.navigate([`/${channel.id}`], { skipLocationChange: true, relativeTo: this.route });
     var htmlElement = document.getElementById(channel.id);
     this.changeActiveItemOnMenu(htmlElement);
     this.showContent(channel);
+    console.log(location);
+    this.location.replaceState(`/messages/${channel.id}`);
+    //location.replace("/messages/C2M99LPK4");
+  }
+
+  onChannelSelected(channel: DisplayChannel) {
   }
 
   private showContent(channel: DisplayChannel) {

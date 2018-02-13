@@ -17,7 +17,7 @@ export class SlackMessageParsingService {
 
     }
 
-    parseSlackMessages(slackMessages: MessagesResponse): DisplayComment[] {
+    parseSlackMessages(channel: string, slackMessages: MessagesResponse): DisplayComment[] {
         var comments: DisplayComment[] = [];
         for (var i = 0; i < slackMessages.messages.length; i++) {
             var displayComment = new DisplayComment();
@@ -35,7 +35,7 @@ export class SlackMessageParsingService {
                 displayComment.textIsHtml = true;
             }
             if (slackMessage.thread_ts) {
-                this.slackMessagesService.getThreadMessages(slackMessage.thread_ts).subscribe((result) => {
+                this.slackMessagesService.getThreadMessages(channel, slackMessage.thread_ts).subscribe((result) => {
                     console.log(result);
                     result.messages.forEach(message => {
                         if (message.thread_ts !== slackMessage.thread_ts) {

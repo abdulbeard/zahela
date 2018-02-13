@@ -13,4 +13,7 @@ export class DisplayChannel {
     public getCssClass(): string {
         return this.selected ? "active red item" : "red item";
     }
+    public getHref(): string {
+        return `/messages/${this.id}`;
+    }
 }

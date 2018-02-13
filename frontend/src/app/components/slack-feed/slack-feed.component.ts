@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit, OnChanges } from '@angular/core';
+import { Component, OnInit, AfterViewInit, OnChanges, Input } from '@angular/core';
 import { EmojiDefinitions, EmojiService } from '../../services/EmojiService';
 import { SlackMessageParsingService } from '../../services/SlackMessageParsingService';
 import { SlackMessagesService, MessagesResponse } from '../../services/SlackMessagesService';
@@ -24,13 +24,22 @@ export class SlackFeedComponent implements AfterViewChecked {
   constructor(private emojiDefinitions: EmojiDefinitions, private emojiService: EmojiService,
     private slackMessagesService: SlackMessagesService, private userService: UserService,
     private slackMessageParsingService: SlackMessageParsingService) {
-    this.slackMessagesService.getMessages().subscribe((result) => {
+
+  }
+
+  @Input()
+  set channel(channel: string) {
+    this.channelName = channel;
+    console.log(`channelName1: ${this.channelName}`);
+    this.slackMessagesService.getMessages(this.channelName).subscribe((result) => {
       console.log(result);
-      this.comments = this.slackMessageParsingService.parseSlackMessages(result);
+      this.comments = this.slackMessageParsingService.parseSlackMessages(this.channelName, result);
     }, (Error) => {
       console.log(Error);
     })
   }
+
+  private channelName: string;
   title = 'app';
   messages: MessagesResponse;
 

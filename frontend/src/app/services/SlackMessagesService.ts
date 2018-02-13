@@ -25,22 +25,22 @@ export class SlackMessagesService {
             .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
     }
 
-    getMessages(): Observable<MessagesResponse> {
+    getMessages(channel: string): Observable<MessagesResponse> {
         let headers = new Headers({
             "Accept": "application/json"
         });
         let options = new RequestOptions({ headers: headers });
-        return this.http.get(`${SlackMessagesService.slackUrl}${SlackMessagesService.conversationsHistory}?token=${environment.slackToken}&channel=C2M99LPK4&pretty=1&limit=${SlackMessagesService.defaultMessagesLimit}`, new RequestOptions())
+        return this.http.get(`${SlackMessagesService.slackUrl}${SlackMessagesService.conversationsHistory}?token=${environment.slackToken}&channel=${channel}&pretty=1&limit=${SlackMessagesService.defaultMessagesLimit}`, new RequestOptions())
             .map((res: Response) => Object.assign(new MessagesResponse(), res.json()))
             .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
     }
 
-    getThreadMessages(threadTimestamp: string): Observable<ThreadMessagesResponse> {
+    getThreadMessages(channel: string, threadTimestamp: string): Observable<ThreadMessagesResponse> {
         let headers = new Headers({
             "Accept": "application/json"
         });
         let options = new RequestOptions({ headers: headers });
-        return this.http.get(`${SlackMessagesService.slackUrl}${SlackMessagesService.conversationsReplies}?token=${environment.slackToken}&channel=C2M99LPK4&pretty=1&limit=${SlackMessagesService.defaultMessagesLimit}&ts=${threadTimestamp}`, new RequestOptions())
+        return this.http.get(`${SlackMessagesService.slackUrl}${SlackMessagesService.conversationsReplies}?token=${environment.slackToken}&channel=${channel}&pretty=1&limit=${SlackMessagesService.defaultMessagesLimit}&ts=${threadTimestamp}`, new RequestOptions())
             .map((res: Response) => Object.assign(new ThreadMessagesResponse(), res.json()))
             .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
     }

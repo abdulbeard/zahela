@@ -30,7 +30,17 @@ a.user_tag {
     font-weight: bold;
 }
 
+a.user_tag:hover {
+    background: black;
+    color: white;    
+}
+
 .at_mention {
     background: #fff6d1;
     font-weight: bold;
+}
+
+.at_mention:hover {
+    background: black;
+    color: white;    
 }

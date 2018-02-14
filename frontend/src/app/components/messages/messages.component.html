@@ -1,14 +1,14 @@
 <div class="ui grid">
   <div class="column" style="width:15vw !important;">
     <div class="ui inverted vertical menu">
-      <a [id]="channel.id" *ngFor="let channel of channels" (click)="channelSelected(channel)" [class]="channel.getCssClass()">
+      <a [id]="channel.id" *ngFor="let channel of channels" (click)="channelSelected(channel)" [class]="channel.getCssClass()" [href]="channel.getHref()">
         {{channel.name}}
       </a>
     </div>
   </div>
   <div class="left floated column" style="width:84vw !important;">
     <div *ngFor="let channel of channels; let i = index;">
-      <app-slack-feed [id]="channel.channelContentId()" [channel]="channel.id" class="channelContent" *ngIf="i === 0"></app-slack-feed>
+      <!-- <app-slack-feed [id]="channel.channelContentId()" [channel]="channel.id" class="channelContent" *ngIf="i === 0"></app-slack-feed>
       <p [id]="channel.channelContentId()" class="channelContent" *ngIf="i !== 0" style="display:none;">There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form,
         by injected humour, or randomised words which don't look even slightly believable. If you are going to use a passage
         of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in the middle of text. All the Lorem
@@ -16,7 +16,8 @@
         on the Internet. It uses a dictionary of over 200 Latin words, combined with a handful of model sentence structures,
         to generate Lorem Ipsum which looks reasonable. The generated Lorem Ipsum is therefore always free from repetition,
         injected humour, or non-characteristic words etc.
-      </p>
+      </p> -->
+      <app-slack-feed [id]="channel.channelContentId()" [channel]="channel.id" class="channelContent" (channelSelectedFromComment)="channelSelected(JSON.parse($event))"></app-slack-feed>      
     </div>
   </div>
 </div>

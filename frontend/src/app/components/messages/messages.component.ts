@@ -42,7 +42,7 @@ export class MessagesComponent implements AfterViewInit {
 
   channels: DisplayChannel[] = [
     new DisplayChannel("C2M99LPK4", "primingham_manor", true),
-    new DisplayChannel("general", "general", false)
+    new DisplayChannel("C2M3C5JRY", "general", false)
   ]
 
   private lookupChannel(channelId: string): DisplayChannel {
@@ -58,16 +58,12 @@ export class MessagesComponent implements AfterViewInit {
   channelFromUrl: DisplayChannel;
 
   channelSelected(channel: DisplayChannel) {
-    //this.router.navigate([`/${channel.id}`], { skipLocationChange: true, relativeTo: this.route });
     var htmlElement = document.getElementById(channel.id);
     this.changeActiveItemOnMenu(htmlElement);
     this.showContent(channel);
     console.log(location);
     this.location.replaceState(`/messages/${channel.id}`);
-    //location.replace("/messages/C2M99LPK4");
-  }
-
-  onChannelSelected(channel: DisplayChannel) {
+    return false;
   }
 
   private showContent(channel: DisplayChannel) {

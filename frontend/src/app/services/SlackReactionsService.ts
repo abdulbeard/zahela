@@ -13,18 +13,14 @@ export class SlackReactionsService {
     get(reactionName: string): DisplayReaction {
         if (SlackReactionsService.reactions && SlackReactionsService.reactions.length === 0) {
             this.slackMessagesService.getEmojisList().subscribe((result) => {
-                console.log(result);
                 SlackReactionsService.reactions = this.parseSlackEmojis(result.emoji);
             }, (Error) => {
-                console.log(Error);
             })
         }
         if (SlackReactionsService.reactions[reactionName]) {
             return SlackReactionsService.reactions[reactionName];
         };
         var emojiDefinition: EmojiDefinition = this.emojiDefs[reactionName];
-        console.log(reactionName);
-        console.log(emojiDefinition);
         return {
             img: emojiDefinition ? 
                     EmojiService.getEmojiImageUrl(emojiDefinition) : 
@@ -45,7 +41,6 @@ export class SlackReactionsService {
                 var text = "";
                 if (data[emoji].toString().startsWith("alias:")) {
                     var emojiDef = this.emojiDefs[`:${data[emoji].toString().replace("alias:", "")}:`];
-                    console.log(emojiDef);
                     image = emojiDef.img;
                 }
                 else {

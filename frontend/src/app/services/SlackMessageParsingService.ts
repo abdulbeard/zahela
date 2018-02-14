@@ -27,7 +27,7 @@ export class SlackMessageParsingService {
             displayComment.user = this.userService.getUserInfo(slackMessage.user);
             displayComment.threadComments = new Array<DisplayComment>();
             displayComment.textIsHtml = true;
-            displayComment.slackHref = this.getSlackHref(slackMessage.ts, "C2M99LPK4");
+            displayComment.slackHref = this.getSlackHref(slackMessage.ts, channel);
             displayComment.reactions = this.getDisplayReactions(slackMessage.reactions);
             if (EmojiService.textContainsEmoji(displayComment.text)) {
                 displayComment.text = this.parse(displayComment.text);
@@ -45,7 +45,7 @@ export class SlackMessageParsingService {
                                 threadComments: [],
                                 timestamp: new Date(parseFloat(message.ts) * 1000.0),
                                 user: this.userService.getUserInfo(message.user),
-                                slackHref: this.getSlackHref(slackMessage.thread_ts, "C2M99LPK4"),
+                                slackHref: this.getSlackHref(slackMessage.thread_ts, channel),
                                 reactions: this.getDisplayReactions(message.reactions),
                                 textIsHtml: true//textContainsEmoji
                             });
@@ -95,18 +95,23 @@ export class SlackMessageParsingService {
             for (var i = 0; i < regexMatches.length; i++) {
                 var user = this.userService.getUserInfo(regexMatches[i].replace(/<@/g, "").replace(/>/g, ""));
                 if (regexMatches[i].startsWith('<@')) {
-                    text = text.replace(regexMatches[i], `<a class='user_tag' href='#'>@    ${user.name}</a>`);
+                    text = text.replace(regexMatches[i], `<a class='user_tag'>@${user.name}</a>`);
                 }
                 else if (regexMatches[i].startsWith('<#')) {
                     var rawText = regexMatches[i].replace(/<#/g, "").replace(/>/g, "");
                     var channelSplit = rawText.split('|');
                     var channelId = channelSplit[0];
                     var channelName = channelSplit[1];
-                    text = text.replace(regexMatches[i], `<a class='user_tag' href='#'>#${channelName}</a>`);
+                    text = text.replace(regexMatches[i], 
+                        `<a class='user_tag'  href='/messages/${channelId}'>#${channelName}</a>`);
                 }
                 else if (regexMatches[i].startsWith('<!')) {
                     var replaced = regexMatches[i].replace(/<!/g, "").replace(/>/g, "");
-                    text = text.replace(regexMatches[i], `<a class='at_mention' href='#'>@${replaced}</a>`);
+                    text = text.replace(regexMatches[i], `<a class='at_mention'>@${replaced}</a>`);
+                }
+                else if (regexMatches[i].startsWith('<http:') || regexMatches[i].startsWith('<www')) {
+                    var replaced = regexMatches[i].replace(/</g, "").replace(/>/g, "");
+                    text = text.replace(regexMatches[i], `<a class='at_mention' href='${replaced}' target='_blank'>${replaced}</a>`);
                 }
             }
         }

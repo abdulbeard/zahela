@@ -8,17 +8,24 @@ import { SlackFeedComponent } from './components/slack-feed/slack-feed.component
 import { MessagesComponent } from './components/messages/messages.component';
 import { HomeComponent } from './components/home/home.component';
 import { RouterModule, Routes } from '@angular/router';
+import { AuthService } from './services/AuthService';
+import { FriendsComponent } from './components/friends/friends.component';
+import { AdminComponent } from './components/admin/admin.component';
 
 const appRoutes: Routes = [
   { path: 'home', component: HomeComponent },
   { path: 'messages/:channel', component: MessagesComponent },
   { path: 'messages', component: MessagesComponent },
-  { path: '', redirectTo: "/home", pathMatch: "full" }
+  { path: 'friends', component: FriendsComponent },
+  { path: 'admin', component: AdminComponent, canActivate: [AuthService] },
+  { path: 'hukaChaka', component: HomeComponent, canActivate: [AuthService] },
+  { path: '', redirectTo: "/home", pathMatch: "full" }, //base url, no path
+  { path: '**', redirectTo: "/home" }, //wrong url/404
 ];
 
 @NgModule({
   declarations: [
-    AppComponent, HtmlSanitizer, SlackFeedComponent, MessagesComponent, HomeComponent
+    AppComponent, HtmlSanitizer, SlackFeedComponent, MessagesComponent, HomeComponent, FriendsComponent, AdminComponent
   ],
   imports: [
     BrowserModule, HttpModule, RouterModule.forRoot(
@@ -27,7 +34,7 @@ const appRoutes: Routes = [
     )
   ],
   exports: [RouterModule],
-  providers: [],
+  providers: [AuthService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

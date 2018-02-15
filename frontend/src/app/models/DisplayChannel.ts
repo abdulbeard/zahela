@@ -10,6 +10,9 @@ export class DisplayChannel {
     public channelContentId(): string { 
         return `${this.id}_content`; 
     }
+    public getChannelContentCssClass(): string {
+        return this.selected ? "channelContent channelContentShow" : "channelContent channelContentHide";
+    }
     public getCssClass(): string {
         return this.selected ? "active red item" : "red item";
     }

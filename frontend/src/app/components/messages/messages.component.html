@@ -17,7 +17,7 @@
         to generate Lorem Ipsum which looks reasonable. The generated Lorem Ipsum is therefore always free from repetition,
         injected humour, or non-characteristic words etc.
       </p> -->
-      <app-slack-feed [id]="channel.channelContentId()" [channel]="channel.id" class="channelContent" (channelSelectedFromComment)="channelSelected(JSON.parse($event))"></app-slack-feed>      
+      <app-slack-feed [id]="channel.channelContentId()" [channel]="channel.id" [class]="channel.getChannelContentCssClass()" (channelSelectedFromComment)="channelSelected(JSON.parse($event))"></app-slack-feed>      
     </div>
   </div>
 </div>

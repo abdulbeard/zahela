@@ -9,6 +9,7 @@ export class SlackMessagesService {
     private static slackUrl: string = "https://slack.com/api/";
     private static conversationsHistory: string = "conversations.history";
     private static conversationsReplies: string = "conversations.replies"
+    private static channelsList: string = "channels.list";
     private static emojisList: string = "emoji.list";
     private static defaultMessagesLimit: number = 100;
     constructor(private http: Http) {
@@ -42,6 +43,16 @@ export class SlackMessagesService {
         let options = new RequestOptions({ headers: headers });
         return this.http.get(`${SlackMessagesService.slackUrl}${SlackMessagesService.conversationsReplies}?token=${environment.slackToken}&channel=${channel}&pretty=1&limit=${SlackMessagesService.defaultMessagesLimit}&ts=${threadTimestamp}`, new RequestOptions())
             .map((res: Response) => Object.assign(new ThreadMessagesResponse(), res.json()))
+            .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
+    }
+
+    getChannelList(): Observable<ChannelsListResponse> {
+        let headers = new Headers({
+            "Accept": "application/json"
+        });
+        let options = new RequestOptions({ headers: headers });
+        return this.http.get(`${SlackMessagesService.slackUrl}${SlackMessagesService.channelsList}?token=${environment.slackToken}`, new RequestOptions())
+            .map((res: Response) => Object.assign(new ChannelsListResponse(), res.json()))
             .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
     }
 }
@@ -105,4 +116,37 @@ export class Reaction {
     name: string;
     users: string[];
     count: number;
+}
+
+export class ChannelsListResponse {
+    ok: boolean;
+    channels: Channel[];
+    response_metadata: Responsemetadata;
+}
+
+export class Channel {
+    id: string;
+    name: string;
+    is_channel: boolean;
+    created: number;
+    creator: string;
+    is_archived: boolean;
+    is_general: boolean;
+    name_normalized: string;
+    is_shared: boolean;
+    is_org_shared: boolean;
+    is_member: boolean;
+    is_private: boolean;
+    is_mpim: boolean;
+    members: string[];
+    topic: Topic;
+    purpose: Topic;
+    previous_names: any[];
+    num_members: number;
+}
+
+export class Topic {
+    value: string;
+    creator: string;
+    last_set: number;
 }

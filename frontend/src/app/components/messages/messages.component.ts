@@ -29,21 +29,27 @@ export class MessagesComponent implements AfterViewInit {
     private slackMessageParsingService: SlackMessageParsingService,
     private route: ActivatedRoute, private router: Router, private location: Location) {
     console.log(this.route.params);
+    slackMessagesService.getChannelList().subscribe(channelsListResponse => {
+      channelsListResponse.channels.forEach(
+        (channel, index, array) => this.channels.push(
+          new DisplayChannel(channel.id, channel.name, index === 0 ? true : false)));
+    },
+      (Error) => {
+        console.log(Error);
+      });
     this.route.params.subscribe(param => {
       var channel = param["channel"];
-      console.log(channel);
       this.channelFromUrl = this.lookupChannel(channel);
-      console.log('param retrieved successfully');
-      console.log(this.channelFromUrl);
     }, (Error) => {
       console.log(Error);
     })
   }
 
-  channels: DisplayChannel[] = [
-    new DisplayChannel("C2M99LPK4", "primingham_manor", true),
-    new DisplayChannel("C2M3C5JRY", "general", false)
-  ]
+  channels: DisplayChannel[] = [];
+  //  = [
+  //   new DisplayChannel("C2M99LPK4", "primingham_manor", true),
+  //   new DisplayChannel("C2M3C5JRY", "general", false)
+  // ]
 
   private lookupChannel(channelId: string): DisplayChannel {
     for (var i = 0; i < this.channels.length; i++) {

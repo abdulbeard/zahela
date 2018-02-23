@@ -13,14 +13,16 @@ import { AuthService } from './services/AuthService';
 import { FriendsComponent } from './components/friends/friends.component';
 import { AdminComponent } from './components/admin/admin.component';
 import { PlaylistComponent } from './components/playlist/playlist.component';
+import { LoginComponent } from './components/login/login.component';
 
 const appRoutes: Routes = [
   { path: 'home', component: HomeComponent },
   { path: 'messages/:channel', component: MessagesComponent },
   { path: 'messages', component: MessagesComponent },
-  { path: 'friends', component: FriendsComponent },
+  { path: 'friends', component: FriendsComponent, canActivate: [AuthService], },
   { path: 'admin', component: AdminComponent, canActivate: [AuthService] },
   { path: 'hukaChaka', component: HomeComponent, canActivate: [AuthService] },
+  { path: 'login', component: LoginComponent },
   { path: 'playlist', component: PlaylistComponent },
   { path: '', redirectTo: "/home", pathMatch: "full" }, //base url, no path
   { path: '**', redirectTo: "/home" }, //wrong url/404
@@ -29,7 +31,7 @@ const appRoutes: Routes = [
 @NgModule({
   declarations: [
     AppComponent, HtmlSanitizer, UrlSanitizer, SlackFeedComponent, MessagesComponent, HomeComponent, FriendsComponent, 
-    AdminComponent, PlaylistComponent
+    AdminComponent, PlaylistComponent, LoginComponent
   ],
   imports: [
     BrowserModule, HttpModule, RouterModule.forRoot(

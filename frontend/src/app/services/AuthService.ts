@@ -3,89 +3,82 @@ import {
     CanActivate, Router,
     ActivatedRouteSnapshot,
     RouterStateSnapshot,
-    CanActivateChild,
     NavigationExtras,
     CanLoad, Route
 } from '@angular/router';
 import { Observable } from "rxjs";
+import { Routes } from '../constants/Routes';
+import { CurrentUser } from "../models/CurrentUser";
+import { CookieUtils } from "../utils/CookieUtils";
 
 @Injectable()
-export class AuthService implements CanActivate, CanActivateChild, CanLoad {
-    canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
-        console.log(route);
-        console.log(state);
-        if (state.url === "/friends") {
-            var userCookie = AuthService.getCookie("user");
-            console.log(userCookie);
-            if (userCookie === "SuperUser") {
-                console.log("authorized");
-                return true;
-            }
-            else {
-                let navigationExtras: NavigationExtras = {
-                    queryParams: { 'cheater': "true" },
-                    fragment: 'anchor'
-                };
-                console.log("unauthorized");
-                // Navigate to the login page with extras
-                this.router.navigate(['/login'], navigationExtras);
-                return false;
-            }
-        }
-        if (state.url !== "hukaChaka/allow") {
-            console.log(state);
-            return false;
-        }
-        return true;
-
-        // let navigationExtras: NavigationExtras = {
-        //     queryParams: { 'session_id': "superSecretSessionId" },
-        //     fragment: 'anchor'
-        // };
-
-        // // Navigate to the login page with extras
-        // //this.router.navigate(['/home'], navigationExtras);
-        // return true;
-    }
-    canActivateChild(childRoute: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
-        if (state.url !== "hukaChaka/allow") {
-            return false;
-        }
-        return true;
-    }
-    canLoad(route: Route): boolean {
-        console.log(route);
-        if (`/${route.path}` !== "/hukaChaka/allow") {
-            return false;
-        }
-        return true;
-    }
+export class AuthService implements CanActivate, CanLoad {
+    loggedIn: boolean = false;
+    currentUser: CurrentUser;
     constructor(private router: Router) { }
 
-    public static deleteCookie(name) {
-        AuthService.setCookie(name, '', -1);
+    canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
+        return this.isAllowedAccess(route, state);
     }
 
-    public static setCookie(name: string, value: string, expireDays: number, path: string = '') {
-        let d:Date = new Date();
-        d.setTime(d.getTime() + expireDays * 24 * 60 * 60 * 1000);
-        let expires:string = `expires=${d.toUTCString()}`;
-        let cpath:string = path ? `; path=${path}` : '';
-        document.cookie = `${name}=${value}; ${expires}${cpath}`;
+    canLoad(route: Route): boolean {
+        return true;
+        //return this.isAllowedAccess(route);
     }
 
-    public static getCookie(name: string): string {
-        let ca: Array<string> = document.cookie.split(';');
-        let caLen: number = ca.length;
-        let cookieName = `${name}=`;
-        let c: string;
+    private isAllowedAccess(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
+        console.log(route);
+        console.log(state);
+        var user = this.getCurrentUser();
+        if (state.url === `/${Routes.friends}`) {
+        }
+        else {
+            let navigationExtras: NavigationExtras = {
+                queryParams: { 'cheater': "true", 'returnUrl': state.url },
+                preserveQueryParams: true,
+            };
+            console.log("unauthorized");
+            // Navigate to the login page with extras
+            this.router.navigate([Routes.login], navigationExtras);
+            return false;
+        }
+        return true;
+    }
 
-        for (let i: number = 0; i < caLen; i += 1) {
-            c = ca[i].replace(/^\s+/g, '');
-            if (c.indexOf(cookieName) == 0) {
-                return c.substring(cookieName.length, c.length);
+    private getCurrentUser(): CurrentUser {
+        return null;
+    }
+
+    private isInUrlList(url: string, urlList: string[], addForwardSlash?: boolean){
+        for (var i = 0; i < urlList.length; i++) {
+            var currentUrl = urlList[i];
+            currentUrl = addForwardSlash ? `/${currentUrl}` : currentUrl;
+            if(url.startsWith(currentUrl)){
+                console.log("url matched");
+                return true;
             }
         }
-        return '';
+    }
+
+    public isLoggedIn(): boolean {
+        return this.loggedIn;
+    }
+
+    public login(username: string, password: string): boolean {
+        this.loggedIn = true;
+
+        console.log(`${username}:${password}`);
+        if (username === "AbdulTheBauss" && password === "YodaSaysIs") {
+            console.log("setting cookiee");
+            CookieUtils.setCookie("user", "SuperUser", 365, "");
+            return true;
+        }
+        return false;
+    }
+
+    public logout() {
+        CookieUtils.deleteCookie("user");
+        this.loggedIn = false;
+        this.router.navigate([Routes.home]);
     }
 }

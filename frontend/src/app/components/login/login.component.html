@@ -10,16 +10,16 @@
       <div class="field">
         <div class="ui left icon input">
           <i class="user icon"></i>
-          <input type="text" name="email" placeholder="E-mail address">
+          <input type="text" name="email" placeholder="E-mail address" [(ngModel)]="username">
         </div>
       </div>
       <div class="field">
         <div class="ui left icon input">
           <i class="lock icon"></i>
-          <input type="password" name="password" placeholder="Password">
+          <input type="password" name="password" placeholder="Password" [(ngModel)]="password" (keyup.enter)="login()">
         </div>
       </div>
-      <div class="ui fluid large teal submit button">Login</div>
+      <div class="ui fluid large teal submit button" (click)="login()">Login</div>
     </div>
 
     <div class="ui error message"></div>

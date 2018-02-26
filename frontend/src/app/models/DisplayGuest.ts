@@ -12,6 +12,11 @@ export class DisplayGuest {
     secondaryImage: string;
     gender: Gender;
 
+    public static default(): DisplayGuest {
+        return new DisplayGuest("Jon Doe", ["Anonymous"], "The bestest Jon of Does", "", "", "", "", 
+        "john@doe.com", ["John-ing", "Doe-ing"], "", "", Gender.Male)
+    }
+
     constructor(name: string, categories: string[], description: string, facebookUrl: string, twitterUrl: string,
         instagramUrl: string, slackUrl: string, email: string, interests: string[], primaryImage: string,
         secondaryImage: string, gender: Gender) {

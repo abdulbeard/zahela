@@ -14,28 +14,32 @@ import { FriendsComponent } from './components/friends/friends.component';
 import { AdminComponent } from './components/admin/admin.component';
 import { PlaylistComponent } from './components/playlist/playlist.component';
 import { LoginComponent } from './components/login/login.component';
+import { AccountComponent } from './components/account/account.component';
+import { FormsModule } from '@angular/forms';
+import { Routes as AppRoutes }  from './constants/Routes';
 
 const appRoutes: Routes = [
-  { path: 'home', component: HomeComponent },
-  { path: 'messages/:channel', component: MessagesComponent },
-  { path: 'messages', component: MessagesComponent },
-  { path: 'friends', component: FriendsComponent, canActivate: [AuthService], },
-  { path: 'admin', component: AdminComponent, canActivate: [AuthService] },
-  { path: 'hukaChaka', component: HomeComponent, canActivate: [AuthService] },
-  { path: 'login', component: LoginComponent },
-  { path: 'playlist', component: PlaylistComponent },
-  { path: '', redirectTo: "/home", pathMatch: "full" }, //base url, no path
-  { path: '**', redirectTo: "/home" }, //wrong url/404
+  { path: AppRoutes.home, component: HomeComponent },
+  { path: AppRoutes.account, component: AccountComponent },
+  { path: AppRoutes.messagesExtended, component: MessagesComponent },
+  { path: AppRoutes.messages, component: MessagesComponent },
+  { path: AppRoutes.friends, component: FriendsComponent, canActivate: [AuthService], },
+  { path: AppRoutes.admin, component: AdminComponent, canActivate: [AuthService] },
+  { path: AppRoutes.hukaChaka, component: HomeComponent, canActivate: [AuthService] },
+  { path: AppRoutes.login, component: LoginComponent },
+  { path: AppRoutes.playlist, component: PlaylistComponent },
+  { path: AppRoutes.empty, redirectTo: AppRoutes.home, pathMatch: "full" }, //base url, no path
+  { path: AppRoutes.wildCard, redirectTo: AppRoutes.home }, //wrong url/404
 ];
 
 @NgModule({
   declarations: [
     AppComponent, HtmlSanitizer, UrlSanitizer, SlackFeedComponent, MessagesComponent, HomeComponent, FriendsComponent, 
-    AdminComponent, PlaylistComponent, LoginComponent
+    AdminComponent, PlaylistComponent, LoginComponent, AccountComponent
   ],
   imports: [
-    BrowserModule, HttpModule, RouterModule.forRoot(
-      appRoutes,
+    BrowserModule, HttpModule, FormsModule, RouterModule.forRoot(
+      appRoutes, 
       { enableTracing: false } // <-- debugging purposes only
     )
   ],

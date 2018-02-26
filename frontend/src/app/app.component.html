@@ -1,24 +1,32 @@
 <div class="ui huge secondary pointing menu">
     <a class="item" routerLink="/home" routerLinkActive="active">
-        Home
+        <i class="home icon"></i>Home
+    </a>
+    <a class="item" routerLink="/account" routerLinkActive="active">
+        <i class="user circle icon"></i>Account
     </a>
     <a class="item" routerLink="/messages" routerLinkActive="active">
-        Messages
+        <i class="envelope outline icon"></i>Messages
     </a>
     <a class="item" routerLink="/friends" routerLinkActive="active">
-        Friends
+        <i class="users icon"></i>Friends
     </a>
     <a class="item" routerLink="/playlist" routerLinkActive="active">
-        Playlist
+        <i class="music icon"></i>Playlist
     </a>
-    <div class="right menu">
-        <a class="ui item">
-            Logout
+
+    <div *ngIf="this.authService.isLoggedIn()" class="right menu">
+        <a class="ui item" (click)="this.authService.logout()">Logout
+            <i class="arrow circle right icon"></i>
+        </a>
+    </div>
+    <div *ngIf="!this.authService.isLoggedIn()" class="right menu">
+        <a class="ui item" (click)="routeForLogin()">
+            <i class="key icon"></i>
+            Login
         </a>
     </div>
 </div>
-
 <div style="background-color: #eaf1f9 ">
-        <router-outlet></router-outlet>
-<!-- <app-messages></app-messages> -->
+    <router-outlet></router-outlet>
 </div>

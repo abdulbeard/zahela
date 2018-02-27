@@ -24,7 +24,6 @@ export class AppComponent implements AfterViewChecked {
   title = 'app';
 
   routeForLogin() {
-    console.log(this.router.url);
     let navigationExtras: NavigationExtras = {
       queryParams: { 'returnUrl': this.router.url },
     };

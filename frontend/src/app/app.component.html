@@ -1,5 +1,5 @@
 <div class="ui huge secondary pointing menu">
-    <a class="item" [routerLink]="this.getHomeRoute()" routerLinkActive="active"  *ngIf="showHomeLink">
+    <a class="item" [routerLink]="this.getHomeRoute()" routerLinkActive="active" *ngIf="showHomeLink">
         <i class="home icon"></i>Home
     </a>
     <a class="item" [routerLink]="this.getAccountRoute()" routerLinkActive="active" *ngIf="showAccountLink">
@@ -16,14 +16,18 @@
     </a>
 
     <div *ngIf="this.authService.isLoggedIn()" class="right menu">
-        <a class="ui item" (click)="this.authService.logout()">Logout
+        <a class="ui item" >
+            <div class="ui large blue inverted label">
+                <a [routerLink]="this.getAccountRoute()" routerLinkActive="active">John</a>
+            </div>
+            <div (click)="this.authService.logout()" style="padding-left:.5em;">Logout</div>
             <i class="arrow circle right icon"></i>
         </a>
     </div>
     <div *ngIf="!this.authService.isLoggedIn()" class="right menu">
         <a class="ui item" (click)="routeForLogin()">
             <i class="key icon"></i>
-            Login
+            Login/Signup
         </a>
     </div>
 </div>

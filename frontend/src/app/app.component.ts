@@ -11,7 +11,7 @@ import { Routes } from './constants/Routes';
   providers: [Routes]
 })
 export class AppComponent implements AfterViewChecked {
-  
+
   ngAfterViewChecked(): void {
     this.refreshNavigationLinks();
   }
@@ -45,13 +45,12 @@ export class AppComponent implements AfterViewChecked {
   showPlaylistLink: boolean = this.authService.isAllowedAccess(this.prependForwardSlash(Routes.playlist));
 
   refreshNavigationLinks() {
-    console.log(this.authService.isAllowedAccess(Routes.friends));
     this.showHomeLink = this.authService.isAllowedAccess(this.prependForwardSlash(Routes.home));
     this.showAccountLink = this.authService.isAllowedAccess(this.prependForwardSlash(Routes.account));
     this.showMessagesLink = this.authService.isAllowedAccess(this.prependForwardSlash(Routes.messages));
     this.showFriendsLink = this.authService.isAllowedAccess(this.prependForwardSlash(Routes.friends));
     this.showPlaylistLink = this.authService.isAllowedAccess(this.prependForwardSlash(Routes.playlist));
-    }
+  }
 
   private prependForwardSlash(route: string): string {
     return `/${route}`;

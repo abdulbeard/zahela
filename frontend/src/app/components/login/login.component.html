@@ -19,10 +19,60 @@
           <input type="password" name="password" placeholder="Password" [(ngModel)]="password" (keyup.enter)="login()">
         </div>
       </div>
-      <div class="ui fluid large teal submit button" (click)="login()">Login</div>
+      <div class="ui fluid large teal submit button" (click)="login()">
+        <i class="key icon"></i>Login</div>
     </div>
-
     <div class="ui error message"></div>
-
   </form>
 </div>
+<div class="ui fluid centered grid" *ngIf="this.loginError" id="loginError">
+  <div class="ui error message">
+    <i class="close icon" (click)="dismissLoginError()"></i>
+    <div class="header">
+      {{this.loginError}}&nbsp;&nbsp;
+    </div>
+  </div>
+</div>
+<br/>
+<br/>
+<div class="ui centered grid">
+
+  <form class="ui form">
+    <div class="ui horizontal divider">
+      <h3 style="color:dodgerblue">Or</h3>
+    </div>
+    <h2 class="ui header">Help us connect with you</h2>
+    <div class="field">
+      <div class="two fields">
+        <div class="field">
+          <input type="text" placeholder="Your Full Name" name="requestConnectionName" [(ngModel)]="requestConnectionName">
+        </div>
+        <div class="field">
+          <input type="email" placeholder="Your Email, so we can get back to you" name="requestConnectionEmail" [(ngModel)]="requestConnectionEmail">
+        </div>
+      </div>
+    </div>
+    <div class="field">
+      <label></label>
+      <textarea placeholder="Tell us a bit about how we met" (keyup.enter)="requestConnection()" name="requestConnectionHistory"[(ngModel)]="requestConnectionHistory"></textarea>
+    </div>
+    <div class="ui fluid large blue submit button" (click)="requestConnection()">
+      <i class="envelope outline icon"></i>Connect
+    </div>
+  </form>
+</div>
+<br/>
+<br/>
+<div class="ui fluid centered grid" *ngIf="this.signupErrors" id="signupErrors">
+  <div class="ui error message">
+    <i class="close icon" (click)="dismissSignupErrors()"></i>
+    <div class="header">
+      There were some errors with your submission &nbsp;&nbsp;
+    </div>
+    <ul class="list" *ngFor="let error of this.signupErrors">
+      <li>{{error}}</li>
+    </ul>
+  </div>
+</div>
+<br/>
+<br/>

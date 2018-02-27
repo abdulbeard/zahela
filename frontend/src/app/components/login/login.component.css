@@ -1,3 +1,11 @@
 .ui.form {
     width: 50em; 
 }
+
+.divider {
+    width: 50em;
+    padding-right: 2rem; 
+}
+
+.close.icon{
+}

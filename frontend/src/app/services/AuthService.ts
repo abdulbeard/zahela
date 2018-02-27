@@ -39,7 +39,6 @@ export class AuthService implements CanActivate, CanLoad {
 
     public isAllowedAccess(url: string): boolean {
         var user = this.getCurrentUser();
-        console.log(user);
         if (this.isInUrlList(url, user.permissions.forbiddenRoutes, true) ||
             (this.isInUrlList(url, user.permissions.postLoginRoutes, true)) && !user.loggedIn) {
             return false;
@@ -56,7 +55,6 @@ export class AuthService implements CanActivate, CanLoad {
             var currentUrl = urlList[i];
             currentUrl = addForwardSlash ? `/${currentUrl}` : currentUrl;
             if (url.startsWith(currentUrl)) {
-                console.log("url matched");
                 return true;
             }
         }
@@ -70,14 +68,13 @@ export class AuthService implements CanActivate, CanLoad {
     }
 
     public login(username: string, password: string): boolean {
-        this.loggedIn = true;
-
         console.log(`${username}:${password}`);
         if (username === "AbdulTheBauss" && password === "YodaSaysIs") {
             console.log("setting cookiee");
             CookieUtils.setCookie("user", "SuperUser", 365, "");
             this.currentUser = new CurrentUser(new UserPermission(UserRole.Admin, [], []), DisplayGuest.default(), true);
             this.logEventSubject.next(true);
+            this.loggedIn = true;
             return true;
         }
         this.logEventSubject.next(false);

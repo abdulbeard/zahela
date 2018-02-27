@@ -1,17 +1,17 @@
 <div class="ui huge secondary pointing menu">
-    <a class="item" routerLink="/home" routerLinkActive="active">
+    <a class="item" [routerLink]="this.getHomeRoute()" routerLinkActive="active"  *ngIf="showHomeLink">
         <i class="home icon"></i>Home
     </a>
-    <a class="item" routerLink="/account" routerLinkActive="active">
+    <a class="item" [routerLink]="this.getAccountRoute()" routerLinkActive="active" *ngIf="showAccountLink">
         <i class="user circle icon"></i>Account
     </a>
-    <a class="item" routerLink="/messages" routerLinkActive="active">
+    <a class="item" [routerLink]="this.getMessagesRoute()" routerLinkActive="active" *ngIf="showMessagesLink">
         <i class="envelope outline icon"></i>Messages
     </a>
-    <a class="item" routerLink="/friends" routerLinkActive="active">
+    <a class="item" [routerLink]="this.getFriendsRoute()" routerLinkActive="active" *ngIf="showFriendsLink">
         <i class="users icon"></i>Friends
     </a>
-    <a class="item" routerLink="/playlist" routerLinkActive="active">
+    <a class="item" [routerLink]="this.getPlaylistRoute()" routerLinkActive="active" *ngIf="showPlaylistLink">
         <i class="music icon"></i>Playlist
     </a>
 

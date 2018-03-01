@@ -1,11 +1,14 @@
-export class DisplayComment{
+export class BasicDisplayComment {
     public user: User;
     public text: string;
     public textIsHtml: boolean;
-    public threadComments: Array<DisplayComment>;
     public timestamp: Date;
-    public slackHref: string;
     public reactions: DisplayReaction[];
+}
+
+export class DisplayComment extends BasicDisplayComment {
+    public threadComments: Array<DisplayComment>;
+    public slackHref: string;
 }
 
 export class User{

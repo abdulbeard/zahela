@@ -3,6 +3,7 @@ import { AfterViewChecked } from '@angular/core';
 import { RouterModule, ActivatedRoute, NavigationExtras, Router } from '@angular/router'
 import { AuthService } from './services/AuthService';
 import { Routes } from './constants/Routes';
+import { DisplayGuest } from './models/DisplayGuest';
 
 @Component({
   selector: 'app-root',
@@ -11,7 +12,7 @@ import { Routes } from './constants/Routes';
   providers: [Routes]
 })
 export class AppComponent implements AfterViewChecked {
-  
+
   ngAfterViewChecked(): void {
     this.refreshNavigationLinks();
   }
@@ -30,6 +31,10 @@ export class AppComponent implements AfterViewChecked {
     console.log("unauthorized");
     // Navigate to the login page with extras
     this.router.navigate([Routes.login], navigationExtras);
+  }
+
+  getDisplayGuest(): DisplayGuest {
+    return this.authService.getCurrentDisplayUser();
   }
 
   getHomeRoute(): string { return this.prependForwardSlash(Routes.home); }
@@ -51,7 +56,7 @@ export class AppComponent implements AfterViewChecked {
     this.showMessagesLink = this.authService.isAllowedAccess(this.prependForwardSlash(Routes.messages));
     this.showFriendsLink = this.authService.isAllowedAccess(this.prependForwardSlash(Routes.friends));
     this.showPlaylistLink = this.authService.isAllowedAccess(this.prependForwardSlash(Routes.playlist));
-    }
+  }
 
   private prependForwardSlash(route: string): string {
     return `/${route}`;

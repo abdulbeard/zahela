@@ -51,6 +51,10 @@ export class AuthService implements CanActivate, CanLoad {
         return this.currentUser ? this.currentUser : CurrentUser.guest();
     }
 
+    public getCurrentDisplayUser(): DisplayGuest {
+        return this.getCurrentUser() ? this.getCurrentUser().guestInfo : DisplayGuest.default();
+    }
+
     private isInUrlList(url: string, urlList: string[], addForwardSlash?: boolean) {
         for (var i = 0; i < urlList.length; i++) {
             var currentUrl = urlList[i];

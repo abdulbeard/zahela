@@ -18,7 +18,7 @@
     <div *ngIf="this.authService.isLoggedIn()" class="right menu">
         <a class="ui item" >
             <div class="ui large blue inverted label">
-                <a [routerLink]="this.getAccountRoute()" routerLinkActive="active">John</a>
+                <a [routerLink]="this.getAccountRoute()" routerLinkActive="active">{{getDisplayGuest().name}}</a>
             </div>
             <div (click)="this.authService.logout()" style="padding-left:.5em;">Logout</div>
             <i class="arrow circle right icon"></i>

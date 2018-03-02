@@ -1,0 +1,10 @@
+.ui.feed {
+    padding-left: 1em;
+}
+
+.event {
+    border: 1px solid darkgrey;
+    border-radius: 3px;
+    background-color: lightgrey !important;
+    margin-bottom: .5em !important;
+}

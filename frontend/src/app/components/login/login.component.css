@@ -7,5 +7,6 @@
     padding-right: 2rem; 
 }
 
-.close.icon{
+.close.icon {
+    padding-left: 3px
 }

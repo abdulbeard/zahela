@@ -42,12 +42,14 @@ export class AppComponent implements AfterViewChecked {
   getMessagesRoute(): string { return this.prependForwardSlash(Routes.messages); }
   getFriendsRoute(): string { return this.prependForwardSlash(Routes.friends); }
   getPlaylistRoute(): string { return this.prependForwardSlash(Routes.playlist); }
+  getFaqRoute(): string { return this.prependForwardSlash(Routes.faq); }
 
   showHomeLink: boolean = this.authService.isAllowedAccess(this.prependForwardSlash(Routes.home));
   showAccountLink: boolean = this.authService.isAllowedAccess(this.prependForwardSlash(Routes.account));
   showMessagesLink: boolean = this.authService.isAllowedAccess(this.prependForwardSlash(Routes.messages));
   showFriendsLink: boolean = this.authService.isAllowedAccess(this.prependForwardSlash(Routes.friends));
   showPlaylistLink: boolean = this.authService.isAllowedAccess(this.prependForwardSlash(Routes.playlist));
+  showFaqLink: boolean = this.authService.isAllowedAccess(this.prependForwardSlash(Routes.faq));
 
   refreshNavigationLinks() {
     this.showHomeLink = this.authService.isAllowedAccess(this.prependForwardSlash(Routes.home));

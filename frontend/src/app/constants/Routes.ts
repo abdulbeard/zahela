@@ -8,6 +8,9 @@ export class Routes {
     public static readonly hukaChaka: string = 'hukaChaka';
     public static readonly login: string = 'login';
     public static readonly playlist: string = 'playlist';
+    public static readonly faq: string = 'faq';
+
+    //default routes
     public static readonly empty: string = '';
     public static readonly wildCard: string = '**';
 }

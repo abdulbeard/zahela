@@ -10,7 +10,7 @@ import { DisplayChannel } from '../../models/DisplayChannel';
 import { DisplayGuest, Gender } from '../../models/DisplayGuest';
 
 @Component({
-  selector: 'app-home',
+  selector: 'app-friends',
   templateUrl: './friends.component.html',
   styleUrls: ['./friends.component.css'],
   providers: [EmojiDefinitions, EmojiService, SlackMessagesService, UserService,

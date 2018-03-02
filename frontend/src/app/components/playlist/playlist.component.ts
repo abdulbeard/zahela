@@ -9,7 +9,7 @@ import { SlackReactionsService } from '../../services/SlackReactionsService';
 import { DisplayChannel } from '../../models/DisplayChannel';
 
 @Component({
-  selector: 'app-home',
+  selector: 'app-playlist',
   templateUrl: './playlist.component.html',
   styleUrls: ['./playlist.component.css'],
   providers: [EmojiDefinitions, EmojiService, SlackMessagesService, UserService,

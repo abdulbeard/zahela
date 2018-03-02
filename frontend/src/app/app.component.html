@@ -14,9 +14,12 @@
     <a class="item" [routerLink]="this.getPlaylistRoute()" routerLinkActive="active" *ngIf="showPlaylistLink">
         <i class="music icon"></i>Playlist
     </a>
+    <a class="item" [routerLink]="this.getFaqRoute()" routerLinkActive="active" *ngIf="showFaqLink">
+        <i class="question icon"></i>FAQs
+    </a>
 
     <div *ngIf="this.authService.isLoggedIn()" class="right menu">
-        <a class="ui item" >
+        <a class="ui item">
             <div class="ui large blue inverted label">
                 <a [routerLink]="this.getAccountRoute()" routerLinkActive="active">{{getDisplayGuest().name}}</a>
             </div>

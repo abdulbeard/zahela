@@ -11,7 +11,7 @@ import { AuthService } from '../../services/AuthService';
 import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
-  selector: 'app-home',
+  selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css'],
   providers: [EmojiDefinitions, EmojiService, SlackMessagesService, UserService,

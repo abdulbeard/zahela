@@ -17,6 +17,7 @@ import { LoginComponent } from './components/login/login.component';
 import { AccountComponent } from './components/account/account.component';
 import { FormsModule } from '@angular/forms';
 import { Routes as AppRoutes }  from './constants/Routes';
+import { FaqComponent } from './components/faqs/faq.component';
 
 const appRoutes: Routes = [
   { path: AppRoutes.home, component: HomeComponent },
@@ -28,6 +29,7 @@ const appRoutes: Routes = [
   { path: AppRoutes.hukaChaka, component: HomeComponent, canActivate: [AuthService] },
   { path: AppRoutes.login, component: LoginComponent },
   { path: AppRoutes.playlist, component: PlaylistComponent },
+  { path: AppRoutes.faq, component: FaqComponent},
   { path: AppRoutes.empty, redirectTo: AppRoutes.home, pathMatch: "full" }, //base url, no path
   { path: AppRoutes.wildCard, redirectTo: AppRoutes.home }, //wrong url/404
 ];
@@ -35,7 +37,7 @@ const appRoutes: Routes = [
 @NgModule({
   declarations: [
     AppComponent, HtmlSanitizer, UrlSanitizer, SlackFeedComponent, MessagesComponent, HomeComponent, FriendsComponent, 
-    AdminComponent, PlaylistComponent, LoginComponent, AccountComponent
+    AdminComponent, PlaylistComponent, LoginComponent, AccountComponent, FaqComponent
   ],
   imports: [
     BrowserModule, HttpModule, FormsModule, RouterModule.forRoot(

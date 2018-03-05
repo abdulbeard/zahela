@@ -1,3 +1,19 @@
+<br/>
+<div class="userInput">
+  <div class="ui fluid icon input">
+    <input type="text" placeholder="Search for or ask a question">
+    <i class="inverted circular search link icon"></i>
+  </div>
+  <br/>
+  <div class="ui inverted green button">Ask this question</div>
+</div>
+<div class="ui inverted segment filterTags">Filters: &nbsp;&nbsp;&nbsp;
+  <a class="ui large blue horizontal label">Sup</a>
+  <a class="ui large blue horizontal label">Sup</a>
+  <a class="ui large blue horizontal label">Sup</a>
+  <a class="ui large blue horizontal label">Sup</a>
+  <a class="ui large blue horizontal label">Sup</a>
+</div>
 <div class="ui accordion">
   <div *ngFor="let panel of accordion; let i = index;">
     <div [class]="panel.getCssClass('title')" (click)="toggle(panel)">

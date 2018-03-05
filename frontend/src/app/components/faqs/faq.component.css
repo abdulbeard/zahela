@@ -1,3 +1,13 @@
 .ui.accordion {
     margin-left: 1vw;
 }
+
+.userInput {
+    margin-right: 2.5rem;
+    margin-left: 2.5rem;
+}
+
+.filterTags {
+    margin-right: 2.5rem;
+    margin-left: 2.5rem;
+}

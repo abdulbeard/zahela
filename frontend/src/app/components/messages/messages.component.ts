@@ -10,6 +10,7 @@ import { DisplayChannel } from '../../models/DisplayChannel';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { convertToParamMap } from '@angular/router/src/shared';
 import { Location } from '@angular/common';
+import { Routes } from '../../constants/Routes';
 
 @Component({
   selector: 'app-messages',
@@ -68,7 +69,7 @@ export class MessagesComponent implements AfterViewInit {
     this.changeActiveItemOnMenu(htmlElement);
     this.showContent(channel);
     console.log(location);
-    this.location.replaceState(`/messages/${channel.id}`);
+    this.location.replaceState(`/${Routes.messages}/${channel.id}`);
     return false;
   }
 

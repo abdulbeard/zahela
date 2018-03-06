@@ -8,18 +8,16 @@
   <div class="ui inverted green button">Ask this question</div>
 </div>
 <div class="ui inverted segment filterTags">Filters: &nbsp;&nbsp;&nbsp;
-  <a class="ui large blue horizontal label">Sup</a>
-  <a class="ui large blue horizontal label">Sup</a>
-  <a class="ui large blue horizontal label">Sup</a>
-  <a class="ui large blue horizontal label">Sup</a>
-  <a class="ui large blue horizontal label">Sup</a>
+  <a class="ui large blue horizontal label" *ngFor="let filter of filters" (click)="doFilter(filter)">{{filter}}</a>
 </div>
 <div class="ui accordion">
   <div *ngFor="let panel of accordion; let i = index;">
-    <div [class]="panel.getCssClass('title')" (click)="toggle(panel)">
+    <div [class]="panel.getCssClass('title')" [attr.href]="panel.getHref()" (click)="toggle(panel)">
       <i class="dropdown icon"></i>
       {{panel.title.title}}
-      <div class="ui red basic horizontal label" *ngFor="let tag of panel.title.tags">{{tag}}</div>
+      <div class="ui red basic horizontal label titleLabel" *ngFor="let tag of panel.title.tags">{{tag}}</div>
+      <div class="ui red basic horizontal label titleLabel" *ngFor="let tag of panel.title.tags">{{tag}}</div>
+      <div class="ui red basic horizontal label titleLabel" *ngFor="let tag of panel.title.tags">{{tag}}</div>
     </div>
     <div [class]="panel.getCssClass('content')">
       <div class="ui segment">

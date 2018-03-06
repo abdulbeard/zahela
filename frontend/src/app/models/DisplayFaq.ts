@@ -1,3 +1,5 @@
+import { Routes } from "../constants/Routes";
+
 export class DisplayFaq {
     content: FaqContent;
     title: FaqTitle;
@@ -13,6 +15,9 @@ export class DisplayFaq {
     }
     getCssClass(titleOrContent: string) {
         return `${this.active ? "active" : ""} ${titleOrContent} accordionItem`;
+    }
+    getHref(): string {
+        return `/${Routes.faq}/${this.id}`;
     }
     public static sort(one: DisplayFaq, two: DisplayFaq) {
         if (one.score < two.score) {

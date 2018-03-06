@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit, AfterViewChecked } from '@angular/core';
 import { EmojiDefinitions, EmojiService } from '../../services/EmojiService';
 import { SlackMessageParsingService } from '../../services/SlackMessageParsingService';
 import { SlackMessagesService, MessagesResponse } from '../../services/SlackMessagesService';
@@ -9,6 +9,9 @@ import { SlackReactionsService } from '../../services/SlackReactionsService';
 import { DisplayChannel } from '../../models/DisplayChannel';
 import { DisplayFaq, FaqTitle, FaqContent } from '../../models/DisplayFaq';
 import { FaqService } from '../../services/FaqService';
+import { ActivatedRoute } from '@angular/router';
+import { Location } from '@angular/common';
+import { Routes } from '../../constants/Routes';
 
 @Component({
   selector: 'app-faq',
@@ -17,12 +20,18 @@ import { FaqService } from '../../services/FaqService';
   providers: [EmojiDefinitions, EmojiService, SlackMessagesService, UserService,
     SlackMessageParsingService, SlackReactionsService, FaqService]
 })
-export class FaqComponent implements AfterViewInit {
-  ngAfterViewInit(): void {
+export class FaqComponent implements OnInit {
+  ngOnInit(): void {
+    if (this.faqFromUrl) {
+      this.accordion.map(faq => {
+        faq.active = faq.id === this.faqFromUrl ? true : false;
+      })
+    }
   }
   constructor(private faqService: FaqService, private userService: UserService,
-    private slackMessageParsingService: SlackMessageParsingService) {
+    private route: ActivatedRoute, private location: Location) {
     faqService.getFaqs().subscribe(faqs => {
+      this.masterList = faqs;
       this.accordion = faqs.sort(DisplayFaq.sort).reverse();
     }, Error => {
       console.log(Error);
@@ -32,18 +41,58 @@ export class FaqComponent implements AfterViewInit {
     }, Error => {
       console.log(Error);
     });
+    this.route.params.subscribe(param => {
+      this.faqFromUrl = param["id"];
+    }, (Error) => {
+      console.log(Error);
+    })
   }
 
+  private masterList: DisplayFaq[];
   private accordion: DisplayFaq[];
   private filters: Array<string>;
+  private faqFromUrl: string;
   question: string = "5456465";
 
+  search(searchString?: string) {
+    console.log('search called');
+  }
+
+  doFilter(filter: string) {
+    this.accordion = this.masterList.filter(faq => {
+      return (faq.title.tags.includes(filter) || faq.content.tags.includes(filter))
+    });
+  }
+
+  removeFilter() {
+
+  }
+
+  private toggle(panel: DisplayFaq) {
+    this.location.replaceState(`/${Routes.faq}/${panel.id}`);
+    this.accordion.map((elem, index) => {
+      if (elem !== panel) {
+        elem.active = false;
+      }
+      else {
+        if (elem.active) {
+          elem.active = false;
+        }
+        else {
+          elem.active = true;
+        }
+      }
+    })
+  }
+
   onKeyUp() {
+    var that = this;
     this.delay(function () {
-      var value = document.getElementById("faq_question");
+      var value = (<HTMLInputElement>document.getElementById("faq_question")).value;
       console.log(value);
-      alert('Time elapsed!' + this.question);
-    }, 1000);
+      that.search(value);
+      //alert('Time elapsed!' + value);
+    }, 300);
   }
 
   delay = (function () {

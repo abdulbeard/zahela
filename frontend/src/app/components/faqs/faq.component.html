@@ -1,7 +1,7 @@
 <br/>
 <div class="userInput">
   <div class="ui fluid icon input">
-    <input type="text" placeholder="Search for or ask a question">
+    <input type="text" id="faq_question" name="question" placeholder="Search for or ask a question" [(ngModel)]="question" (keyup)="onKeyUp()">
     <i class="inverted circular search link icon"></i>
   </div>
   <br/>

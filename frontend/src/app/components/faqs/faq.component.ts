@@ -52,10 +52,22 @@ export class FaqComponent implements OnInit {
   private accordion: DisplayFaq[];
   private filters: Array<string>;
   private faqFromUrl: string;
-  question: string = "5456465";
+  question: string = "";
 
   search(searchString?: string) {
-    console.log('search called');
+    searchString = searchString ? searchString : this.question;
+    if (searchString) {
+      var split = searchString.split(' ').map(entry => entry.trim());
+      this.accordion = this.accordion.filter(faq => {
+        var tagsToSearch = faq.title.tags.map(x => x.toLowerCase()).concat(faq.content.tags.map(x => x.toLowerCase()));
+        console.log(tagsToSearch);
+        console.log(split);
+        return split.some(x => tagsToSearch.includes(x));
+      })
+    }
+    else {
+      this.accordion = this.masterList;
+    }
   }
 
   doFilter(filter: string) {

@@ -12,7 +12,7 @@
 </div>
 <div class="ui accordion">
   <div *ngFor="let panel of accordion; let i = index;">
-    <div [class]="panel.getCssClass('title')" [attr.href]="panel.getHref()" (click)="toggle(panel)">
+    <div [class]="panel.getCssClass('title')" (click)="toggle(panel)">
       <i class="dropdown icon"></i>
       {{panel.title.title}}
       <div class="ui red basic horizontal label titleLabel" *ngFor="let tag of panel.title.tags">{{tag}}</div>
@@ -20,8 +20,11 @@
       <div class="ui red basic horizontal label titleLabel" *ngFor="let tag of panel.title.tags">{{tag}}</div>
     </div>
     <div [class]="panel.getCssClass('content')">
-      <div class="ui segment">
+      <div class="ui segment faqContent">
         <div *ngIf="panel.content.tags">
+          <a class="ui label copyFaqLink" [attr.href]="panel.getHref()" target="_blank" data-tooltip="Get Link" data-inverted="">
+            <i class="share icon" style="margin:0;"></i>
+          </a>
           <div class="ui blue basic horizontal label" *ngFor="let tag of panel.content.tags">{{tag}}</div>
         </div>
         <p>{{panel.content.content}}</p>

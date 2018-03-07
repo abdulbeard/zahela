@@ -12,6 +12,15 @@
     margin-left: 2.5rem;
 }
 
+.faqContent, .title {
+    margin-right: 2.5rem;
+    margin-left: 2.5rem;
+}
+
 .titleLabel {
+    float: right;
+}
+
+.copyFaqLink {
     float: right;
 }

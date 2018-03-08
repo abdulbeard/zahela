@@ -7,6 +7,7 @@ import { DisplayComment } from '../../models/DisplayComment';
 import * as $ from 'jquery';
 import { SlackReactionsService } from '../../services/SlackReactionsService';
 import { DisplayChannel } from '../../models/DisplayChannel';
+import { DisplayMenu } from '../../models/DisplayMenu';
 
 @Component({
   selector: 'app-account',
@@ -23,36 +24,16 @@ export class AccountComponent implements AfterViewInit {
     private slackMessageParsingService: SlackMessageParsingService) {
   }
 
-  channels: DisplayChannel[] = [
-    new DisplayChannel("#random", "random", true),
-    new DisplayChannel("#general", "general", false)
+  accountMenu: DisplayMenu[] = [
+    new DisplayMenu("RSVP", true),
+    new DisplayMenu("Updates", false),
+    new DisplayMenu("Dietary Restrictions", false),
+    new DisplayMenu("Polo", false),
   ]
 
-  channelSelected(channel: DisplayChannel) {
-    var htmlElement = document.getElementById(channel.id);
-    this.changeActiveItemOnMenu(htmlElement);
-    this.showContent(channel);
-  }
-
-  private showContent(channel: DisplayChannel){
-    var allChannelContents = $('.channelContent').toArray();
-    allChannelContents.forEach(element => {
-      if(element.id === channel.channelContentId()){
-        $(element).show();
-      }
-      else{
-        $(element).hide();
-      }
+  accountMenuSelected(menu: DisplayMenu) {
+    this.accountMenu.map(x => {
+      x.active = x.name === menu.name;
     });
-  }
-
-  private changeActiveItemOnMenu(item: HTMLElement) {
-    $(item)
-      .addClass('active')
-      .closest('.ui.menu')
-      .find('.item')
-      .not($(item))
-      .removeClass('active')
-      ;
   }
 }

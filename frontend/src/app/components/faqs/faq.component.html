@@ -10,6 +10,10 @@
 <div class="ui inverted segment filterTags">Filters: &nbsp;&nbsp;&nbsp;
   <a class="ui large blue horizontal label" *ngFor="let filter of filters" (click)="doFilter(filter)">{{filter}}</a>
 </div>
+<br/>
+<div class="ui centered grid">
+  <h1>Frequently Asked Questions</h1>
+</div>
 <div class="ui accordion">
   <div *ngFor="let panel of accordion; let i = index;">
     <div [class]="panel.getCssClass('title')" (click)="toggle(panel)">
@@ -18,6 +22,7 @@
       <div class="ui red basic horizontal label titleLabel" *ngFor="let tag of panel.title.tags">{{tag}}</div>
       <div class="ui red basic horizontal label titleLabel" *ngFor="let tag of panel.title.tags">{{tag}}</div>
       <div class="ui red basic horizontal label titleLabel" *ngFor="let tag of panel.title.tags">{{tag}}</div>
+      <div class="ui divider"></div>
     </div>
     <div [class]="panel.getCssClass('content')">
       <div class="ui segment faqContent">

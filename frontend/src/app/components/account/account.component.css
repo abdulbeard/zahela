@@ -1,5 +1,6 @@
-.ui.feed {
+.ui.container {
     padding-left: 1em;
+    padding-right: 1em;
 }
 
 .event {
@@ -7,4 +8,8 @@
     border-radius: 3px;
     background-color: lightgrey !important;
     margin-bottom: .5em !important;
+}
+
+.accountMenu {
+    border-bottom: 0 !important;
 }

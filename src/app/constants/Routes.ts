@@ -9,6 +9,7 @@ export class Routes {
     public static readonly login: string = 'login';
     public static readonly playlist: string = 'playlist';
     public static readonly faq: string = 'faq';
+    public static readonly faqExtended: string = 'faq/:id';
 
     //default routes
     public static readonly empty: string = '';

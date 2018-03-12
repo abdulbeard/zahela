@@ -21,7 +21,7 @@ import { FaqComponent } from './components/faqs/faq.component';
 
 const appRoutes: Routes = [
   { path: AppRoutes.home, component: HomeComponent },
-  { path: AppRoutes.account, component: AccountComponent },
+  { path: AppRoutes.account, component: AccountComponent, canActivate: [AuthService] },
   { path: AppRoutes.messagesExtended, component: MessagesComponent },
   { path: AppRoutes.messages, component: MessagesComponent },
   { path: AppRoutes.friends, component: FriendsComponent, canActivate: [AuthService], },
@@ -29,6 +29,7 @@ const appRoutes: Routes = [
   { path: AppRoutes.hukaChaka, component: HomeComponent, canActivate: [AuthService] },
   { path: AppRoutes.login, component: LoginComponent },
   { path: AppRoutes.playlist, component: PlaylistComponent },
+  { path: AppRoutes.faqExtended, component: FaqComponent},
   { path: AppRoutes.faq, component: FaqComponent},
   { path: AppRoutes.empty, redirectTo: AppRoutes.home, pathMatch: "full" }, //base url, no path
   { path: AppRoutes.wildCard, redirectTo: AppRoutes.home }, //wrong url/404

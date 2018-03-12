@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit, AfterViewChecked } from '@angular/core';
 import { EmojiDefinitions, EmojiService } from '../../services/EmojiService';
 import { SlackMessageParsingService } from '../../services/SlackMessageParsingService';
 import { SlackMessagesService, MessagesResponse } from '../../services/SlackMessagesService';
@@ -8,57 +8,86 @@ import * as $ from 'jquery';
 import { SlackReactionsService } from '../../services/SlackReactionsService';
 import { DisplayChannel } from '../../models/DisplayChannel';
 import { DisplayFaq, FaqTitle, FaqContent } from '../../models/DisplayFaq';
+import { FaqService } from '../../services/FaqService';
+import { ActivatedRoute } from '@angular/router';
+import { Location } from '@angular/common';
+import { Routes } from '../../constants/Routes';
 
 @Component({
   selector: 'app-faq',
   templateUrl: './faq.component.html',
   styleUrls: ['./faq.component.css'],
   providers: [EmojiDefinitions, EmojiService, SlackMessagesService, UserService,
-    SlackMessageParsingService, SlackReactionsService]
+    SlackMessageParsingService, SlackReactionsService, FaqService]
 })
-export class FaqComponent implements AfterViewInit {
-  ngAfterViewInit(): void {
+export class FaqComponent implements OnInit {
+  ngOnInit(): void {
+    if (this.faqFromUrl) {
+      this.accordion.map(faq => {
+        faq.active = faq.id === this.faqFromUrl ? true : false;
+      })
+    }
   }
-  constructor(private emojiDefinitions: EmojiDefinitions, private emojiService: EmojiService,
-    private slackMessagesService: SlackMessagesService, private userService: UserService,
-    private slackMessageParsingService: SlackMessageParsingService) {
+  constructor(private faqService: FaqService, private userService: UserService,
+    private route: ActivatedRoute, private location: Location) {
+    faqService.getFaqs().subscribe(faqs => {
+      this.masterList = faqs;
+      this.accordion = faqs.sort(DisplayFaq.sort).reverse();
+    }, Error => {
+      console.log(Error);
+    })
+    faqService.getFilters().subscribe(filters => {
+      this.filters = filters;
+    }, Error => {
+      console.log(Error);
+    });
+    this.route.params.subscribe(param => {
+      this.faqFromUrl = param["id"];
+    }, (Error) => {
+      console.log(Error);
+    })
   }
 
+  private masterList: DisplayFaq[];
+  private accordion: DisplayFaq[];
+  private filters: Array<string>;
+  private faqFromUrl: string;
+  question: string = "";
 
-  private accordion: DisplayFaq[] = [
-    new DisplayFaq(new FaqTitle("What is a dog?", ["Dogs"]), new FaqContent("A dog is a type of domesticated animal. Known for its loyalty and faithfulness, it can be found as a welcome guest in many households across the world.", ["Pawgs"]), "1"),
-    new DisplayFaq(new FaqTitle("What kinds of dogs are there?", ["Kinds"]), new FaqContent("There are many breeds of dogs. Each breed varies in size and temperament. Owners often select a breed of dog that they find to be compatible with their own lifestyle and desires from a companion.", ["KindContent"]), "2"),
-    new DisplayFaq(new FaqTitle("How do you acquire a dog?", ["Acquisition"]), new FaqContent("Three common ways for a prospective owner to acquire a dog is from pet shops, private owners, or shelters. A pet shop may be the most convenient way to buy a dog. Buying a dog from a private owner allows you to assess the pedigree and upbringing of your dog before choosing to take it home. Lastly, finding your dog from a shelter, helps give a good home to a dog who may not find one so readily.", ["Acquisition", "Dogs"]), "3")
-  ]
-
-  channelSelected(channel: DisplayChannel) {
-    var htmlElement = document.getElementById(channel.id);
-    this.changeActiveItemOnMenu(htmlElement);
-    this.showContent(channel);
+  search(searchString?: string) {
+    searchString = searchString ? searchString : this.question;
+    if (searchString) {
+      var split = searchString.split(' ').map(entry => entry.trim());
+      this.accordion = this.accordion.filter(faq => {
+        var tagsToSearch = faq.title.tags.map(x => x.toLowerCase()).concat(faq.content.tags.map(x => x.toLowerCase()));
+        console.log(tagsToSearch);
+        console.log(split);
+        return split.some(x => tagsToSearch.includes(x));
+      })
+    }
+    else {
+      this.accordion = this.masterList;
+    }
   }
 
-  private showContent(channel: DisplayChannel) {
-    var allChannelContents = $('.channelContent').toArray();
-    allChannelContents.forEach(element => {
-      if (element.id === channel.channelContentId()) {
-        $(element).show();
-      }
-      else {
-        $(element).hide();
-      }
+  doFilter(filter: string) {
+    this.accordion = this.masterList.filter(faq => {
+      return (faq.title.tags.includes(filter) || faq.content.tags.includes(filter))
     });
   }
 
+  removeFilter() {
+
+  }
 
   private toggle(panel: DisplayFaq) {
+    this.location.replaceState(`/${Routes.faq}/${panel.id}`);
     this.accordion.map((elem, index) => {
       if (elem !== panel) {
-        console.log('elem not panel');
         elem.active = false;
       }
       else {
         if (elem.active) {
-          console.log('elem is panel');
           elem.active = false;
         }
         else {
@@ -68,54 +97,21 @@ export class FaqComponent implements AfterViewInit {
     })
   }
 
-  // private toggle(index: number) {
-  //   $('.accordionItem').map((x, elem) => {
-  //     if ($(elem).attr('id') === 'title-' + index) {
-  //       $(elem).addClass('active');
-  //     }
-
-  //     if ($(elem).attr('id') === 'content-' + index) {
-  //       $(elem).addClass('active');
-  //     }
-  //     else {
-  //       $(elem).removeClass('active');
-  //     }
-  //   })
-  // }
-
-  // private toggle(index: number) {
-  //   $('.accordionItem').map((x, elem) => {
-  //     if ($(elem).attr('id') === 'title-' + index) {
-  //       if ($(elem).hasClass('active')) {
-  //         $(elem).removeClass('active');
-  //       }
-  //       else {
-  //         $(elem).addClass('active');
-  //       }
-  //     }
-  //     if ($(elem).attr('id') === 'content-' + index) {
-  //       $(elem).addClass('active');
-  //       if ($(elem).hasClass('active')) {
-  //         $(elem).removeClass('active');
-  //       }
-  //       else {
-  //         $(elem).addClass('active');
-  //       }
-  //       $(elem).slideToggle("fast");
-  //     }
-  //     else {
-  //       $(elem).removeClass('active');
-  //     }
-  //   })
-  // }
-
-  private changeActiveItemOnMenu(item: HTMLElement) {
-    $(item)
-      .addClass('active')
-      .closest('.ui.menu')
-      .find('.item')
-      .not($(item))
-      .removeClass('active')
-      ;
+  onKeyUp() {
+    var that = this;
+    this.delay(function () {
+      var value = (<HTMLInputElement>document.getElementById("faq_question")).value;
+      console.log(value);
+      that.search(value);
+      //alert('Time elapsed!' + value);
+    }, 300);
   }
+
+  delay = (function () {
+    var timer = 0;
+    return function (callback, ms) {
+      clearTimeout(timer);
+      timer = setTimeout(callback, ms);
+    };
+  })();
 }

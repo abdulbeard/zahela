@@ -49,8 +49,8 @@ export class FaqComponent implements OnInit {
   }
 
   private masterList: DisplayFaq[];
-  private accordion: DisplayFaq[];
-  private filters: Array<string>;
+  accordion: DisplayFaq[];
+  filters: Array<string>;
   private faqFromUrl: string;
   question: string = "";
 

@@ -17,11 +17,12 @@ export class AppComponent implements AfterViewChecked {
     this.refreshNavigationLinks();
   }
 
-  constructor(private authService: AuthService, private router: Router) {
-    authService.logEvent.subscribe(logEvent => {
+  constructor(authService: AuthService, private router: Router) {
+    this.authService.logEvent.subscribe(logEvent => {
       this.refreshNavigationLinks();
     });
   }
+  authService: AuthService;
   title = 'app';
 
   routeForLogin() {

@@ -1,0 +1,21 @@
+.ui.large.secondary.pointing.menu::-webkit-scrollbar-thumb {
+    background: #888; 
+    border-radius: 0;
+}
+
+.ui.large.secondary.pointing.menu {
+    overflow-x: scroll;
+    border-bottom: 0 !important;
+}
+
+.ui.large.secondary.pointing.menu::-webkit-scrollbar {
+    height: 0;
+    z-index: inherit;
+    /* margin-top:15px !important; */
+}
+
+.mainMenuItem {
+    /* padding-right: 0 !important; */
+    border-bottom-width: .3em !important;
+    padding: .6em .8em !important;
+}

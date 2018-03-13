@@ -12,4 +12,14 @@
 
 .accountMenu {
     border-bottom: 0 !important;
+    overflow-x: scroll;
+}
+
+.accountMenu::-webkit-scrollbar-thumb {
+    background: #888; 
+    border-radius: 0;
+}
+
+.accountMenu::-webkit-scrollbar {
+    height: 0;
 }

@@ -17,7 +17,14 @@ import { DisplayGuest } from "../models/DisplayGuest";
 export class AuthService implements CanActivate, CanLoad {
     loggedIn: boolean = false;
     currentUser: CurrentUser;
-    constructor(private router: Router) { }
+    constructor(private router: Router) {
+        var userCookie = CookieUtils.getCookie("user");
+        if (userCookie.indexOf("SuperUser") >= 0) {
+            this.currentUser = new CurrentUser(new UserPermission(UserRole.Admin, [], []), DisplayGuest.default(), true);
+            this.logEventSubject.next(true);
+            this.loggedIn = true;
+        }
+    }
 
     canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
         if (!this.isAllowedAccess(state.url)) {
@@ -64,7 +71,7 @@ export class AuthService implements CanActivate, CanLoad {
         }
     }
 
-    private logEventSubject: Subject<boolean> =  new Subject<boolean>();
+    private logEventSubject: Subject<boolean> = new Subject<boolean>();
     public logEvent: Observable<boolean> = this.logEventSubject.asObservable();
 
     public isLoggedIn(): boolean {

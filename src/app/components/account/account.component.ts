@@ -29,6 +29,8 @@ export class AccountComponent implements AfterViewInit {
     new DisplayMenu("Updates", false),
     new DisplayMenu("Dietary Restrictions", false),
     new DisplayMenu("Polo", false),
+    new DisplayMenu("Solo", false),
+    new DisplayMenu("Yolo", false),
   ]
 
   accountMenuSelected(menu: DisplayMenu) {

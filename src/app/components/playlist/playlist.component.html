@@ -22,7 +22,7 @@
     <div *ngFor="let video of videos; let i = index;" class="item">
       <br/>
       <h3>#{{i}}</h3>
-      <iframe width="560" height="315" [src]="video.url | sanitizeUrl" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+      <iframe width="560" height="315" scrolling="yes"[src]="video.url | sanitizeUrl" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
       <br/>
       <br/>
       <div class="ui green segment">

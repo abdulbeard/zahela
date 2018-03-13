@@ -18,6 +18,7 @@ export class AppComponent implements AfterViewChecked {
   }
 
   constructor(authService: AuthService, private router: Router) {
+    this.authService = authService;
     this.authService.logEvent.subscribe(logEvent => {
       this.refreshNavigationLinks();
     });

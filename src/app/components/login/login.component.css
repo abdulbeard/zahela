@@ -1,12 +1,23 @@
 .ui.form {
-    width: 50em; 
+    width: 63vw;
+    padding-left: 0;
+    padding-right: 0;
 }
 
 .divider {
-    width: 50em;
-    padding-right: 2rem; 
+    width: 63vw;
+    /* padding-right: 2rem;  */
 }
 
 .close.icon {
     padding-left: 3px
+}
+
+.ui.segment {
+    width: 63vw;
+    background: transparent;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    margin-top: 1vw;
+    font-size: 16px;
 }

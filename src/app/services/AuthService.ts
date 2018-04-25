@@ -92,6 +92,10 @@ export class AuthService implements CanActivate, CanLoad {
         return false;
     }
 
+    public loginWithSlack(code: string) {
+        console.log(`login with slack code: ${code}`);
+    }
+
     public logout() {
         CookieUtils.deleteCookie("user");
         this.loggedIn = false;

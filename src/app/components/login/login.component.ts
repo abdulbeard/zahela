@@ -32,15 +32,25 @@ export class LoginComponent implements AfterViewInit, AfterViewChecked {
   }
   constructor(private router: Router, route: ActivatedRoute, private authService: AuthService) {
     this.returnUrl = route.snapshot.queryParams['returnUrl'] || '/';
+    this.comingFromSlack = route.snapshot.queryParams['comingFromSlack'];
+    this.slackCode = route.snapshot.queryParams['code'];
+    this.slackState = route.snapshot.queryParams['state'];
+    if (this.slackState) {
+      this.returnUrl = this.slackState;
+    }
+    console.log(this.returnUrl);
+    console.log(this.comingFromSlack);
+    console.log(this.slackCode);
+    console.log(this.slackState);
   }
 
   loginError: string;
   signupErrors: string[];
 
   returnUrl: string;
-
-  username: string = "";
-  password: string = "";
+  comingFromSlack: boolean = false;
+  slackCode: string;
+  slackState: string;
 
   requestConnectionName: string = "";
   requestConnectionEmail: string = "";
@@ -48,13 +58,20 @@ export class LoginComponent implements AfterViewInit, AfterViewChecked {
 
   login() {
     this.dismissLoginError();
-    if (this.authService.login(this.username, this.password)) {
+    if (this.authService.loginWithSlack(this.slackCode)) {
       console.log(this.returnUrl);
       this.router.navigateByUrl(this.returnUrl);
     }
     else {
       this.loginError = "You done wrong";
     }
+    // if (this.authService.login(this.username, this.password)) {
+    //   console.log(this.returnUrl);
+    //   this.router.navigateByUrl(this.returnUrl);
+    // }
+    // else {
+    //   this.loginError = "You done wrong";
+    // }
   }
 
   requestConnection() {
@@ -68,5 +85,12 @@ export class LoginComponent implements AfterViewInit, AfterViewChecked {
 
   dismissSignupErrors() {
     this.signupErrors = null;
+  }
+
+  getSlackButtonHref(){
+    let slackBaseUrl = "https://slack.com/oauth/authorize?scope=identity.basic,identity.email";
+    let slackState = this.returnUrl;
+    let clientId = "352254812548.353380346342";
+    return `${slackBaseUrl}&state=${slackState}&client_id=${clientId}`;
   }
 }

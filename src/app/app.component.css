@@ -6,6 +6,7 @@
 .ui.large.secondary.pointing.menu {
     overflow-x: scroll;
     border-bottom: 0 !important;
+    background: linear-gradient(to right, lightblue, aliceblue);
 }
 
 .ui.large.secondary.pointing.menu::-webkit-scrollbar {

@@ -8,11 +8,12 @@
   <div class="ui green button">Ask this question</div>
 </div>
 <div class="ui inverted segment filterTags">Filters: &nbsp;&nbsp;&nbsp;
-  <a class="ui large blue horizontal label" *ngFor="let filter of filters" (click)="doFilter(filter)">{{filter}}</a>
+  <a class="ui large blue horizontal label filter" *ngFor="let filter of filters" (click)="doFilter(filter)">{{filter}}</a>
 </div>
 <br/>
 <div class="ui centered grid">
   <h1>Frequently Asked Questions</h1>
+  <div class="ui divider"></div>
 </div>
 <div class="ui accordion">
   <div *ngFor="let panel of accordion; let i = index;">
@@ -34,6 +35,6 @@
         </div>
         <p>{{panel.content.content}}</p>
       </div>
-    </div>
+    </div>  
   </div>
 </div>

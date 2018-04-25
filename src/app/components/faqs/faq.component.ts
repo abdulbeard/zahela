@@ -57,13 +57,14 @@ export class FaqComponent implements OnInit {
   search(searchString?: string) {
     searchString = searchString ? searchString : this.question;
     if (searchString) {
-      var split = searchString.split(' ').map(entry => entry.trim());
+      var split = searchString.split(' ').map(entry => entry.trim().toLowerCase());
       this.accordion = this.accordion.filter(faq => {
         var tagsToSearch = faq.title.tags.map(x => x.toLowerCase()).concat(faq.content.tags.map(x => x.toLowerCase()));
         console.log(tagsToSearch);
         console.log(split);
-        return split.some(x => tagsToSearch.includes(x));
+        return split.some(x => tagsToSearch.includes(x) || tagsToSearch.some(y => y.startsWith(x)));
       })
+      if(this.accordion.length == 0) this.accordion = this.masterList;
     }
     else {
       this.accordion = this.masterList;
@@ -71,9 +72,10 @@ export class FaqComponent implements OnInit {
   }
 
   doFilter(filter: string) {
-    this.accordion = this.masterList.filter(faq => {
-      return (faq.title.tags.includes(filter) || faq.content.tags.includes(filter))
-    });
+    // this.accordion = this.masterList.filter(faq => {
+    //   return (faq.title.tags.includes(filter) || faq.content.tags.includes(filter))
+    // });
+    this.search(filter);
   }
 
   removeFilter() {

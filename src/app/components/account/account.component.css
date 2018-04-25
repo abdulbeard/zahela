@@ -23,3 +23,7 @@
 .accountMenu::-webkit-scrollbar {
     height: 0;
 }
+
+.item {
+    margin: 0 !important;
+}

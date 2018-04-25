@@ -7,7 +7,7 @@
 <br/>
 <br/>
 <div>
-  <div class="ui container">
+  <div class="ui container" *ngIf="showUpdates">
     <div class="ui feed">
       <div class="event">
         <div class="label">
@@ -242,5 +242,20 @@
         </div>
       </div>
     </div>
+  </div>
+  <div *ngIf="showRsvp">
+    <h1>THIS IS RSVP</h1>
+  </div>
+  <div *ngIf="showDietaryRestrictions">
+    <h1>THIS IS Dietary Restrictions</h1>
+  </div>
+  <div *ngIf="showPolo">
+    <h1>THIS IS POLO</h1>
+  </div>
+  <div *ngIf="showYolo">
+    <h1>THIS IS YOLO</h1>
+  </div>
+  <div *ngIf="showSolo">
+    <h1>THIS IS SOLO</h1>
   </div>
 </div>

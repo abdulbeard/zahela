@@ -18,6 +18,7 @@ import { AccountComponent } from './components/account/account.component';
 import { FormsModule } from '@angular/forms';
 import { Routes as AppRoutes }  from './constants/Routes';
 import { FaqComponent } from './components/faqs/faq.component';
+import { SlackAuthService } from './services/SlackAuthService';
 
 const appRoutes: Routes = [
   { path: AppRoutes.home, component: HomeComponent },
@@ -47,7 +48,7 @@ const appRoutes: Routes = [
     )
   ],
   exports: [RouterModule],
-  providers: [AuthService],
+  providers: [AuthService, SlackAuthService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -12,12 +12,13 @@ import { CurrentUser } from "../models/CurrentUser";
 import { CookieUtils } from "../utils/CookieUtils";
 import { UserPermission, UserRole } from "../constants/UserPermissions";
 import { DisplayGuest } from "../models/DisplayGuest";
+import { SlackAuthService, SlackOAuthAccessResponse } from "./SlackAuthService";
 
 @Injectable()
 export class AuthService implements CanActivate, CanLoad {
     loggedIn: boolean = false;
     currentUser: CurrentUser;
-    constructor(private router: Router) {
+    constructor(private router: Router, private slackAuthService: SlackAuthService) {
         var userCookie = CookieUtils.getCookie("user");
         if (userCookie.indexOf("SuperUser") >= 0) {
             this.currentUser = new CurrentUser(new UserPermission(UserRole.Admin, [], []), DisplayGuest.default(), true);
@@ -81,6 +82,13 @@ export class AuthService implements CanActivate, CanLoad {
     public login(username: string, password: string): boolean {
         console.log(`${username}:${password}`);
         if (username === "AbdulTheBauss" && password === "YodaSaysIs") {
+            return this.loginEvent(true);
+        }
+        return this.loginEvent(false);
+    }
+
+    public loginEvent(successful: boolean) {
+        if (successful) {
             console.log("setting cookiee");
             CookieUtils.setCookie("user", "SuperUser", 365, "");
             this.currentUser = new CurrentUser(new UserPermission(UserRole.Admin, [], []), DisplayGuest.default(), true);
@@ -88,12 +96,15 @@ export class AuthService implements CanActivate, CanLoad {
             this.loggedIn = true;
             return true;
         }
-        this.logEventSubject.next(false);
-        return false;
+        else {
+            this.logEventSubject.next(false);
+            return false;
+        }
     }
 
-    public loginWithSlack(code: string) {
+    public loginWithSlack(code: string) : Observable<SlackOAuthAccessResponse> {
         console.log(`login with slack code: ${code}`);
+        return this.slackAuthService.getUserToken(code);
     }
 
     public logout() {

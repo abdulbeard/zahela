@@ -42,6 +42,9 @@ export class LoginComponent implements AfterViewInit, AfterViewChecked {
     console.log(this.comingFromSlack);
     console.log(this.slackCode);
     console.log(this.slackState);
+    if (this.comingFromSlack){
+      this.login();
+    }
   }
 
   loginError: string;
@@ -58,13 +61,23 @@ export class LoginComponent implements AfterViewInit, AfterViewChecked {
 
   login() {
     this.dismissLoginError();
-    if (this.authService.loginWithSlack(this.slackCode)) {
+    this.authService.loginWithSlack(this.slackCode).subscribe(response => {
       console.log(this.returnUrl);
+      console.log(response);
+      this.authService.loginEvent(true);
       this.router.navigateByUrl(this.returnUrl);
-    }
-    else {
-      this.loginError = "You done wrong";
-    }
+    }, error => {
+      this.loginError = "You done goofed";
+      this.authService.loginEvent(false);
+    });
+
+    // if (this.authService.loginWithSlack(this.slackCode)) {
+    //   console.log(this.returnUrl);
+    //   this.router.navigateByUrl(this.returnUrl);
+    // }
+    // else {
+    //   this.loginError = "You done goofed";
+    // }
     // if (this.authService.login(this.username, this.password)) {
     //   console.log(this.returnUrl);
     //   this.router.navigateByUrl(this.returnUrl);

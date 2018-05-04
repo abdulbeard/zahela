@@ -20,3 +20,14 @@
     border-bottom-width: .3em !important;
     padding: .6em .8em !important;
 }
+
+.sidebar {
+    width: auto !important;
+}
+
+.sidebar.visible {
+    visibility: visible;
+}
+.sidebar.invisible {
+    visibility: hidden;
+}

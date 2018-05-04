@@ -24,6 +24,7 @@ export class AppComponent implements AfterViewChecked {
     });
   }
   title = 'app';
+  showSideBar = false;
 
   routeForLogin() {
     let navigationExtras: NavigationExtras = {
@@ -66,4 +67,22 @@ export class AppComponent implements AfterViewChecked {
   private prependForwardSlash(route: string): string {
     return `/${route}`;
   }
+
+  get sidebarVisibility() : boolean {
+    return this.sidebarIsVisible;
+  }
+  
+  sidebarIsVisible: boolean = false;
+
+  hideSidebar(){
+    this.sidebarIsVisible = false;
+    return true;
+  }
+
+  showSidebar(){
+    console.log("tryna show sidebar");
+    this.sidebarIsVisible = true;
+    return true;
+  }
+
 }

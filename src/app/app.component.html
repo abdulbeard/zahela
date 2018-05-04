@@ -1,13 +1,13 @@
 <div class="ui large secondary pointing menu">
     <a class="item mainMenuItem" [routerLink]="this.getHomeRoute()" routerLinkActive="active" *ngIf="showHomeLink">
-        <i class="home icon"></i>Home
+        <i class="home icon"></i>
     </a>
     <a class="item mainMenuItem" [routerLink]="this.getAccountRoute()" routerLinkActive="active" *ngIf="showAccountLink">
         <i class="user circle icon"></i>Account
     </a>
-    <a class="item mainMenuItem" [routerLink]="this.getMessagesRoute()" routerLinkActive="active" *ngIf="showMessagesLink">
+    <!-- <a class="item mainMenuItem" [routerLink]="this.getMessagesRoute()" routerLinkActive="active" *ngIf="showMessagesLink">
         <i class="envelope outline icon"></i>Messages
-    </a>
+    </a> -->
     <a class="item mainMenuItem" [routerLink]="this.getFriendsRoute()" routerLinkActive="active" *ngIf="showFriendsLink">
         <i class="users icon"></i>Friends
     </a>
@@ -16,6 +16,9 @@
     </a>
     <a class="item mainMenuItem" [routerLink]="this.getFaqRoute()" routerLinkActive="active" *ngIf="showFaqLink">
         <i class="question icon"></i>FAQs
+    </a>
+    <a class="item mainMenuItem" [routerLink]="this.getRecipeRoute()" routerLinkActive="active" *ngIf="showRecipeLink">
+        <i class="utensils icon"></i>Recipes
     </a>
 
     <!-- <div *ngIf="this.authService.isLoggedIn()" class="right menu">
@@ -49,6 +52,6 @@
         </div>
 </div>
 <br/>
-<div style="background-image: url(assets/blue_denim.jpg);min-height:100vh;">
+<div style="background: url(assets/blue_denim.jpg);min-height:100vh;">
     <router-outlet></router-outlet>
 </div>

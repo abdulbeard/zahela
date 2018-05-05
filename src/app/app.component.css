@@ -9,10 +9,23 @@
     background: linear-gradient(to right, lightblue, aliceblue);
 }
 
+.ui.large.secondary.pointing.menu.mobile {
+    overflow-x: scroll;
+    border-bottom: 0 !important;
+    background: linear-gradient(to right, lightblue, aliceblue);
+    margin-bottom: 0;
+}
+
 .ui.large.secondary.pointing.menu::-webkit-scrollbar {
     height: 0;
     z-index: inherit;
     /* margin-top:15px !important; */
+}
+
+.small.rainbow.divider {
+    height: 2px;
+    background: black;
+    margin-bottom: 1px;
 }
 
 .mainMenuItem {

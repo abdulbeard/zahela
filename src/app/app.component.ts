@@ -22,9 +22,19 @@ export class AppComponent implements AfterViewChecked {
     this.authService.logEvent.subscribe(logEvent => {
       this.refreshNavigationLinks();
     });
+    this.setMobileView(window);
+    window.onresize = () => this.setMobileView(window);
   }
   title = 'app';
   showSideBar = false;
+  screenWidth: number = 1000;
+  isMobileView: boolean = false;
+
+  setMobileView(window: Window) {
+    this.screenWidth = window.innerWidth;
+    this.isMobileView = this.screenWidth < 500;
+    console.log(`sw=${this.screenWidth}&ismobile=${this.isMobileView}`);
+  }
 
   routeForLogin() {
     let navigationExtras: NavigationExtras = {

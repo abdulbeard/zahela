@@ -64,11 +64,6 @@
         </a>
     </div>
     <div *ngIf="!this.authService.isLoggedIn()" class="right menu">
-        <a class="item mainMenuItem" (click)="showSidebar()">
-            <i class="utensils icon"></i>
-        </a>
-    </div>
-    <div *ngIf="!this.authService.isLoggedIn()" class="right menu">
         <a class="item mainMenuItem" (click)="routeForLogin()" (click)="hideSidebar()">
             <i class="key icon"></i>
         </a>

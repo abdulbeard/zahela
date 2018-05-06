@@ -11,7 +11,7 @@ export class RecipeService {
         //var currentUser = this.authService.currentUser;
         return Observable.of(Array.of(new Recipe(
             "Zaheer's Chicken", new RecipeDescription(
-                Array.of("zaheersChicken1.jpg", "ZaheersChicken2.jpg"),
+                Array.of("https://images-gmi-pmc.edge-generalmills.com/8a61d4b7-8967-47f0-b486-71a0e86ca82a.jpg", "https://cdn-image.foodandwine.com/sites/default/files/styles/medium_2x/public/200610-r-xl-wine-baked-chicken-legs-with-marjoram.jpg?itok=8SJ2jlod"),
                 "1hr", "2 regular-sized people", "4 meals", Array.of("Chicken", "Desi", "Awesome")
             ),
             Array.of(

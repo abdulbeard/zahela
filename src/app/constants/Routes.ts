@@ -11,6 +11,7 @@ export class Routes {
     public static readonly faq: string = 'faq';
     public static readonly faqExtended: string = 'faq/:id';
     public static readonly recipe: string = 'recipe';
+    public static readonly recipeDetail: string = 'recipe/:id/detail';
 
     //default routes
     public static readonly empty: string = '';

@@ -1,15 +1,15 @@
 export class Recipe {
-    constructor(name: string, description: RecipeDescription, ingredients: Array<Ingredient>, 
-        equipment: Array<string>, prep: Array<Stage>, cooking: Array<Stage>, 
+    constructor(name: string, description: RecipeDescription, ingredients: Array<Ingredient>,
+        equipment: Array<string>, prep: Array<Stage>, cooking: Array<Stage>,
         source: string, origin: string) {
-            this.Name = name;
-            this.Description = description;
-            this.Ingredients = ingredients;
-            this.EquipmentNeeded = equipment;
-            this.Preparation = prep;
-            this.ActualCooking = cooking;
-            this.Source = source;
-            this.Origin = origin;
+        this.Name = name;
+        this.Description = description;
+        this.Ingredients = ingredients;
+        this.EquipmentNeeded = equipment;
+        this.Preparation = prep;
+        this.ActualCooking = cooking;
+        this.Source = source;
+        this.Origin = origin;
     }
     public Name: string;
     public Description: RecipeDescription;
@@ -22,22 +22,24 @@ export class Recipe {
 }
 
 export class RecipeDescription {
-    constructor(images: Array<string>, prepTime: string, serves: string, portionSize: string, tags: Array<string>){
+    constructor(images: Array<string>, prepTime: string, serves: string, portionSize: string, tags: Array<string>, text: string) {
         this.Images = images;
         this.PreparationTime = prepTime;
         this.ServesHowMany = serves;
         this.PortionSize = portionSize;
         this.Tags = tags;
+        this.Text = text;
     }
     public Images: Array<string>;
     public PreparationTime: string;
     public ServesHowMany: string;
     public PortionSize: string;
     public Tags: Array<string>;
+    public Text: string;
 }
 
 export class Ingredient {
-    constructor(name: string, url: string, amount: number, measure: IngredientMeasure, 
+    constructor(name: string, url: string, amount: number, measure: IngredientMeasure,
         description: string, extraInfo: string) {
         this.Name = name;
         this.Url = url;
@@ -52,6 +54,20 @@ export class Ingredient {
     public Measure: IngredientMeasure;
     public Description: string;
     public ExtraInfo: string;
+    public getTitle(): string {
+        return `${this.Amount} ${IngredientMeasure[this.Measure]}`;
+    }
+    public getAbbreviatedMeasure(): string {
+        switch (this.Measure) {
+            case IngredientMeasure.Count: { return "cnt"; }
+            case IngredientMeasure.Milliliter: { return "ml"; }
+            case IngredientMeasure.Cup: { return "cup"; }
+            case IngredientMeasure.Pinch: { return "pinch"; }
+            case IngredientMeasure.Teaspoon: { return "tsp"; }
+            case IngredientMeasure.Tablespoon: { return "tbs"; }
+            default: { return this.Measure; }
+        }
+    }
 }
 
 export enum IngredientMeasure {

@@ -3,6 +3,10 @@
 }
 
 .recipeDescription
-.ui.inverted.red.segment.text {
-    background-color: cornflowerblue !important;
+.ui.inverted.segment.text {
+    background-color: cornflowerblue;
+}
+
+.ui.container {
+    padding-bottom: 10%;
 }

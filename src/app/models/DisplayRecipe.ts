@@ -1,5 +1,5 @@
 export class Recipe {
-    constructor(name: string, description: RecipeDescription, ingredients: Array<Ingredient>,
+    constructor(id: string, name: string, description: RecipeDescription, ingredients: Array<Ingredient>,
         equipment: Array<string>, prep: Array<Stage>, cooking: Array<Stage>,
         source: string, origin: string) {
         this.Name = name;
@@ -10,6 +10,7 @@ export class Recipe {
         this.ActualCooking = cooking;
         this.Source = source;
         this.Origin = origin;
+        this.Id = id;
     }
     public Name: string;
     public Description: RecipeDescription;
@@ -19,6 +20,7 @@ export class Recipe {
     public ActualCooking: Array<Stage>;
     public Source: string;
     public Origin: string;
+    public Id: string;
 }
 
 export class RecipeDescription {

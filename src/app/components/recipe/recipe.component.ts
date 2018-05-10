@@ -26,4 +26,7 @@ export class RecipeComponent implements AfterViewInit {
       error => console.log(error));
   }
   recipes: Array<Recipe>
+  getRecipeLink(recipe: Recipe): string {
+    return `recipe/${recipe.Id}/detail`;
+  }
 }

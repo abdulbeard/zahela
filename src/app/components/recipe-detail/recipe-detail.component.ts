@@ -35,4 +35,12 @@ export class RecipeDetailComponent implements AfterViewInit {
       console.log(Error);
     })
   }
+
+  getDividerSymbol(numberOfStars: number): string {
+    var result = "*";
+    for(var i = 0; i < numberOfStars; i++){
+      result += "*";
+    }
+    return result;
+  }
 }

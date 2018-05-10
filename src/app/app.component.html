@@ -1,7 +1,28 @@
 <div class="ui large secondary pointing menu mobile" *ngIf="this.isMobileView">
-    <a class="item mainMenuItem" [routerLink]="this.getHomeRoute()" routerLinkActive="active" *ngIf="showHomeLink" (click)="showSidebar()">
+    <a class="item mainMenuItem" routerLinkActive="active" *ngIf="showHomeLink" (click)="showSidebar()">
         <i class="content icon"></i>
     </a>
+    <!-- <div style="width:100px;height:100px;"> -->
+    <!-- <div style="">
+
+        <svg viewBox="0 0 900 500">
+            <symbol id="s-text">
+                <text text-anchor="middle" x="50%" y="50%" dy=".35em">
+                                M & Z
+                            </text>
+                <text text-anchor="middle">
+                    M & Z
+                </text>
+            </symbol>
+
+            <use xlink:href="#s-text" class="text"></use>
+            <use xlink:href="#s-text" class="text"></use>
+            <use xlink:href="#s-text" class="text"></use>
+            <use xlink:href="#s-text" class="text"></use>
+            <use xlink:href="#s-text" class="text"></use>
+
+        </svg>
+    </div> -->
 
     <div *ngIf="this.authService.isLoggedIn()" class="right menu">
         <a class="item mainMenuItem">

@@ -3,20 +3,6 @@
   <div *ngFor="let tag of this.recipe.Description.Tags" class="ui small red horizontal label">{{tag}}</div>
   <br/>
   <br/>
-  <!-- <div class="ui large horizontal divided list recipeMetadata">
-    <div class="item">
-      <div class="content">
-        <div class="header">Contributed By </div>
-        <img class="ui avatar image" src="assets/1484648039_male3.svg" /> {{this.recipe.Source}}
-      </div>
-    </div>
-    <div class="item">
-      <div class="content">
-        <div class="header">Origin </div>
-        {{this.recipe.Origin}}
-      </div>
-    </div>
-  </div> -->
   <div>
     <strong>Contributed By:</strong>
     <a href="#">
@@ -50,12 +36,9 @@
         </div>
       </div>
     </div>
-    <div class="ui red inverted raised segment text">
+    <div class="ui inverted raised segment text">
       <p>{{this.recipe.Description.Text}}</p>
     </div>
-    <!-- <p>PrepTime: {{this.recipe.Description.PreparationTime}}</p>
-    <p>Serves: {{this.recipe.Description.ServesHowMany}}</p>
-    <p>Portion Size: {{this.recipe.Description.PortionSize}}</p> -->
     <div class="ui medium images" *ngIf="this.recipe.Description.Images">
       <a *ngFor="let image of this.recipe.Description.Images" [href]="image" target="__blank">
         <img [src]="image">
@@ -77,76 +60,38 @@
   <div class="recipeIngredients" *ngIf="this.recipe.Ingredients">
     <div class="ui horizontal divider">Ingredients</div>
     <div class="ui bulleted list">
-        <div *ngFor="let ingredient of this.recipe.Ingredients" class="item">
-          <div>{{ingredient.Name}}</div>
-          <div class="list">
-            <a *ngIf="ingredient.Url" class="item" [href]="ingredient.Url" target="__blank">Example</a>
-            <div class="item" [attr.title]="ingredient.getTitle()">{{ingredient.Amount}}&nbsp;{{ingredient.getAbbreviatedMeasure()}}</div>
-            <div class="item">{{ingredient.Description}}</div>
-            <div *ngIf="ingredient.ExtraInfo" class="item">{{ingredient.ExtraInfo}}</div>
-          </div>
+      <div *ngFor="let ingredient of this.recipe.Ingredients" class="item">
+        <div>{{ingredient.Name}}</div>
+        <div class="list">
+          <a *ngIf="ingredient.Url" class="item" [href]="ingredient.Url" target="__blank">Example</a>
+          <div class="item" [attr.title]="ingredient.getTitle()">{{ingredient.Amount}}&nbsp;{{ingredient.getAbbreviatedMeasure()}}</div>
+          <div class="item">{{ingredient.Description}}</div>
+          <div *ngIf="ingredient.ExtraInfo" class="item">{{ingredient.ExtraInfo}}</div>
         </div>
-      </div>
-    <!-- <div class="ui cards">
-        <div class="card">
-          <div class="content">
-            <div class="header">Elliot Fu</div>
-            <div class="meta">Friend</div>
-            <div class="description">
-              Elliot Fu is a film-maker from New York.
-            </div>
-          </div>
-        </div>
-        <div class="card">
-          <div class="content">
-            <div class="header">Veronika Ossi</div>
-            <div class="meta">Friend</div>
-            <div class="description">
-              Veronika Ossi is a set designer living in New York who enjoys kittens, music, and partying.
-            </div>
-          </div>
-        </div>
-        <div class="card">
-          <div class="content">
-            <div class="header">Jenny Hess</div>
-            <div class="meta">Friend</div>
-            <div class="description">
-              Jenny is a student studying Media Management at the New School
-            </div>
-          </div>
-        </div>
-      </div>   -->
-  </div>
-  <!-- <div class="ui internally celled grid">
-    <div class="row">
-      <div class="three wide column">
-        <img>asdlkfslkdf
-      </div>
-      <div class="ten wide column">
-        <p>here's text</p>
-      </div>
-      <div class="three wide column">
-        <img>jjjjjjjjjj
-      </div>
-    </div>
-    <div class="row">
-      <div class="three wide column">
-        <img>kkkkkkkkkkk
-      </div>
-      <div class="ten wide column">
-        <p>oh look more text</p>
-      </div>
-      <div class="three wide column">
-        <img>lllllllllllllllll
       </div>
     </div>
   </div>
-  <p>There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form,
-    by injected humour, or randomised words which don't look even slightly believable. If you are going to use a passage
-    of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in the middle of text. All the Lorem Ipsum
-    generators on the Internet tend to repeat predefined chunks as necessary, making this the first true generator on the
-    Internet. It uses a dictionary of over 200 Latin words, combined with a handful of model sentence structures, to generate
-    Lorem Ipsum which looks reasonable. The generated Lorem Ipsum is therefore always free from repetition, injected humour,
-    or non-characteristic words etc.
-  </p> -->
+  <div *ngIf="this.recipe.Preparation">
+    <div class="ui horizontal divider">Preparation</div>
+    <div class="ui inverted blue segment prep">
+      <div *ngFor="let prepStage of this.recipe.Preparation; let i = index;">
+        <div class="ui horizontal divider">{{getDividerSymbol(i)}}</div>
+        <ul class="ui list">
+          <li *ngFor="let step of prepStage.Steps">{{step.Instructions}}</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="this.recipe.ActualCooking">
+      <div class="ui horizontal divider">Cooking</div>
+      <div class="ui inverted blue segment prep">
+        <div *ngFor="let prepStage of this.recipe.ActualCooking; let i = index;">
+          <div class="ui horizontal divider">{{getDividerSymbol(i)}}</div>
+          <ul class="ui list">
+            <li *ngFor="let step of prepStage.Steps">{{step.Instructions}}</li>
+          </ul>
+        </div>
+      </div>
+    </div>
 </div>

@@ -22,6 +22,8 @@ import { SlackAuthService } from './services/SlackAuthService';
 import { RecipeComponent } from './components/recipe/recipe.component';
 import { RecipeService } from './services/RecipeService';
 import { RecipeDetailComponent } from './components/recipe-detail/recipe-detail.component';
+import { ForumComponent } from './components/forum/forum.component';
+import { ForumService } from './services/ForumService';
 
 const appRoutes: Routes = [
   { path: AppRoutes.home, component: HomeComponent },
@@ -37,6 +39,8 @@ const appRoutes: Routes = [
   { path: AppRoutes.faq, component: FaqComponent},
   { path: AppRoutes.recipe, component: RecipeComponent},
   { path: AppRoutes.recipeDetail, component: RecipeDetailComponent},
+  { path: AppRoutes.forum, component: ForumComponent},
+  { path: AppRoutes.forumDetail, component: ForumComponent},
   { path: AppRoutes.empty, redirectTo: AppRoutes.home, pathMatch: "full" }, //base url, no path
   { path: AppRoutes.wildCard, redirectTo: AppRoutes.home }, //wrong url/404
 ];
@@ -44,7 +48,8 @@ const appRoutes: Routes = [
 @NgModule({
   declarations: [
     AppComponent, HtmlSanitizer, UrlSanitizer, SlackFeedComponent, MessagesComponent, HomeComponent, FriendsComponent, 
-    AdminComponent, PlaylistComponent, LoginComponent, AccountComponent, FaqComponent, RecipeComponent, RecipeDetailComponent
+    AdminComponent, PlaylistComponent, LoginComponent, AccountComponent, FaqComponent, RecipeComponent, RecipeDetailComponent,
+    ForumComponent
   ],
   imports: [
     BrowserModule, HttpModule, FormsModule, RouterModule.forRoot(
@@ -53,7 +58,7 @@ const appRoutes: Routes = [
     )
   ],
   exports: [RouterModule],
-  providers: [AuthService, SlackAuthService, RecipeService],
+  providers: [AuthService, SlackAuthService, RecipeService, ForumService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -1,0 +1,27 @@
+.secondary.vertical.pointing.menu {
+    text-decoration-color: blue;
+    float: left;
+    width: 13vw;
+}
+
+.topic.content {
+    float: right;
+}
+.topic.content .feed {
+    padding-top: 1em;
+    padding-left: 1em;
+    padding-right: 1em;
+    width: 85vw;
+    float: right;
+    background: slategray;
+    height: 75vh;
+    overflow-y: scroll;
+}
+
+.event {
+    border-top: 1px solid darkgray !important;
+    border: 1px solid darkgrey;
+    border-radius: 3px;
+    background-color: rgb(211, 211, 211, 0.4) !important;
+    margin-bottom: .5em !important;
+}

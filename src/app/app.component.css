@@ -45,6 +45,12 @@
     visibility: hidden;
 }
 
+.main.app.container {
+  background-image: url("/assets/blue_denim.jpg");
+  min-height: 100vh;
+  background-repeat: repeat;
+}
+
 
 
 /*this is for the fancy stuff on the sidebar*/

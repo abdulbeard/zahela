@@ -4,6 +4,7 @@ import { RouterModule, ActivatedRoute, NavigationExtras, Router } from '@angular
 import { AuthService } from './services/AuthService';
 import { Routes } from './constants/Routes';
 import { DisplayGuest } from './models/DisplayGuest';
+import { MobileUtils } from './utils/MobileUtils';
 
 @Component({
   selector: 'app-root',
@@ -33,6 +34,7 @@ export class AppComponent implements AfterViewChecked {
   setMobileView(window: Window) {
     this.screenWidth = window.innerWidth;
     this.isMobileView = this.screenWidth < 500;
+    MobileUtils.updateIsMobileView(this.isMobileView);
     console.log(`sw=${this.screenWidth}&ismobile=${this.isMobileView}`);
   }
 
@@ -78,18 +80,18 @@ export class AppComponent implements AfterViewChecked {
     return `/${route}`;
   }
 
-  get sidebarVisibility() : boolean {
+  get sidebarVisibility(): boolean {
     return this.sidebarIsVisible;
   }
-  
+
   sidebarIsVisible: boolean = false;
 
-  hideSidebar(){
+  hideSidebar() {
     this.sidebarIsVisible = false;
     return true;
   }
 
-  showSidebar(){
+  showSidebar() {
     console.log("tryna show sidebar");
     this.sidebarIsVisible = true;
     return true;

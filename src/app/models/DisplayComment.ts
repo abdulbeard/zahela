@@ -1,4 +1,9 @@
 export class BasicDisplayComment {
+    constructor(user: User, text: string, timestamp: Date){
+        this.user = user;
+        this.text = text;
+        this.timestamp = timestamp;
+    }
     public user: User;
     public text: string;
     public textIsHtml: boolean;

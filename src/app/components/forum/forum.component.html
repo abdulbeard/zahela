@@ -6,7 +6,7 @@
     <div class="item">c</div>
     <div class="item">d</div>
   </div> -->
-  <div class="ui blue secondary vertical pointing menu">
+  <div class="ui blue secondary vertical pointing menu topics" [class.invisible]="this.isMobileView">
     <a *ngFor="let topic of this.topics" [id]="topic.Id" class="item" [class.active]="topic.Active" (click)="topicSelected(topic)">
       {{topic.Name}}
     </a>
@@ -15,13 +15,41 @@
     <div *ngFor="let topic of this.topics" class="topicContent" [id]="topic.getTopicContentId()">
       <div *ngIf="topic.Active">
         <h2 class="ui header">
+          <span class="mobile topics" *ngIf="this.isMobileView">
+              <i class="blue small content icon"></i>
+          </span>
+
           <i class="envelope icon"></i>
           <div class="content">
             {{topic.Name}}
             <div class="sub header">{{topic.Description}}</div>
           </div>
         </h2>
-        <div class="ui feed">
+        <div class="ui feed" [class.isMobile]="this.isMobileView">
+          <div *ngFor="let message of topicMessages" class="event">
+            <div class="label">
+              <img [src]="message.user.img">
+            </div>
+            <div class="content">
+              <div class="summary">
+                <a>{{message.user.name}}</a>
+                <div class="date" [title]="message.timestamp">
+                  {{message.timestamp | date:'shortTime'}}
+                </div>
+              </div>
+              <div class="extra text">{{message.text}}</div>
+              <div class="meta">
+                <a class="like">
+                  <i class="like icon"></i> 5 Likes
+                  <i class="thumbs up icon"></i> 5 Likes
+                  <i class="utensils icon"></i> 5 Likes
+                </a>
+              </div>
+            </div>
+          </div>
+
+
+
           <div class="event">
             <div class="label">
               <img src="https://semantic-ui.com/images/avatar/small/elliot.jpg">

@@ -5,6 +5,8 @@ import { ForumTopic } from '../../models/ForumTopic';
 import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 import { Routes } from '../../constants/Routes';
+import { BasicDisplayComment } from '../../models/DisplayComment';
+import { MobileUtils } from '../../utils/MobileUtils';
 
 @Component({
   selector: 'app-forum',
@@ -33,15 +35,22 @@ export class ForumComponent implements AfterViewInit {
     }, (Error) => {
       console.log(Error);
     });
+    this.isMobileView = MobileUtils.getIsMobileView();
+    MobileUtils.IsMobileView.subscribe(x => this.isMobileView = x);
   }
 
   topics: ForumTopic[];
   topicId: string;
+  topicMessages: Array<BasicDisplayComment>;
+  currentTopic: ForumTopic;
+  isMobileView: boolean;
   topicSelected(topic: ForumTopic) {
     if (this.topics) {
       this.topics.forEach(element => {
         if (element.Id == topic.Id) {
           element.Active = true;
+          this.currentTopic = element;
+          this.forumService.getMessagesForTopic().subscribe(x => { this.topicMessages = x; }, error => console.log(error));
           this.location.replaceState(`/${Routes.forum}/${element.Id}`);
           return false;
         }

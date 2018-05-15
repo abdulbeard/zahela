@@ -44,6 +44,15 @@ export class ForumComponent implements AfterViewInit {
   topicMessages: Array<BasicDisplayComment>;
   currentTopic: ForumTopic;
   isMobileView: boolean;
+  showForumTopicsMobileSidebar: boolean;
+
+  mobileSidebarTopicSelected(topic: ForumTopic) {
+    this.topicSelected(topic);
+    this.hideMobileTopics();
+  }
+  showMobileTopics(){this.showForumTopicsMobileSidebar = true; return true;}
+  hideMobileTopics(){this.showForumTopicsMobileSidebar = false; return true;}
+
   topicSelected(topic: ForumTopic) {
     if (this.topics) {
       this.topics.forEach(element => {

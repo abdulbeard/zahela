@@ -20,7 +20,7 @@ export class SlackMessageParsingService {
     parseSlackMessages(channel: string, slackMessages: MessagesResponse): DisplayComment[] {
         var comments: DisplayComment[] = [];
         for (var i = 0; i < slackMessages.messages.length; i++) {
-            var displayComment = new DisplayComment();
+            var displayComment = new DisplayComment(null, "", null);
             var slackMessage = slackMessages.messages[i];
             displayComment.text = this.parse(slackMessage.text);
             displayComment.timestamp = new Date(parseFloat(slackMessage.ts) * 1000.0);

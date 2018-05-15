@@ -1,11 +1,10 @@
-<!-- <div class="ui container"> -->
+<div class="ui sidebar blue inverted vertical menu mobileTopicsSidebar" [class.visible]="this.showForumTopicsMobileSidebar"
+  [class.invisible]="!this.showForumTopicsMobileSidebar" style="top: inherit;">
+  <a *ngFor="let topic of this.topics" class="item" [class.active]="topic.Active" (click)="mobileSidebarTopicSelected(topic)">
+    <i class="file alternate icon"></i>{{topic.Name}}
+  </a>
+</div>
 <div class="">
-  <!-- <div class="ui divided list">
-    <div class="item">a</div>
-    <div class="item">b</div>
-    <div class="item">c</div>
-    <div class="item">d</div>
-  </div> -->
   <div class="ui blue secondary vertical pointing menu topics" [class.invisible]="this.isMobileView">
     <a *ngFor="let topic of this.topics" [id]="topic.Id" class="item" [class.active]="topic.Active" (click)="topicSelected(topic)">
       {{topic.Name}}
@@ -15,8 +14,8 @@
     <div *ngFor="let topic of this.topics" class="topicContent" [id]="topic.getTopicContentId()">
       <div *ngIf="topic.Active">
         <h2 class="ui header">
-          <span class="mobile topics" *ngIf="this.isMobileView">
-              <i class="blue small content icon"></i>
+          <span class="mobile topics" *ngIf="this.isMobileView" (click)="showMobileTopics()">
+            <i class="blue small content icon"></i>
           </span>
 
           <i class="envelope icon"></i>
@@ -25,7 +24,7 @@
             <div class="sub header">{{topic.Description}}</div>
           </div>
         </h2>
-        <div class="ui feed" [class.isMobile]="this.isMobileView">
+        <div class="ui feed" [class.isMobile]="this.isMobileView" (click)="hideMobileTopics()">
           <div *ngFor="let message of topicMessages" class="event">
             <div class="label">
               <img [src]="message.user.img">

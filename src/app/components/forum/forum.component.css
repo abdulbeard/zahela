@@ -15,6 +15,20 @@
     float: none;
 }
 
+.mobileTopicsSidebar {
+    top: inherit;
+    width: auto !important;
+}
+
+.mobileTopicsSidebar.visible {
+    visibility: visible;
+    display: block;
+}
+.mobileTopicsSidebar.invisible {
+    visibility: hidden;
+    display: none;
+}
+
 .ui.header .mobile.topics {
     float: left;
     padding: 3vw;

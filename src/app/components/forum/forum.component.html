@@ -284,8 +284,8 @@
         </div>
         <div class="ui container" style="width:85vw;">
           <div class="ui action input" style="width:100%">
-            <input type="text" placeholder="Compose your message...">
-            <div class="ui button">Reply</div>
+            <input type="text" [(ngModel)]="newComment" placeholder="Compose your message...">
+            <div class="ui button" (click)="submitComment()">Reply</div>
           </div>
         </div>
       </div>

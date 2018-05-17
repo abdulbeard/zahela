@@ -27,3 +27,7 @@
 .item {
     margin: 0 !important;
 }
+
+.container h1 {
+    text-align: center;
+}

@@ -38,12 +38,20 @@ export class AccountComponent implements AfterViewInit {
     new DietaryRestrictionsDisplayGuest("Abdul2", ["badass2"], "also2 badass", "bad2@ass.com", Gender.Male)
   ]
 
-  religiousRestrictions: Array<string> = [
-    "Bahå'i", "Buddhism", "Hinduism", "Judaism", "Islam"
+  religiousRestrictions: Array<any> = [
+    {name: "Bahå'i"},
+    {name: "Buddhism"},
+    {name: "Hinduism"},
+    {name: "Judaism"},
+    {name: "Islam"}
   ]
 
-  dietaryRestrictionDefinitions: Array<string> = [
-    "Vegan", "Ovo-Vegetarian", "Lacto-Vegetarian", "Lacto-Ovo Vegetarian", "Pescetarian"
+  dietaryRestrictionDefinitions: Array<any> = [
+    {name: "Vegan", desc: "Plant based diet. No meat, fish, eggs or dairy."},
+    {name: "Ovo-Vegetarian", desc: "Plant based diet. No meat, fish, eggs or dairy."},
+    {name: "Lacto-Vegetarian", desc: "Plant based diet. No meat, fish, eggs or dairy."},
+    {name: "Lacto-Ovo Vegetarian", desc: "Plant based diet. No meat, fish, eggs or dairy."},
+    {name: "Pescetarian", desc: "Plant based diet. No meat, fish, eggs or dairy."}
   ]
 
   accountMenu: DisplayMenu[] = [
@@ -72,11 +80,25 @@ export class AccountComponent implements AfterViewInit {
     this.location.replaceState(`/${Routes.account}/${menu.name}`);
   }
 
+  guestHasDietaryRestriction(tag: string, guest: DietaryRestrictionsDisplayGuest): boolean {
+    return guest.dietaryRestrictions.includes(tag);
+  }
+
   addDietaryRestriction(tag: string, guest: DietaryRestrictionsDisplayGuest) {
-    guest.dietaryRestrictions.push(tag);
+    if (guest.dietaryRestrictions.includes(tag)) {
+      guest.dietaryRestrictions = guest.dietaryRestrictions.filter(x => x !== tag);
+    }
+    else {
+      guest.dietaryRestrictions.push(tag);
+    }
   }
   addReligiousRestriction(tag: string, guest: DietaryRestrictionsDisplayGuest) {
-    guest.dietaryRestrictions.push(tag);
+    if (guest.dietaryRestrictions.includes(tag)) {
+      guest.dietaryRestrictions = guest.dietaryRestrictions.filter(x => x !== tag);
+    }
+    else {
+      guest.dietaryRestrictions.push(tag);
+    }
   }
 
   private toggle(panel: DietaryRestrictionsDisplayGuest) {

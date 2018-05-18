@@ -35,3 +35,13 @@
 .titleLabel, .moreInfoLink {
     float: right;
 }
+
+.ui.inverted.green.mini.button.selected {
+    color: white;
+    background-color: #2ecc40
+}
+
+.ui.inverted.blue.mini.button.selected {
+    color: white;
+    background-color: #54c8ff
+}

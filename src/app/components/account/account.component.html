@@ -1,6 +1,6 @@
 <div class="ui centered grid">
   <div class="ui small secondary pointing menu accountMenu">
-    <a *ngFor="let menu of accountMenu" [class]="menu.getCssClass()" (click)="accountMenuSelected(menu)">{{menu.name}}</a>
+    <a *ngFor="let menu of accountMenu" [class]="menu.getCssClass()" (click)="accountMenuSelected(menu)">{{menu.displayText}}</a>
   </div>
 </div>
 <br/>
@@ -329,6 +329,51 @@
   </div>
   <div class="ui container" *ngIf="showDietaryRestrictions">
     <h1>THIS IS Dietary Restrictions</h1>
+    <div class="ui accordion">
+      <div *ngFor="let guest of linkedGuests; let i = index;">
+        <div [class]="guest.getCssClass('title')" (click)="toggle(guest)">
+          <i class="dropdown icon"></i>
+          <img class="ui avatar image" src="assets/male-2.svg"> {{guest.name}}
+          <div class="ui red basic horizontal label titleLabel" *ngFor="let tag of guest.allergies">{{tag}}</div>
+          <div class="ui red basic horizontal label titleLabel" *ngFor="let tag of guest.dietaryRestrictions">{{tag}}</div>
+          <div class="ui divider"></div>
+        </div>
+        <div [class]="guest.getCssClass('content')">
+          <div class="ui segment faqContent">
+            <p>Please choose any number of categories below, or instead write to us</p>
+            <div>
+              <a class="ui label moreInfoLink" href="http://www.webster.edu/specialevents/planning/food-information.html" target="_blank"
+                data-tooltip="More information on definitions" data-inverted="">
+                <i class="question circle icon" style="margin:0;"></i>
+              </a>
+              <a class="ui inverted green mini button" *ngFor="let tag of religiousRestrictions" (click)="addReligiousRestriction(tag, guest)">{{tag}}</a>
+              <a class="ui inverted blue mini button" *ngFor="let tag of dietaryRestrictionDefinitions" (click)="addDietaryRestriction(tag, guest)">{{tag}}</a>
+              <!-- <a class="ui inverted green basic horizontal label" *ngFor="let tag of religiousRestrictions">{{tag}}</a>
+              <a class="ui inverted blue basic horizontal label" *ngFor="let tag of dietaryRestrictionDefinitions">{{tag}}</a> -->
+            </div>
+            <form class="ui reply form">
+              <div class="field">
+                <textarea></textarea>
+              </div>
+              <div class="ui primary submit labeled icon button">
+                <i class="icon edit"></i> Add Reply
+              </div>
+            </form>
+            <div class="ui horizontal divier"></div>
+            <p>If you have any food allergies, please let us know:</p>
+            <form class="ui reply form">
+              <div class="field">
+                <textarea></textarea>
+              </div>
+              <div class="ui primary submit labeled icon button">
+                <i class="icon edit"></i> Add Reply
+              </div>
+            </form>
+            <div class="ui horizontal divier"></div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
   <div class="ui container" *ngIf="showPolo">
     <h1>THIS IS POLO</h1>

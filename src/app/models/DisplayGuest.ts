@@ -11,10 +11,11 @@ export class DisplayGuest {
     primaryImage: string;
     secondaryImage: string;
     gender: Gender;
+    linkedGuests: Array<string>;
 
     public static default(): DisplayGuest {
-        return new DisplayGuest("Jon Doe", ["Anonymous"], "The bestest Jon of Does", "", "", "", "", 
-        "john@doe.com", ["John-ing", "Doe-ing"], "", "", Gender.Male)
+        return new DisplayGuest("Jon Doe", ["Anonymous"], "The bestest Jon of Does", "", "", "", "",
+            "john@doe.com", ["John-ing", "Doe-ing"], "", "", Gender.Male)
     }
 
     constructor(name: string, categories: string[], description: string, facebookUrl: string, twitterUrl: string,
@@ -67,6 +68,22 @@ export class DisplayGuest {
         if (this.gender === Gender.NonSpecific) {
             return firstCapital ? "They" : "they";
         }
+    }
+}
+
+export class DietaryRestrictionsDisplayGuest extends DisplayGuest {
+    public active: boolean;
+    public allergies: Array<string>;
+    public dietaryRestrictions: Array<string>;
+    public freeformRestrictions: string;
+    public freeformAllergies: string;
+    constructor(name: string, categories: string[], description: string, email: string, gender: Gender) {
+        super(name, categories, description, "", "", "", "", email, [], "", "", gender);
+        this.allergies = [];
+        this.dietaryRestrictions = [];
+    }
+    getCssClass(currentClass: string): string {
+        return `${this.active ? "active" : ""} ${currentClass}`;
     }
 }
 

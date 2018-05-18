@@ -1,36 +1,58 @@
 import { Component, OnInit, AfterViewInit } from '@angular/core';
-import { EmojiDefinitions, EmojiService } from '../../services/EmojiService';
-import { SlackMessageParsingService } from '../../services/SlackMessageParsingService';
-import { SlackMessagesService, MessagesResponse } from '../../services/SlackMessagesService';
 import { UserService } from '../../services/UserService';
 import { DisplayComment } from '../../models/DisplayComment';
 import * as $ from 'jquery';
 import { SlackReactionsService } from '../../services/SlackReactionsService';
 import { DisplayChannel } from '../../models/DisplayChannel';
 import { DisplayMenu } from '../../models/DisplayMenu';
+import { DietaryRestrictionsDisplayGuest, Gender } from '../../models/DisplayGuest';
+import { Location } from '@angular/common';
+import { ActivatedRoute } from '@angular/router';
+import { Routes } from '../../constants/Routes';
 
 @Component({
   selector: 'app-account',
   templateUrl: './account.component.html',
   styleUrls: ['./account.component.css'],
-  providers: [EmojiDefinitions, EmojiService, SlackMessagesService, UserService,
-    SlackMessageParsingService, SlackReactionsService]
+  providers: []
 })
 export class AccountComponent implements AfterViewInit {
   ngAfterViewInit(): void {
   }
-  constructor(private emojiDefinitions: EmojiDefinitions, private emojiService: EmojiService,
-    private slackMessagesService: SlackMessagesService, private userService: UserService,
-    private slackMessageParsingService: SlackMessageParsingService) {
+  constructor(private location: Location, private route: ActivatedRoute) {
+    var tabToSelect = this.accountMenu[0];
+    route.params.subscribe(param => {
+      var selectedTabFromUrl = param["selectedTab"];
+      if (selectedTabFromUrl) {
+        tabToSelect = new DisplayMenu(selectedTabFromUrl, true, "");
+      }
+    }, (Error) => {
+      console.log(Error);
+    });
+    this.accountMenuSelected(tabToSelect);
   }
 
+  linkedGuests: DietaryRestrictionsDisplayGuest[] = [
+    new DietaryRestrictionsDisplayGuest("Abdul", ["badass"], "also badass", "bad@ass.com", Gender.Male),
+    new DietaryRestrictionsDisplayGuest("Abdul1", ["badass1"], "also1 badass", "bad1@ass.com", Gender.Male),
+    new DietaryRestrictionsDisplayGuest("Abdul2", ["badass2"], "also2 badass", "bad2@ass.com", Gender.Male)
+  ]
+
+  religiousRestrictions: Array<string> = [
+    "Bahå'i", "Buddhism", "Hinduism", "Judaism", "Islam"
+  ]
+
+  dietaryRestrictionDefinitions: Array<string> = [
+    "Vegan", "Ovo-Vegetarian", "Lacto-Vegetarian", "Lacto-Ovo Vegetarian", "Pescetarian"
+  ]
+
   accountMenu: DisplayMenu[] = [
-    new DisplayMenu("RSVP", true),
-    new DisplayMenu("Updates", false),
-    new DisplayMenu("Dietary Restrictions", false),
-    new DisplayMenu("Polo", false),
-    new DisplayMenu("Yolo", false),
-    new DisplayMenu("Solo", false)
+    new DisplayMenu("rsvp", false, "RSVP"),
+    new DisplayMenu("updates", false, "Updates"),
+    new DisplayMenu("dietaryRestrictions", false, "Dietary Restrictions"),
+    new DisplayMenu("polo", false, "Polo"),
+    new DisplayMenu("yolo", false, "Yolo"),
+    new DisplayMenu("solo", false, "Solo")
   ]
 
   private showUpdates: boolean = false;
@@ -41,16 +63,40 @@ export class AccountComponent implements AfterViewInit {
   private showYolo: boolean = false;
 
   accountMenuSelected(menu: DisplayMenu) {
-    this.accountMenu.map(x => {      
-        x.active = x.name === menu.name;
-        if(x.active) {
-          this.showMenuItem(x);
-        }
+    this.accountMenu.map(x => {
+      x.active = x.name === menu.name;
+      if (x.active) {
+        this.showMenuItem(x);
+      }
     });
+    this.location.replaceState(`/${Routes.account}/${menu.name}`);
+  }
+
+  addDietaryRestriction(tag: string, guest: DietaryRestrictionsDisplayGuest) {
+    guest.dietaryRestrictions.push(tag);
+  }
+  addReligiousRestriction(tag: string, guest: DietaryRestrictionsDisplayGuest) {
+    guest.dietaryRestrictions.push(tag);
+  }
+
+  private toggle(panel: DietaryRestrictionsDisplayGuest) {
+    this.linkedGuests.map((elem, index) => {
+      if (elem !== panel) {
+        elem.active = false;
+      }
+      else {
+        if (elem.active) {
+          elem.active = false;
+        }
+        else {
+          elem.active = true;
+        }
+      }
+    })
   }
 
   showMenuItem(displayMenu: DisplayMenu) {
-    if (displayMenu.name == "RSVP") {
+    if (displayMenu.displayText == "RSVP") {
       //console.log("rsvp");
       this.showRsvp = true;
       this.showUpdates = false;
@@ -59,7 +105,7 @@ export class AccountComponent implements AfterViewInit {
       this.showYolo = false;
       this.showSolo = false;
     }
-    else if (displayMenu.name == "Updates") {
+    else if (displayMenu.displayText == "Updates") {
       //console.log("updates");
       this.showRsvp = false;
       this.showUpdates = true;
@@ -68,7 +114,7 @@ export class AccountComponent implements AfterViewInit {
       this.showYolo = false;
       this.showSolo = false;
     }
-    else if (displayMenu.name == "Dietary Restrictions") {
+    else if (displayMenu.displayText == "Dietary Restrictions") {
       //console.log("dietary restrictions");
       this.showRsvp = false;
       this.showUpdates = false;
@@ -77,7 +123,7 @@ export class AccountComponent implements AfterViewInit {
       this.showYolo = false;
       this.showSolo = false;
     }
-    else if (displayMenu.name == "Polo") {
+    else if (displayMenu.displayText == "Polo") {
       //console.log("polo");
       this.showRsvp = false;
       this.showUpdates = false;
@@ -86,7 +132,7 @@ export class AccountComponent implements AfterViewInit {
       this.showYolo = false;
       this.showSolo = false;
     }
-    else if (displayMenu.name == "Solo") {
+    else if (displayMenu.displayText == "Solo") {
       //console.log("solo");
       this.showRsvp = false;
       this.showUpdates = false;
@@ -95,7 +141,7 @@ export class AccountComponent implements AfterViewInit {
       this.showYolo = false;
       this.showSolo = true;
     }
-    else if (displayMenu.name == "Yolo") {
+    else if (displayMenu.displayText == "Yolo") {
       //console.log("yolo");
       this.showRsvp = false;
       this.showUpdates = false;

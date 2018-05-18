@@ -28,6 +28,7 @@ import { ForumService } from './services/ForumService';
 const appRoutes: Routes = [
   { path: AppRoutes.home, component: HomeComponent },
   { path: AppRoutes.account, component: AccountComponent, canActivate: [AuthService] },
+  { path: AppRoutes.accountExtended, component: AccountComponent, canActivate: [AuthService] },
   { path: AppRoutes.messagesExtended, component: MessagesComponent },
   { path: AppRoutes.messages, component: MessagesComponent },
   { path: AppRoutes.friends, component: FriendsComponent, canActivate: [AuthService], },

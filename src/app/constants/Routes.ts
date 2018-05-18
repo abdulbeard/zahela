@@ -1,6 +1,7 @@
 export class Routes {
     public static readonly home: string = 'home';
     public static readonly account: string = 'account';
+    public static readonly accountExtended: string = 'account/:selectedTab';
     public static readonly messagesExtended: string = 'messages/:channel';
     public static readonly messages: string = 'messages';
     public static readonly friends: string = 'friends';

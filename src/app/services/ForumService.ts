@@ -28,38 +28,27 @@ export class ForumService {
             Text: comment.text,
             Likes: null
         }), options);
-        response.subscribe(x => console.log(x));
+    }
+
+    getThreadedMessagesForTopic(topicId: string, userId: string): Observable<Array<DisplayComment>> {
+        let array = Array.of(
+            new DisplayComment({ name: "Amy", img: "https://semantic-ui.com/images/avatar/small/elliot.jpg" }, "cash", new Date()),
+            new DisplayComment({ name: "Shaq", img: "https://semantic-ui.com/images/avatar/small/elliot.jpg" }, "me", new Date()),
+            new DisplayComment({ name: "Laurel", img: "https://semantic-ui.com/images/avatar/small/elliot.jpg" }, "ousside", new Date()),
+            new DisplayComment({ name: "Andy", img: "https://semantic-ui.com/images/avatar/small/elliot.jpg" }, "how bout dat?", new Date()),
+        );
+        array[0].threadComments = Array.of(new DisplayComment({ name: "Danielle", img: "https://semantic-ui.com/images/avatar/small/elliot.jpg" }, "huh?", new Date()));
+        return Observable.of(array);
     }
 
     getMessagesForTopic(topicId: string, userId: string): Observable<Array<BasicDisplayComment>> {
-        var responseComments = Array.of(new BasicDisplayComment({ name: "Joe Shmoe", img: "https://semantic-ui.com/images/avatar/small/elliot.jpg" }, "I'm here", new Date()),
-            new BasicDisplayComment({ name: "Joseph Schmozef", img: "https://semantic-ui.com/images/avatar/small/elliot.jpg" }, "Now I'm here", new Date()),
-            new BasicDisplayComment({ name: "Shlo Moe", img: "https://semantic-ui.com/images/avatar/small/elliot.jpg" }, "But now I'm here", new Date()),
-            new BasicDisplayComment({ name: "Yo Lo", img: "https://semantic-ui.com/images/avatar/small/helen.jpg" }, "How about now?", new Date()),
+        var responseComments = Array.of(
             new BasicDisplayComment({ name: "Joe Shmoe", img: "https://semantic-ui.com/images/avatar/small/elliot.jpg" }, "I'm here", new Date()),
             new BasicDisplayComment({ name: "Joseph Schmozef", img: "https://semantic-ui.com/images/avatar/small/elliot.jpg" }, "Now I'm here", new Date()),
             new BasicDisplayComment({ name: "Shlo Moe", img: "https://semantic-ui.com/images/avatar/small/elliot.jpg" }, "But now I'm here", new Date()),
             new BasicDisplayComment({ name: "Yo Lo", img: "https://semantic-ui.com/images/avatar/small/helen.jpg" }, "How about now?", new Date()),
-            new BasicDisplayComment({ name: "Joe Shmoe", img: "https://semantic-ui.com/images/avatar/small/elliot.jpg" }, "I'm here", new Date()),
-            new BasicDisplayComment({ name: "Joseph Schmozef", img: "https://semantic-ui.com/images/avatar/small/elliot.jpg" }, "Now I'm here", new Date()),
-            new BasicDisplayComment({ name: "Shlo Moe", img: "https://semantic-ui.com/images/avatar/small/elliot.jpg" }, "But now I'm here", new Date()),
-            new BasicDisplayComment({ name: "Yo Lo", img: "https://semantic-ui.com/images/avatar/small/helen.jpg" }, "How about now?", new Date()),
-            new BasicDisplayComment({ name: "Joe Shmoe", img: "https://semantic-ui.com/images/avatar/small/elliot.jpg" }, "I'm here", new Date()),
-            new BasicDisplayComment({ name: "Joseph Schmozef", img: "https://semantic-ui.com/images/avatar/small/elliot.jpg" }, "Now I'm here", new Date()),
-            new BasicDisplayComment({ name: "Shlo Moe", img: "https://semantic-ui.com/images/avatar/small/elliot.jpg" }, "But now I'm here", new Date()),
-            new BasicDisplayComment({ name: "Yo Lo", img: "https://semantic-ui.com/images/avatar/small/helen.jpg" }, "How about now?", new Date()),
-            new BasicDisplayComment({ name: "Joe Shmoe", img: "https://semantic-ui.com/images/avatar/small/elliot.jpg" }, "I'm here", new Date()),
-            new BasicDisplayComment({ name: "Joseph Schmozef", img: "https://semantic-ui.com/images/avatar/small/elliot.jpg" }, "Now I'm here", new Date()),
-            new BasicDisplayComment({ name: "Shlo Moe", img: "https://semantic-ui.com/images/avatar/small/elliot.jpg" }, "But now I'm here", new Date()),
-            new BasicDisplayComment({ name: "Yo Lo", img: "https://semantic-ui.com/images/avatar/small/helen.jpg" }, "How about now?", new Date()),
-            new BasicDisplayComment({ name: "Joe Shmoe", img: "https://semantic-ui.com/images/avatar/small/elliot.jpg" }, "I'm here", new Date()),
-            new BasicDisplayComment({ name: "Joseph Schmozef", img: "https://semantic-ui.com/images/avatar/small/elliot.jpg" }, "Now I'm here", new Date()),
-            new BasicDisplayComment({ name: "Shlo Moe", img: "https://semantic-ui.com/images/avatar/small/elliot.jpg" }, "But now I'm here", new Date()),
-            new BasicDisplayComment({ name: "Yo Lo", img: "https://semantic-ui.com/images/avatar/small/helen.jpg" }, "How about now?", new Date()),
-            new BasicDisplayComment({ name: "Joe Shmoe", img: "https://semantic-ui.com/images/avatar/small/elliot.jpg" }, "I'm here", new Date()),
-            new BasicDisplayComment({ name: "Joseph Schmozef", img: "https://semantic-ui.com/images/avatar/small/elliot.jpg" }, "Now I'm here", new Date()),
-            new BasicDisplayComment({ name: "Shlo Moe", img: "https://semantic-ui.com/images/avatar/small/elliot.jpg" }, "But now I'm here", new Date()),
-            new BasicDisplayComment({ name: "Yo Lo", img: "https://semantic-ui.com/images/avatar/small/helen.jpg" }, "How about now?", new Date()));
+            new BasicDisplayComment({ name: "Joe Shmoe", img: "https://semantic-ui.com/images/avatar/small/elliot.jpg" }, "I'm here", new Date()), );
+
 
         let headers = new Headers({
             "Accept": "application/json"

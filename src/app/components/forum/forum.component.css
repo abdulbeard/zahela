@@ -49,6 +49,36 @@
     overflow-y: scroll;
 }
 
+.topic.content .ui.minimal.comments {
+    margin-right: 1vw;
+    padding-top: 1vw;
+    padding-left: 1vw;
+    padding-right: 1vw;
+    width: 85vw;
+    float: right;
+    background: slategray;
+    height: 75vh;
+    overflow-y: scroll;
+}
+
+.ui.minimal.comments .comment {
+    background-color: lightgray;
+    padding: 1vw;
+    border: solid;
+    border-color: darkgray;
+    border-width: 1px;
+}
+.ui.minimal.comments .comment:hover{
+    background-color: aliceblue;
+}
+
+.comment .actions {
+    transition: none !important;
+    visibility: visible;
+    display: block;
+}
+
+
 .topic.content .feed.isMobile {
     width: auto;
 }

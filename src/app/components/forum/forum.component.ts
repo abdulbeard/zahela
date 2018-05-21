@@ -70,7 +70,8 @@ export class ForumComponent implements AfterViewInit {
         if (element.Id == topic.Id) {
           element.Active = true;
           this.currentTopic = element;
-          this.forumService.getMessagesForTopic(element.Id, this.currentUser.name).subscribe(
+          //this.forumService.getMessagesForTopic(element.Id, this.currentUser.name).subscribe(
+          this.forumService.getThreadedMessagesForTopic(element.Id, this.currentUser.name).subscribe(
             x => { this.topicMessages = x; },
             error => console.log(error));
           this.location.replaceState(`/${Routes.forum}/${element.Id}`);

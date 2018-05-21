@@ -24,7 +24,70 @@
             <div class="sub header">{{topic.Description}}</div>
           </div>
         </h2>
-        <div class="ui feed" [class.isMobile]="this.isMobileView" (click)="hideMobileTopics()">
+        <div class="ui minimal comments" [class.isMobile]="this.isMobileView" (click)="hideMobileTopics()">
+          <h3 class="ui dividing header">Comments</h3>
+          <div *ngFor="let message of topicMessages" class="comment">
+            <a class="avatar">
+              <img [attr.src]="message.user.img">
+            </a>
+            <div class="content">
+              <a class="author" [attr.href]="">{{message.user.name}}</a>
+              <div class="metadata">
+                <span class="date" [attr.title]="message.timestamp"> {{message.timestamp | date:'shortTime'}}</span>
+              </div>
+              <div class="text">
+                <p>{{message.text}}</p>
+              </div>
+              <div class="actions">
+                <a title="reply" class="ui mini inverted blue icon button reply">
+                  <i class="reply icon"></i>
+                </a>
+                <a title="like">
+                  <i class="green thumbs up icon"></i>
+                </a>
+                <a title="dislike">
+                  <i class="red thumbs down icon"></i>
+                </a>
+              </div>
+            </div>
+            <div *ngIf="message.threadComments" class="comments">
+              <div *ngFor="let threadedMessage of message.threadComments" class="comment">
+                <a class="avatar">
+                  <img [attr.src]="threadedMessage.user.img">
+                </a>
+                <div class="content">
+                  <a class="author" [attr.href]="">{{threadedMessage.user.name}}</a>
+                  <div class="metadata">
+                    <span class="date" [attr.title]="threadedMessage.timestamp"> {{threadedMessage.timestamp | date:'shortTime'}}</span>
+                  </div>
+                  <div class="text">
+                    <p>{{threadedMessage.text}}</p>
+                  </div>
+                  <div class="actions">
+                    <a title="reply" class="ui mini inverted blue icon button reply">
+                      <i class="reply icon"></i>
+                    </a>
+                    <a title="like">
+                      <i class="green thumbs up icon"></i>
+                    </a>
+                    <a title="dislike">
+                      <i class="red thumbs down icon"></i>
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <form class="ui reply form">
+            <div class="field">
+              <textarea></textarea>
+            </div>
+            <div class="ui blue labeled submit icon button">
+              <i class="icon edit"></i> Add Reply
+            </div>
+          </form>
+        </div>
+        <!-- <div class="ui feed" [class.isMobile]="this.isMobileView" (click)="hideMobileTopics()">
           <div *ngFor="let message of topicMessages" class="event">
             <div class="label">
               <img [src]="message.user.img">
@@ -46,249 +109,15 @@
               </div>
             </div>
           </div>
-
-
-
-          <div class="event">
-            <div class="label">
-              <img src="https://semantic-ui.com/images/avatar/small/elliot.jpg">
-            </div>
-            <div class="content">
-              <div class="summary">
-                <a class="user">
-                  Elliot Fu
-                </a> added you as a friend
-                <div class="date">
-                  1 Hour Ago
-                </div>
-              </div>
-              <div class="meta">
-                <a class="like">
-                  <i class="like icon"></i> 4 Likes
-                </a>
-              </div>
-            </div>
-          </div>
-          <div class="event">
-            <div class="label">
-              <img src="https://semantic-ui.com/images/avatar/small/helen.jpg">
-            </div>
-            <div class="content">
-              <div class="summary">
-                <a>Helen Troy</a> added
-                <a>2 new illustrations</a>
-                <div class="date">
-                  4 days ago
-                </div>
-              </div>
-              <div class="extra images">
-                <a>
-                  <img src="https://semantic-ui.com/images/wireframe/image.png">
-                </a>
-                <a>
-                  <img src="https://semantic-ui.com/images/wireframe/image.png">
-                </a>
-              </div>
-              <div class="meta">
-                <a class="like">
-                  <i class="like icon"></i> 1 Like
-                </a>
-              </div>
-            </div>
-          </div>
-          <div class="event">
-            <div class="label">
-              <img src="https://semantic-ui.com/images/avatar/small/jenny.jpg">
-            </div>
-            <div class="content">
-              <div class="summary">
-                <a class="user">
-                  Jenny Hess
-                </a> added you as a friend
-                <div class="date">
-                  2 Days Ago
-                </div>
-              </div>
-              <div class="meta">
-                <a class="like">
-                  <i class="like icon"></i> 8 Likes
-                </a>
-              </div>
-            </div>
-          </div>
-          <div class="event">
-            <div class="label">
-              <img src="https://semantic-ui.com/images/avatar/small/joe.jpg">
-            </div>
-            <div class="content">
-              <div class="summary">
-                <a>Joe Henderson</a> posted on his page
-                <div class="date">
-                  3 days ago
-                </div>
-              </div>
-              <div class="extra text">
-                Ours is a life of constant reruns. We're always circling back to where we'd we started, then starting all over again. Even
-                if we don't run extra laps that day, we surely will come back for more of the same another day soon.
-              </div>
-              <div class="meta">
-                <a class="like">
-                  <i class="like icon"></i> 5 Likes
-                </a>
-              </div>
-            </div>
-          </div>
-          <div class="event">
-            <div class="label">
-              <img src="https://semantic-ui.com/images/avatar/small/justen.jpg">
-            </div>
-            <div class="content">
-              <div class="summary">
-                <a>Justen Kitsune</a> added
-                <a>2 new photos</a> of you
-                <div class="date">
-                  4 days ago
-                </div>
-              </div>
-              <div class="extra images">
-                <a>
-                  <img src="https://semantic-ui.com/images/wireframe/image.png">
-                </a>
-                <a>
-                  <img src="https://semantic-ui.com/images/wireframe/image.png">
-                </a>
-              </div>
-              <div class="meta">
-                <a class="like">
-                  <i class="like icon"></i> 41 Likes
-                </a>
-              </div>
-            </div>
-          </div>
-          <div class="event">
-            <div class="label">
-              <img src="https://semantic-ui.com/images/avatar/small/elliot.jpg">
-            </div>
-            <div class="content">
-              <div class="summary">
-                <a class="user">
-                  Elliot Fu
-                </a> added you as a friend
-                <div class="date">
-                  1 Hour Ago
-                </div>
-              </div>
-              <div class="meta">
-                <a class="like">
-                  <i class="like icon"></i> 4 Likes
-                </a>
-              </div>
-            </div>
-          </div>
-          <div class="event">
-            <div class="label">
-              <img src="https://semantic-ui.com/images/avatar/small/helen.jpg">
-            </div>
-            <div class="content">
-              <div class="summary">
-                <a>Helen Troy</a> added
-                <a>2 new illustrations</a>
-                <div class="date">
-                  4 days ago
-                </div>
-              </div>
-              <div class="extra images">
-                <a>
-                  <img src="https://semantic-ui.com/images/wireframe/image.png">
-                </a>
-                <a>
-                  <img src="https://semantic-ui.com/images/wireframe/image.png">
-                </a>
-              </div>
-              <div class="meta">
-                <a class="like">
-                  <i class="like icon"></i> 1 Like
-                </a>
-              </div>
-            </div>
-          </div>
-          <div class="event">
-            <div class="label">
-              <img src="https://semantic-ui.com/images/avatar/small/jenny.jpg">
-            </div>
-            <div class="content">
-              <div class="summary">
-                <a class="user">
-                  Jenny Hess
-                </a> added you as a friend
-                <div class="date">
-                  2 Days Ago
-                </div>
-              </div>
-              <div class="meta">
-                <a class="like">
-                  <i class="like icon"></i> 8 Likes
-                </a>
-              </div>
-            </div>
-          </div>
-          <div class="event">
-            <div class="label">
-              <img src="https://semantic-ui.com/images/avatar/small/joe.jpg">
-            </div>
-            <div class="content">
-              <div class="summary">
-                <a>Joe Henderson</a> posted on his page
-                <div class="date">
-                  3 days ago
-                </div>
-              </div>
-              <div class="extra text">
-                Ours is a life of constant reruns. We're always circling back to where we'd we started, then starting all over again. Even
-                if we don't run extra laps that day, we surely will come back for more of the same another day soon.
-              </div>
-              <div class="meta">
-                <a class="like">
-                  <i class="like icon"></i> 5 Likes
-                </a>
-              </div>
-            </div>
-          </div>
-          <div class="event">
-            <div class="label">
-              <img src="https://semantic-ui.com/images/avatar/small/justen.jpg">
-            </div>
-            <div class="content">
-              <div class="summary">
-                <a>Justen Kitsune</a> added
-                <a>2 new photos</a> of you
-                <div class="date">
-                  4 days ago
-                </div>
-              </div>
-              <div class="extra images">
-                <a>
-                  <img src="https://semantic-ui.com/images/wireframe/image.png">
-                </a>
-                <a>
-                  <img src="https://semantic-ui.com/images/wireframe/image.png">
-                </a>
-              </div>
-              <div class="meta">
-                <a class="like">
-                  <i class="like icon"></i> 41 Likes
-                </a>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="ui container" style="width:85vw;">
-          <div class="ui action input" style="width:100%">
-            <input type="text" [(ngModel)]="newComment" placeholder="Compose your message...">
-            <div class="ui button" (click)="submitComment()">Reply</div>
-          </div>
-        </div>
+          <textarea>lkjlkjlkj</textarea>
+        </div> -->
       </div>
+      <!-- <div class="ui container" style="width:85vw;">
+        <div class="ui action input" style="width:100%">
+          <input type="text" [(ngModel)]="newComment" placeholder="Compose your message...">
+          <div class="ui button" (click)="submitComment()">Reply</div>
+        </div>
+      </div> -->
     </div>
   </div>
 </div>

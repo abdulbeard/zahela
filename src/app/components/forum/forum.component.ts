@@ -5,7 +5,7 @@ import { ForumTopic } from '../../models/ForumTopic';
 import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 import { Routes } from '../../constants/Routes';
-import { BasicDisplayComment, User } from '../../models/DisplayComment';
+import { BasicDisplayComment, User, DisplayComment } from '../../models/DisplayComment';
 import { MobileUtils } from '../../utils/MobileUtils';
 import { AuthService } from '../../services/AuthService';
 import { DisplayGuest } from '../../models/DisplayGuest';
@@ -82,9 +82,18 @@ export class ForumComponent implements AfterViewInit {
     }
   }
 
+  addReplyToParentComment(parentComment: DisplayComment, currentComment: DisplayComment) {
+    console.log(parentComment);
+    console.log(currentComment);
+  }
+
+  addReplyToCurrentComment(currentComment: DisplayComment) {
+    console.log(currentComment);
+  }
+
   submitComment() {
     if (this.newComment) {
-      this.forumService.addComment(new BasicDisplayComment({name: this.currentUser.name, img: ""}, this.newComment, new Date()), this.currentTopic.Id);
+      this.forumService.addComment(new BasicDisplayComment({ name: this.currentUser.name, img: "" }, this.newComment, new Date()), this.currentTopic.Id);
     }
   }
 }

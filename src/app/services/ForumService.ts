@@ -37,7 +37,8 @@ export class ForumService {
             new DisplayComment({ name: "Laurel", img: "https://semantic-ui.com/images/avatar/small/elliot.jpg" }, "ousside", new Date()),
             new DisplayComment({ name: "Andy", img: "https://semantic-ui.com/images/avatar/small/elliot.jpg" }, "how bout dat?", new Date()),
         );
-        array[0].threadComments = Array.of(new DisplayComment({ name: "Danielle", img: "https://semantic-ui.com/images/avatar/small/elliot.jpg" }, "huh?", new Date()));
+        let comment = new DisplayComment({ name: "Danielle", img: "https://semantic-ui.com/images/avatar/small/elliot.jpg" }, "huh?", new Date());
+        array[0].threadComments = Array.of(comment);
         return Observable.of(array);
     }
 

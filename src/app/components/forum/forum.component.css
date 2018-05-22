@@ -34,9 +34,20 @@
     padding: 3vw;
 }
 
-.topic.content {
+/* .topic.content {
     float: right;
+} */
+
+.topic.content {
+    float: left;
+    margin-left: 2vw;
+    width: 83vw;
 }
+
+.topic.content.mobile {
+    width: 96vw;
+}
+
 .topic.content .feed {
     margin-right: 1vw;
     padding-top: 1vw;
@@ -54,10 +65,10 @@
     padding-top: 1vw;
     padding-left: 1vw;
     padding-right: 1vw;
-    width: 85vw;
-    float: right;
+    width: 100%;
     background: slategray;
-    height: 75vh;
+    height: 82vh;
+    max-width: none;
     overflow-y: scroll;
 }
 
@@ -76,8 +87,13 @@
     transition: none !important;
     visibility: visible;
     display: block;
+    margin-top: 2px;
+    opacity: unset !important;
 }
 
+.ui.form .field.reply {
+    margin-bottom: 2px;
+}
 
 .topic.content .feed.isMobile {
     width: auto;

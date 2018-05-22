@@ -47,7 +47,8 @@ export class SlackMessageParsingService {
                                 user: this.userService.getUserInfo(message.user),
                                 slackHref: this.getSlackHref(slackMessage.thread_ts, channel),
                                 reactions: this.getDisplayReactions(message.reactions),
-                                textIsHtml: true//textContainsEmoji
+                                textIsHtml: true,//textContainsEmoji,
+                                currentReply: ""
                             });
                         }
                     })

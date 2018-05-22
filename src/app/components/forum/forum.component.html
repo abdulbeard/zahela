@@ -10,22 +10,26 @@
       {{topic.Name}}
     </a>
   </div>
-  <div class="topic content">
+  <div class="topic content" [class.mobile]="this.isMobileView">
     <div *ngFor="let topic of this.topics" class="topicContent" [id]="topic.getTopicContentId()">
       <div *ngIf="topic.Active">
-        <h2 class="ui header">
+        <h2 class="ui center aligned icon header" *ngIf="!this.isMobileView">
+          <div class="content">
+            {{topic.Name}}
+            <div class="sub header">{{topic.Description}}</div>
+          </div>
+        </h2>
+        <h2 class="ui center aligned header" *ngIf="this.isMobileView">
           <span class="mobile topics" *ngIf="this.isMobileView" (click)="showMobileTopics()">
             <i class="blue small content icon"></i>
           </span>
-
-          <i class="envelope icon"></i>
           <div class="content">
             {{topic.Name}}
             <div class="sub header">{{topic.Description}}</div>
           </div>
         </h2>
         <div class="ui minimal comments" [class.isMobile]="this.isMobileView" (click)="hideMobileTopics()">
-          <h3 class="ui dividing header">Comments</h3>
+          <h3 class="ui center aligned dividing header">Comments</h3>
           <div *ngFor="let message of topicMessages" class="comment">
             <a class="avatar">
               <img [attr.src]="message.user.img">
@@ -39,9 +43,6 @@
                 <p>{{message.text}}</p>
               </div>
               <div class="actions">
-                <a title="reply" class="ui mini inverted blue icon button reply">
-                  <i class="reply icon"></i>
-                </a>
                 <a title="like">
                   <i class="green thumbs up icon"></i>
                 </a>
@@ -64,9 +65,6 @@
                     <p>{{threadedMessage.text}}</p>
                   </div>
                   <div class="actions">
-                    <a title="reply" class="ui mini inverted blue icon button reply">
-                      <i class="reply icon"></i>
-                    </a>
                     <a title="like">
                       <i class="green thumbs up icon"></i>
                     </a>
@@ -75,17 +73,27 @@
                     </a>
                   </div>
                 </div>
+                <div class="ui form">
+                  <div class="field reply">
+                    <textarea rows="2" [(ngModel)]="threadedMessage.currentReply" [placeholder]="'Reply to '+threadedMessage.user.name"></textarea>
+                  </div>
+                  <a class="ui mini blue label" (click)="addReplyToParentComment(message, threadedMessage)">
+                    Reply
+                  </a>
+                </div>
               </div>
             </div>
+            <div class="ui form">
+              <div class="field reply">
+                <textarea rows="2" [(ngModel)]="message.currentReply" [placeholder]="'Reply to '+message.user.name"></textarea>
+              </div>
+              <a class="ui mini blue label" (click)="addReplyToCurrentComment(message)">
+                Reply
+              </a>
+            </div>
           </div>
-          <form class="ui reply form">
-            <div class="field">
-              <textarea></textarea>
-            </div>
-            <div class="ui blue labeled submit icon button">
-              <i class="icon edit"></i> Add Reply
-            </div>
-          </form>
+          <h3 class="ui center aligned dividing header">End of Messages</h3>
+          <br/>
         </div>
         <!-- <div class="ui feed" [class.isMobile]="this.isMobileView" (click)="hideMobileTopics()">
           <div *ngFor="let message of topicMessages" class="event">

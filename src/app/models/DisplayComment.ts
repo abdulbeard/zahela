@@ -14,6 +14,7 @@ export class BasicDisplayComment {
 export class DisplayComment extends BasicDisplayComment {
     public threadComments: Array<DisplayComment>;
     public slackHref: string;
+    public currentReply: string = "";
 }
 
 export class User{

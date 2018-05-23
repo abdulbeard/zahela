@@ -23,8 +23,8 @@ export class ForumComponent implements AfterViewInit {
     private authService: AuthService) {
 
     this.currentUser = this.authService.getCurrentDisplayUser();
-    this.currentUser = DisplayGuest.default();
-    this.currentUser.name = "User1";
+    //this.currentUser = DisplayGuest.default();
+    //this.currentUser.name = "User1";
 
     var selectedDefaultTopic = false;
     var selectedTopicFromUrl = false;
@@ -70,8 +70,8 @@ export class ForumComponent implements AfterViewInit {
         if (element.Id == topic.Id) {
           element.Active = true;
           this.currentTopic = element;
-          //this.forumService.getMessagesForTopic(element.Id, this.currentUser.name).subscribe(
-          this.forumService.getThreadedMessagesForTopic(element.Id, this.currentUser.name).subscribe(
+          this.forumService.getMessagesForTopic(element.Id, this.currentUser.name).subscribe(
+          //this.forumService.getThreadedMessagesForTopic(element.Id, this.currentUser.name).subscribe(
             x => { this.topicMessages = x; },
             error => console.log(error));
           this.location.replaceState(`/${Routes.forum}/${element.Id}`);
@@ -83,17 +83,38 @@ export class ForumComponent implements AfterViewInit {
   }
 
   addReplyToParentComment(parentComment: DisplayComment, currentComment: DisplayComment) {
-    console.log(parentComment);
-    console.log(currentComment);
+    if (currentComment && currentComment.currentReply && currentComment.currentReply.length > 0) {
+      if (!currentComment.currentReply.startsWith("@")) {
+        currentComment.currentReply = `@${parentComment.user.name} ${currentComment.currentReply}`;
+      }
+      console.log(parentComment);
+      console.log(currentComment);
+    }
   }
 
   addReplyToCurrentComment(currentComment: DisplayComment) {
-    console.log(currentComment);
+    if (currentComment && currentComment.currentReply && currentComment.currentReply.length > 0) {
+      if (!currentComment.currentReply.startsWith("@")) {
+        currentComment.currentReply = `@${currentComment.user.name} ${currentComment.currentReply}`;
+        this.forumService.addComment(
+          new DisplayComment({ name: this.currentUser.name, img: "" }, currentComment.currentReply, new Date()),
+          this.currentTopic.Id, currentComment.id).subscribe(x=>{
+            currentComment.currentReply = "";
+          }, error => console.log(error));
+      }
+      console.log(currentComment);
+    }
   }
 
   submitComment() {
+    console.log(this.newComment);
     if (this.newComment) {
-      this.forumService.addComment(new BasicDisplayComment({ name: this.currentUser.name, img: "" }, this.newComment, new Date()), this.currentTopic.Id);
+      console.log('tryna submit new comment');
+      this.forumService.addComment(
+        new DisplayComment({ name: this.currentUser.name, img: "" }, this.newComment, new Date()),
+        this.currentTopic.Id, "").subscribe(x=>{
+          this.newComment = "";
+        }, error => console.log(error));
     }
   }
 }

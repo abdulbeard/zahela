@@ -40,8 +40,8 @@ const appRoutes: Routes = [
   { path: AppRoutes.faq, component: FaqComponent},
   { path: AppRoutes.recipe, component: RecipeComponent},
   { path: AppRoutes.recipeDetail, component: RecipeDetailComponent},
-  { path: AppRoutes.forum, component: ForumComponent},
-  { path: AppRoutes.forumDetail, component: ForumComponent},
+  { path: AppRoutes.forum, component: ForumComponent, canActivate: [AuthService]},
+  { path: AppRoutes.forumDetail, component: ForumComponent, canActivate: [AuthService]},
   { path: AppRoutes.empty, redirectTo: AppRoutes.home, pathMatch: "full" }, //base url, no path
   { path: AppRoutes.wildCard, redirectTo: AppRoutes.home }, //wrong url/404
 ];

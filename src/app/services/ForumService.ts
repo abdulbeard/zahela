@@ -17,17 +17,21 @@ export class ForumService {
                 new ForumTopic("cats", "cats_1", "For cats and all things cats", false)));
     }
 
-    addComment(comment: BasicDisplayComment, topicId: string) {
+    addComment(comment: DisplayComment, topicId: string, threadCommentId: string): Observable<Response> {
         let headers = new Headers({
-            "Accept": "application/json"
+            "Accept": "application/json",
+            "Content-Type": "application/json"
         });
         let options = new RequestOptions({ headers: headers });
-        var response = this.http.put(`${environment.backendUrl}/forumcomments`, JSON.stringify({
+        var json = JSON.stringify({
             ForumTopicId: topicId,
             UserId: comment.user.name,
             Text: comment.text,
-            Likes: null
-        }), options);
+            ThreadCommentId: threadCommentId,
+            Likes: null,
+        });
+        console.log(json);
+        return this.http.post(`${environment.backendUrl}/forumcomments`, json, options);
     }
 
     getThreadedMessagesForTopic(topicId: string, userId: string): Observable<Array<DisplayComment>> {
@@ -38,17 +42,20 @@ export class ForumService {
             new DisplayComment({ name: "Andy", img: "https://semantic-ui.com/images/avatar/small/elliot.jpg" }, "how bout dat?", new Date()),
         );
         let comment = new DisplayComment({ name: "Danielle", img: "https://semantic-ui.com/images/avatar/small/elliot.jpg" }, "huh?", new Date());
+        let comment1 = new DisplayComment({ name: "Danielle1", img: "https://semantic-ui.com/images/avatar/small/elliot.jpg" }, "huh1?", new Date());
         array[0].threadComments = Array.of(comment);
+        array[0].threadComments.push(comment1);
         return Observable.of(array);
     }
 
     getMessagesForTopic(topicId: string, userId: string): Observable<Array<BasicDisplayComment>> {
-        var responseComments = Array.of(
-            new BasicDisplayComment({ name: "Joe Shmoe", img: "https://semantic-ui.com/images/avatar/small/elliot.jpg" }, "I'm here", new Date()),
-            new BasicDisplayComment({ name: "Joseph Schmozef", img: "https://semantic-ui.com/images/avatar/small/elliot.jpg" }, "Now I'm here", new Date()),
-            new BasicDisplayComment({ name: "Shlo Moe", img: "https://semantic-ui.com/images/avatar/small/elliot.jpg" }, "But now I'm here", new Date()),
-            new BasicDisplayComment({ name: "Yo Lo", img: "https://semantic-ui.com/images/avatar/small/helen.jpg" }, "How about now?", new Date()),
-            new BasicDisplayComment({ name: "Joe Shmoe", img: "https://semantic-ui.com/images/avatar/small/elliot.jpg" }, "I'm here", new Date()), );
+        var responseComments: BasicDisplayComment[] = [];
+        // Array.of(
+        //     new BasicDisplayComment({ name: "Joe Shmoe", img: "https://semantic-ui.com/images/avatar/small/elliot.jpg" }, "I'm here", new Date()),
+        //     new BasicDisplayComment({ name: "Joseph Schmozef", img: "https://semantic-ui.com/images/avatar/small/elliot.jpg" }, "Now I'm here", new Date()),
+        //     new BasicDisplayComment({ name: "Shlo Moe", img: "https://semantic-ui.com/images/avatar/small/elliot.jpg" }, "But now I'm here", new Date()),
+        //     new BasicDisplayComment({ name: "Yo Lo", img: "https://semantic-ui.com/images/avatar/small/helen.jpg" }, "How about now?", new Date()),
+        //     new BasicDisplayComment({ name: "Joe Shmoe", img: "https://semantic-ui.com/images/avatar/small/elliot.jpg" }, "I'm here", new Date()), );
 
 
         let headers = new Headers({
@@ -58,7 +65,11 @@ export class ForumService {
         let response = this.http.get(`${environment.backendUrl}/forumcomments/${topicId}/${userId}`, options);
         response.subscribe((response: Response) => {
             response.json().map(x => {
-                responseComments.push(new BasicDisplayComment({ name: x.userId, img: "https://semantic-ui.com/images/avatar/small/helen.jpg" }, x.text, new Date()));
+                let comment = new DisplayComment(
+                    { name: x.userId, img: "https://semantic-ui.com/images/avatar/small/helen.jpg" },
+                    x.text, new Date());
+                    comment.id = x.id;
+                responseComments.push(comment);
             })
         }, error => console.log(error));
         return Observable.of(responseComments);

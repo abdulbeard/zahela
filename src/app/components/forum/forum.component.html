@@ -75,7 +75,7 @@
                 </div>
                 <div class="ui form">
                   <div class="field reply">
-                    <textarea rows="2" [(ngModel)]="threadedMessage.currentReply" [placeholder]="'Reply to '+threadedMessage.user.name"></textarea>
+                    <textarea rows="1" [(ngModel)]="threadedMessage.currentReply" [placeholder]="'Reply to '+threadedMessage.user.name"></textarea>
                   </div>
                   <a class="ui mini blue label" (click)="addReplyToParentComment(message, threadedMessage)">
                     Reply
@@ -85,7 +85,7 @@
             </div>
             <div class="ui form">
               <div class="field reply">
-                <textarea rows="2" [(ngModel)]="message.currentReply" [placeholder]="'Reply to '+message.user.name"></textarea>
+                <textarea rows="1" [(ngModel)]="message.currentReply" [placeholder]="'Reply to '+message.user.name"></textarea>
               </div>
               <a class="ui mini blue label" (click)="addReplyToCurrentComment(message)">
                 Reply
@@ -93,6 +93,15 @@
             </div>
           </div>
           <h3 class="ui center aligned dividing header">End of Messages</h3>
+          <br/>
+          <div class="ui form">
+            <div class="field reply">
+              <textarea rows="1" [(ngModel)]="newComment" placeholder="Post new message"></textarea>
+            </div>
+            <a class="ui mini blue label" (click)="submitComment()">
+              Post
+            </a>
+          </div>
           <br/>
         </div>
         <!-- <div class="ui feed" [class.isMobile]="this.isMobileView" (click)="hideMobileTopics()">

@@ -48,7 +48,8 @@ export class SlackMessageParsingService {
                                 slackHref: this.getSlackHref(slackMessage.thread_ts, channel),
                                 reactions: this.getDisplayReactions(message.reactions),
                                 textIsHtml: true,//textContainsEmoji,
-                                currentReply: ""
+                                currentReply: "",
+                                id: ""
                             });
                         }
                     })

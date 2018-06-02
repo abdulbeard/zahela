@@ -50,7 +50,7 @@ export class ForumComponent implements AfterViewInit {
 
   topics: ForumTopic[];
   topicId: string;
-  topicMessages: Array<BasicDisplayComment>;
+  topicMessages: Array<DisplayComment>;
   currentTopic: ForumTopic;
   isMobileView: boolean;
   showForumTopicsMobileSidebar: boolean;
@@ -71,8 +71,8 @@ export class ForumComponent implements AfterViewInit {
           element.Active = true;
           this.currentTopic = element;
           this.forumService.getMessagesForTopic(element.Id, this.currentUser.name).subscribe(
-          //this.forumService.getThreadedMessagesForTopic(element.Id, this.currentUser.name).subscribe(
-            x => { this.topicMessages = x; },
+            //this.forumService.getThreadedMessagesForTopic(element.Id, this.currentUser.name).subscribe(            
+            x => { this.topicMessages = x; console.log(this.topicMessages);},
             error => console.log(error));
           this.location.replaceState(`/${Routes.forum}/${element.Id}`);
           return false;
@@ -87,6 +87,14 @@ export class ForumComponent implements AfterViewInit {
       if (!currentComment.currentReply.startsWith("@")) {
         currentComment.currentReply = `@${parentComment.user.name} ${currentComment.currentReply}`;
       }
+      if (!parentComment.threadComments || parentComment.threadComments.length == 0) {
+        parentComment.threadComments = new Array<DisplayComment>();
+      }
+      this.forumService.addComment(
+        new DisplayComment({ name: this.currentUser.name, img: "" }, currentComment.currentReply, new Date()),
+        this.currentTopic.Id, parentComment.id).subscribe(x => {
+          currentComment.currentReply = "";
+        }, error => console.log(error));
       console.log(parentComment);
       console.log(currentComment);
     }
@@ -98,7 +106,7 @@ export class ForumComponent implements AfterViewInit {
         currentComment.currentReply = `@${currentComment.user.name} ${currentComment.currentReply}`;
         this.forumService.addComment(
           new DisplayComment({ name: this.currentUser.name, img: "" }, currentComment.currentReply, new Date()),
-          this.currentTopic.Id, currentComment.id).subscribe(x=>{
+          this.currentTopic.Id, currentComment.id).subscribe(x => {
             currentComment.currentReply = "";
           }, error => console.log(error));
       }
@@ -112,7 +120,7 @@ export class ForumComponent implements AfterViewInit {
       console.log('tryna submit new comment');
       this.forumService.addComment(
         new DisplayComment({ name: this.currentUser.name, img: "" }, this.newComment, new Date()),
-        this.currentTopic.Id, "").subscribe(x=>{
+        this.currentTopic.Id, "").subscribe(x => {
           this.newComment = "";
         }, error => console.log(error));
     }

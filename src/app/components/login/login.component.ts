@@ -50,6 +50,9 @@ export class LoginComponent implements AfterViewInit, AfterViewChecked {
   loginError: string;
   signupErrors: string[];
 
+  username: string;
+  password: string;
+
   returnUrl: string;
   comingFromSlack: boolean = false;
   slackCode: string;
@@ -61,30 +64,30 @@ export class LoginComponent implements AfterViewInit, AfterViewChecked {
 
   login() {
     this.dismissLoginError();
-    this.authService.loginWithSlack(this.slackCode).subscribe(response => {
-      console.log(this.returnUrl);
-      console.log(response);
-      this.authService.loginEvent(true);
-      this.router.navigateByUrl(this.returnUrl);
-    }, error => {
-      this.loginError = "You done goofed";
-      this.authService.loginEvent(false);
-    });
-
-    // if (this.authService.loginWithSlack(this.slackCode)) {
+    // this.authService.loginWithSlack(this.slackCode).subscribe(response => {
     //   console.log(this.returnUrl);
+    //   console.log(response);
+    //   this.authService.loginEvent(true);
     //   this.router.navigateByUrl(this.returnUrl);
-    // }
-    // else {
+    // }, error => {
     //   this.loginError = "You done goofed";
-    // }
-    // if (this.authService.login(this.username, this.password)) {
-    //   console.log(this.returnUrl);
-    //   this.router.navigateByUrl(this.returnUrl);
-    // }
-    // else {
-    //   this.loginError = "You done wrong";
-    // }
+    //   this.authService.loginEvent(false);
+    // });
+
+    if (this.authService.loginWithSlack(this.slackCode)) {
+      console.log(this.returnUrl);
+      this.router.navigateByUrl(this.returnUrl);
+    }
+    else {
+      this.loginError = "You done goofed";
+    }
+    if (this.authService.login(this.username, this.password)) {
+      console.log(this.returnUrl);
+      this.router.navigateByUrl(this.returnUrl);
+    }
+    else {
+      this.loginError = "You done wrong";
+    }
   }
 
   requestConnection() {

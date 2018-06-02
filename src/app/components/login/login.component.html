@@ -1,8 +1,7 @@
 <div class="ui centered grid">
   <div class="ui segment">
     <p>Logging in to this website is managed by Slack. Slack is also the primary forum and chat medium we'll be using.
-      <br/>
-      Clicking on the "Sign in with Slack" button will redirect you to Slack, and walk you through creating a Slack account.
+      <br/> Clicking on the "Sign in with Slack" button will redirect you to Slack, and walk you through creating a Slack account.
       <br/>
       <br/>
       <b>NOTE: If you're asked to allow "Zahela-WeddingWebsite" to have access to your Slack information, please approve that
@@ -16,6 +15,44 @@
     </a>
   </div>
 </div>
+
+<div class="ui centered grid">
+  <form class="ui form">
+    <br/>
+    <h2>
+      <div class="content">
+        Log In
+      </div>
+    </h2>
+    <div class="ui stacked segment">
+      <div class="field">
+        <div class="ui left icon input">
+          <i class="user icon"></i>
+          <input type="text" name="email" placeholder="Email address" [(ngModel)]="username">
+        </div>
+      </div>
+      <div class="field">
+        <div class="ui left icon input">
+          <i class="lock icon"></i>
+          <input type="password" name="password" placeholder="Password" [(ngModel)]="password" (keyup.enter)="login()">
+        </div>
+      </div>
+      <div class="ui fluid large teal submit button" (click)="login()">
+        <i class="key icon"></i>Login</div>
+    </div>
+    <div class="ui error message"></div>
+  </form>
+</div>
+<div class="ui fluid centered grid" *ngIf="this.loginError" id="loginError">
+  <div class="ui error message">
+    <i class="close icon" (click)="dismissLoginError()"></i>
+    <div class="header">
+      {{this.loginError}}&nbsp;&nbsp;
+    </div>
+  </div>
+</div>
+
+
 <br/>
 <br/>
 <div class="ui centered grid">

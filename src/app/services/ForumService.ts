@@ -48,8 +48,8 @@ export class ForumService {
         return Observable.of(array);
     }
 
-    getMessagesForTopic(topicId: string, userId: string): Observable<Array<BasicDisplayComment>> {
-        var responseComments: BasicDisplayComment[] = [];
+    getMessagesForTopic(topicId: string, userId: string): Observable<Array<DisplayComment>> {
+        var responseComments: DisplayComment[] = [];
         // Array.of(
         //     new BasicDisplayComment({ name: "Joe Shmoe", img: "https://semantic-ui.com/images/avatar/small/elliot.jpg" }, "I'm here", new Date()),
         //     new BasicDisplayComment({ name: "Joseph Schmozef", img: "https://semantic-ui.com/images/avatar/small/elliot.jpg" }, "Now I'm here", new Date()),
@@ -68,10 +68,21 @@ export class ForumService {
                 let comment = new DisplayComment(
                     { name: x.userId, img: "https://semantic-ui.com/images/avatar/small/helen.jpg" },
                     x.text, new Date());
-                    comment.id = x.id;
+                comment.id = x.id;
+                comment.threadComments = new Array<DisplayComment>();
+                if (x.threadComments) {
+                    x.threadComments.map(x => {
+                        var innerComment = new DisplayComment(
+                            { name: x.userId, img: "https://semantic-ui.com/images/avatar/small/helen.jpg" },
+                            x.text, new Date());
+                        innerComment.id = x.id;;
+                        comment.threadComments.push(innerComment);
+                    })
+                }
                 responseComments.push(comment);
             })
         }, error => console.log(error));
+        console.log(responseComments);
         return Observable.of(responseComments);
     }
 }

@@ -4,6 +4,14 @@
     width: 11vw;
 }
 
+.topics a:hover {
+    color: #2185d0 !important;
+}
+
+.createNewTopic {
+    width: 100%;
+}
+
 .topics.visible {
     visibility: visible;
     float: left;
@@ -89,6 +97,10 @@
     display: block;
     margin-top: 2px;
     opacity: unset !important;
+}
+
+.comment .actions button {
+    box-shadow: 0 0 0 1px inset !important;
 }
 
 .ui.form .field.reply {

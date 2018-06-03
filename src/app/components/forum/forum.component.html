@@ -1,11 +1,17 @@
 <div class="ui sidebar blue inverted vertical menu mobileTopicsSidebar" [class.visible]="this.showForumTopicsMobileSidebar"
   [class.invisible]="!this.showForumTopicsMobileSidebar" style="top: inherit;">
+  <a class="item">
+    <i class="plus alternate icon"></i>Create Topic
+  </a>
   <a *ngFor="let topic of this.topics" class="item" [class.active]="topic.Active" (click)="mobileSidebarTopicSelected(topic)">
     <i class="file alternate icon"></i>{{topic.Name}}
   </a>
 </div>
 <div class="">
   <div class="ui blue secondary vertical pointing menu topics" [class.invisible]="this.isMobileView">
+    <button class="item ui centered blue button createNewTopic">
+      Create New Topic
+    </button>
     <a *ngFor="let topic of this.topics" [id]="topic.Id" class="item" [class.active]="topic.Active" (click)="topicSelected(topic)">
       {{topic.Name}}
     </a>
@@ -21,14 +27,14 @@
         </h2>
         <h2 class="ui center aligned header" *ngIf="this.isMobileView">
           <span class="mobile topics" *ngIf="this.isMobileView" (click)="showMobileTopics()">
-            <i class="blue small content icon"></i>
+            <a><i class="blue small content icon"></i></a>
           </span>
-          <div class="content">
+          <div class="content" (click)="hideMobileTopics()">
             {{topic.Name}}
             <div class="sub header">{{topic.Description}}</div>
           </div>
         </h2>
-        <div class="ui minimal comments" [class.isMobile]="this.isMobileView" (click)="hideMobileTopics()">
+        <div class="ui minimal comments" [class.isMobile]="this.isMobileView" (click)="hideMobileTopics()" #scrollMe [scrollTop]="scrollMe.scrollHeight">
           <h3 class="ui center aligned dividing header">Comments</h3>
           <div *ngFor="let message of topicMessages" class="comment">
             <a class="avatar">
@@ -43,12 +49,24 @@
                 <p>{{message.text}}</p>
               </div>
               <div class="actions">
-                <a title="like">
+                <!-- <a title="like">
                   <i class="green thumbs up icon"></i>
                 </a>
                 <a title="dislike">
                   <i class="red thumbs down icon"></i>
+                </a> -->
+                <!-- <a class="ui mini label">
+                  <i class="green thumbs up icon"></i>
                 </a>
+                <a class="ui mini label">
+                  <i class="red thumbs down icon"></i>
+                </a> -->
+                <button class="ui inverted green mini icon button" title="like">
+                  <i class="thumbs up icon"></i>
+                </button>
+                <button class="ui inverted  red mini icon button" title="dislike">
+                  <i class="thumbs down icon"></i>
+                </button>
               </div>
             </div>
             <div *ngIf="message.threadComments" class="comments">
@@ -65,30 +83,42 @@
                     <p>{{threadedMessage.text}}</p>
                   </div>
                   <div class="actions">
-                    <a title="like">
+                    <!-- <a title="like">
                       <i class="green thumbs up icon"></i>
                     </a>
                     <a title="dislike">
                       <i class="red thumbs down icon"></i>
-                    </a>
+                    </a> -->
+                    <button class="ui inverted green mini icon button" title="like">
+                      <i class="thumbs up icon"></i>
+                    </button>
+                    <button class="ui inverted red mini icon button" title="dislike">
+                      <i class="thumbs down icon"></i>
+                    </button>
                   </div>
                 </div>
                 <div class="ui form">
-                  <div class="field reply">
+                  <div class="field reply" *ngIf="threadedMessage.showReplyTextbox">
                     <textarea rows="1" [(ngModel)]="threadedMessage.currentReply" [placeholder]="'Reply to '+threadedMessage.user.name"></textarea>
                   </div>
                   <a class="ui mini blue label" (click)="addReplyToParentComment(message, threadedMessage)">
                     Reply
                   </a>
+                  <a *ngIf="threadedMessage.showReplyTextbox" class="ui mini gray label" (click)="hideReplyBox(threadedMessage)">
+                    Hide
+                  </a>
                 </div>
               </div>
             </div>
             <div class="ui form">
-              <div class="field reply">
+              <div class="field reply" *ngIf="message.showReplyTextbox">
                 <textarea rows="1" [(ngModel)]="message.currentReply" [placeholder]="'Reply to '+message.user.name"></textarea>
               </div>
               <a class="ui mini blue label" (click)="addReplyToCurrentComment(message)">
                 Reply
+              </a>
+              <a *ngIf="message.showReplyTextbox" class="ui mini gray label" (click)="hideReplyBox(message)">
+                Hide
               </a>
             </div>
           </div>
@@ -96,7 +126,7 @@
           <br/>
           <div class="ui form">
             <div class="field reply">
-              <textarea rows="1" [(ngModel)]="newComment" placeholder="Post new message"></textarea>
+              <textarea rows="3" [(ngModel)]="newComment" placeholder="Post new message"></textarea>
             </div>
             <a class="ui mini blue label" (click)="submitComment()">
               Post

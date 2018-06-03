@@ -83,6 +83,10 @@ export class ForumComponent implements AfterViewInit {
   }
 
   addReplyToParentComment(parentComment: DisplayComment, currentComment: DisplayComment) {
+    if(!currentComment.showReplyTextbox){
+      currentComment.showReplyTextbox = true;
+      return;
+    }
     if (currentComment && currentComment.currentReply && currentComment.currentReply.length > 0) {
       if (!currentComment.currentReply.startsWith("@")) {
         currentComment.currentReply = `@${parentComment.user.name} ${currentComment.currentReply}`;
@@ -101,6 +105,10 @@ export class ForumComponent implements AfterViewInit {
   }
 
   addReplyToCurrentComment(currentComment: DisplayComment) {
+    if(!currentComment.showReplyTextbox){
+      currentComment.showReplyTextbox = true;
+      return;
+    }
     if (currentComment && currentComment.currentReply && currentComment.currentReply.length > 0) {
       if (!currentComment.currentReply.startsWith("@")) {
         currentComment.currentReply = `@${currentComment.user.name} ${currentComment.currentReply}`;
@@ -124,5 +132,9 @@ export class ForumComponent implements AfterViewInit {
           this.newComment = "";
         }, error => console.log(error));
     }
+  }
+
+  hideReplyBox(comment: DisplayComment) {
+    comment.showReplyTextbox = false;
   }
 }

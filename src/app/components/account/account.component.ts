@@ -72,6 +72,8 @@ export class AccountComponent implements AfterViewInit {
   private showSolo: boolean = false;
   private showYolo: boolean = false;
 
+  private imageData: string;
+
   accountMenuSelected(menu: DisplayMenu) {
     this.accountMenu.map(x => {
       x.active = x.name === menu.name;
@@ -189,8 +191,13 @@ export class AccountComponent implements AfterViewInit {
           Data: reader.result.split(',')[1]
         };
         console.log(imagePayload);
+        this.imageData = reader.result;
         this.avatarService.uploadImage(imagePayload).subscribe(x => console.log(x), error => console.log(error));
       };
     }
+  }
+
+  get imageDataExists(): boolean {
+    return this.imageData && this.imageData.length > 0;
   }
 }

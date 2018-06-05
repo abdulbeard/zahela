@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ViewChild } from '@angular/core';
 import { UserService } from '../../services/UserService';
 import { DisplayComment } from '../../models/DisplayComment';
 import * as $ from 'jquery';
@@ -10,6 +10,7 @@ import { Location } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { Routes } from '../../constants/Routes';
 import { AvatarService } from '../../services/AvatarService';
+import { ImageCropperComponent, CropperSettings  } from 'ng2-image-cropper'
 
 @Component({
   selector: 'app-account',
@@ -20,6 +21,10 @@ import { AvatarService } from '../../services/AvatarService';
 export class AccountComponent implements AfterViewInit {
   ngAfterViewInit(): void {
   }
+
+  @ViewChild('cropper', undefined)
+  cropper: ImageCropperComponent;
+
   constructor(private location: Location, private route: ActivatedRoute,
     private avatarService: AvatarService) {
     var tabToSelect = this.accountMenu[0];
@@ -32,6 +37,18 @@ export class AccountComponent implements AfterViewInit {
       console.log(Error);
     });
     this.accountMenuSelected(tabToSelect);
+    this.cropperSettings = new CropperSettings();
+    this.cropperSettings.noFileInput = false;
+    //this.cropperSettings.rounded = true;
+    this.cropperSettings.keepAspect = true;
+    // this.cropperSettings.croppedWidth = 100;
+    // this.cropperSettings.croppedHeight = 100;
+    this.cropperSettings.cropperClass = "cropperClass";
+    this.cropperSettings.croppingClass = "croppingClass";
+    this.cropperSettings.preserveSize = true;
+    this.cropperSettings.cropperDrawSettings.strokeColor = 'rgba(255,255,255,1)';
+    this.cropperSettings.cropperDrawSettings.strokeWidth = 1;
+    this.data = {};
   }
 
   linkedGuests: DietaryRestrictionsDisplayGuest[] = [
@@ -73,6 +90,9 @@ export class AccountComponent implements AfterViewInit {
   private showYolo: boolean = false;
 
   private imageData: string;
+  private croppedImage: string;
+  private data: any;
+  public cropperSettings: CropperSettings;
 
   accountMenuSelected(menu: DisplayMenu) {
     this.accountMenu.map(x => {
@@ -182,7 +202,6 @@ export class AccountComponent implements AfterViewInit {
     let reader = new FileReader();
     if (event.target.files && event.target.files.length > 0) {
       let file = event.target.files[0];
-      reader.readAsDataURL(file);
       reader.onload = () => {
         var imagePayload = {
           Name: file.name,
@@ -192,9 +211,25 @@ export class AccountComponent implements AfterViewInit {
         };
         console.log(imagePayload);
         this.imageData = reader.result;
-        this.avatarService.uploadImage(imagePayload).subscribe(x => console.log(x), error => console.log(error));
+        //this.avatarService.uploadImage(imagePayload).subscribe(x => console.log(x), error => console.log(error));
       };
+      var image: any = new Image();
+      var that = this;
+      reader.onloadend = function (loadEvent: any) {
+        image.src = loadEvent.target.result;
+        that.cropper.setImage(image);
+      };
+      reader.readAsDataURL(file);
     }
+  }
+
+  saveImage() {
+    console.log(this.cropper);
+  }
+
+  imageCropped(event: any){
+    console.log(event);
+    this.croppedImage = this.cropper.image.image;
   }
 
   get imageDataExists(): boolean {

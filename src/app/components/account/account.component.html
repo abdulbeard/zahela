@@ -383,8 +383,14 @@
   </div>
   <div class="ui container" *ngIf="showPolo">
     <h1>THIS IS POLO</h1>
-    <input type="file" id="avatar" (change)="onFileChange($event)" #fileInput>
-    <img *ngIf="imageDataExists" [src]="imageData" style="width:100px;height:100px;" alt="Red dot" />
+    <!-- <input type="file" id="avatar" (change)="onFileChange($event)" #fileInput> -->
+    <div *ngIf="true">
+      <img-cropper #cropper [image]="data" [settings]="cropperSettings" (onCrop)="imageCropped($event)"></img-cropper>
+    </div>
+    <img *ngIf="croppedImage" [src]="croppedImage" style="width:200px;height:200px;" alt="nolo" />
+      <img class="ui avatar image" [src]="croppedImage" style="width:100px;height:100px;">
+    <!-- <div class="ui button" (click)="saveImage()" >Save</div> -->
+    <!-- <img *ngIf="imageDataExists" [src]="imageData" style="width:100px;height:100px;" alt="Red dot" /> -->
   </div>
   <div class="ui container" *ngIf="showYolo">
     <h1>THIS IS YOLO</h1>

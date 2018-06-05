@@ -49,7 +49,8 @@ export class SlackMessageParsingService {
                                 reactions: this.getDisplayReactions(message.reactions),
                                 textIsHtml: true,//textContainsEmoji,
                                 currentReply: "",
-                                id: ""
+                                id: "",
+                                showReplyTextbox: false
                             });
                         }
                     })

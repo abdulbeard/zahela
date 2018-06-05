@@ -45,3 +45,11 @@
     color: white;
     background-color: #54c8ff
 }
+
+.cropperClass {
+    background-color: rgba(124, 7, 7, 0.7);
+}
+
+.croppingClass {
+    background-color: rgba(19, 19, 228, 0.7);
+}

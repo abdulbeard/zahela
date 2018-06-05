@@ -383,6 +383,7 @@
   </div>
   <div class="ui container" *ngIf="showPolo">
     <h1>THIS IS POLO</h1>
+    <input type="file" id="avatar" (change)="onFileChange($event)" #fileInput>
   </div>
   <div class="ui container" *ngIf="showYolo">
     <h1>THIS IS YOLO</h1>

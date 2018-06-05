@@ -24,6 +24,7 @@ import { RecipeService } from './services/RecipeService';
 import { RecipeDetailComponent } from './components/recipe-detail/recipe-detail.component';
 import { ForumComponent } from './components/forum/forum.component';
 import { ForumService } from './services/ForumService';
+import { AvatarService } from './services/AvatarService';
 
 const appRoutes: Routes = [
   { path: AppRoutes.home, component: HomeComponent },
@@ -59,7 +60,7 @@ const appRoutes: Routes = [
     )
   ],
   exports: [RouterModule],
-  providers: [AuthService, SlackAuthService, RecipeService, ForumService],
+  providers: [AuthService, SlackAuthService, RecipeService, ForumService, AvatarService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

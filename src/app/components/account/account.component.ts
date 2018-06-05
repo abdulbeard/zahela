@@ -9,6 +9,7 @@ import { DietaryRestrictionsDisplayGuest, Gender } from '../../models/DisplayGue
 import { Location } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { Routes } from '../../constants/Routes';
+import { AvatarService } from '../../services/AvatarService';
 
 @Component({
   selector: 'app-account',
@@ -19,7 +20,8 @@ import { Routes } from '../../constants/Routes';
 export class AccountComponent implements AfterViewInit {
   ngAfterViewInit(): void {
   }
-  constructor(private location: Location, private route: ActivatedRoute) {
+  constructor(private location: Location, private route: ActivatedRoute,
+    private avatarService: AvatarService) {
     var tabToSelect = this.accountMenu[0];
     route.params.subscribe(param => {
       var selectedTabFromUrl = param["selectedTab"];
@@ -39,19 +41,19 @@ export class AccountComponent implements AfterViewInit {
   ]
 
   religiousRestrictions: Array<any> = [
-    {name: "Bahå'i"},
-    {name: "Buddhism"},
-    {name: "Hinduism"},
-    {name: "Judaism"},
-    {name: "Islam"}
+    { name: "Bahå'i" },
+    { name: "Buddhism" },
+    { name: "Hinduism" },
+    { name: "Judaism" },
+    { name: "Islam" }
   ]
 
   dietaryRestrictionDefinitions: Array<any> = [
-    {name: "Vegan", desc: "Plant based diet. No meat, fish, eggs or dairy."},
-    {name: "Ovo-Vegetarian", desc: "Plant based diet. No meat, fish, eggs or dairy."},
-    {name: "Lacto-Vegetarian", desc: "Plant based diet. No meat, fish, eggs or dairy."},
-    {name: "Lacto-Ovo Vegetarian", desc: "Plant based diet. No meat, fish, eggs or dairy."},
-    {name: "Pescetarian", desc: "Plant based diet. No meat, fish, eggs or dairy."}
+    { name: "Vegan", desc: "Plant based diet. No meat, fish, eggs or dairy." },
+    { name: "Ovo-Vegetarian", desc: "Plant based diet. No meat, fish, eggs or dairy." },
+    { name: "Lacto-Vegetarian", desc: "Plant based diet. No meat, fish, eggs or dairy." },
+    { name: "Lacto-Ovo Vegetarian", desc: "Plant based diet. No meat, fish, eggs or dairy." },
+    { name: "Pescetarian", desc: "Plant based diet. No meat, fish, eggs or dairy." }
   ]
 
   accountMenu: DisplayMenu[] = [
@@ -171,6 +173,24 @@ export class AccountComponent implements AfterViewInit {
       this.showPolo = false;
       this.showYolo = true;
       this.showSolo = false;
+    }
+  }
+
+  onFileChange(event) {
+    let reader = new FileReader();
+    if (event.target.files && event.target.files.length > 0) {
+      let file = event.target.files[0];
+      reader.readAsDataURL(file);
+      reader.onload = () => {
+        var imagePayload = {
+          Name: file.name,
+          Size: file.size,
+          Type: file.type,
+          Data: reader.result.split(',')[1]
+        };
+        console.log(imagePayload);
+        this.avatarService.uploadImage(imagePayload).subscribe(x => console.log(x), error => console.log(error));
+      };
     }
   }
 }

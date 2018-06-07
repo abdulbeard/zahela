@@ -36,7 +36,7 @@
         </h2>
         <div class="ui minimal comments" [class.isMobile]="this.isMobileView" (click)="hideMobileTopics()" #scrollMe [scrollTop]="scrollMe.scrollHeight">
           <h3 class="ui center aligned dividing header">Comments</h3>
-          <div *ngFor="let message of topicMessages" class="comment">
+          <div *ngFor="let message of topicMessages" class="comment" [id]="message.id">
             <a class="avatar">
               <img [attr.src]="message.user.img">
             </a>

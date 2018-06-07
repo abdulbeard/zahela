@@ -15,6 +15,7 @@ export class Routes {
     public static readonly recipeDetail: string = 'recipe/:id/detail';
     public static readonly forum: string = 'forum'
     public static readonly forumDetail: string = 'forum/:topic'
+    public static readonly forumDetailComment: string = 'forum/:topic/:comment'
 
     //default routes
     public static readonly empty: string = '';

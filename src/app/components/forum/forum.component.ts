@@ -37,6 +37,8 @@ export class ForumComponent implements AfterViewInit {
     }, error => console.log(error));
     route.params.subscribe(param => {
       this.topicId = param["topic"];
+      this.commentId = param["comment"]
+      console.log(this.commentId);
       if (this.topicId && !selectedDefaultTopic) {
         this.topicSelected(new ForumTopic("", this.topicId, "", true));
         selectedTopicFromUrl = true;
@@ -50,6 +52,7 @@ export class ForumComponent implements AfterViewInit {
 
   topics: ForumTopic[];
   topicId: string;
+  commentId: string;
   topicMessages: Array<DisplayComment>;
   currentTopic: ForumTopic;
   isMobileView: boolean;
@@ -65,14 +68,16 @@ export class ForumComponent implements AfterViewInit {
   hideMobileTopics() { this.showForumTopicsMobileSidebar = false; return true; }
 
   topicSelected(topic: ForumTopic) {
+    var topicId: string;
     if (this.topics) {
       this.topics.forEach(element => {
         if (element.Id == topic.Id) {
+          topicId = element.Id;
           element.Active = true;
           this.currentTopic = element;
           this.forumService.getMessagesForTopic(element.Id, this.currentUser.name).subscribe(
             //this.forumService.getThreadedMessagesForTopic(element.Id, this.currentUser.name).subscribe(            
-            x => { this.topicMessages = x; console.log(this.topicMessages);},
+            x => { this.topicMessages = x; console.log(this.topicMessages); },
             error => console.log(error));
           this.location.replaceState(`/${Routes.forum}/${element.Id}`);
           return false;
@@ -80,10 +85,17 @@ export class ForumComponent implements AfterViewInit {
         else { element.Active = false; }
       });
     }
+    this.showComment(this.commentId, topicId);
+    console.log('before');
+    // if(this.commentId){
+    //   console.log('got in here');
+    //   this.showComment(this.commentId, topicId);
+    //   this.location.replaceState(`/${Routes.forum}/${topicId}/${this.commentId}`);
+    // }
   }
 
   addReplyToParentComment(parentComment: DisplayComment, currentComment: DisplayComment) {
-    if(!currentComment.showReplyTextbox){
+    if (!currentComment.showReplyTextbox) {
       currentComment.showReplyTextbox = true;
       return;
     }
@@ -105,7 +117,7 @@ export class ForumComponent implements AfterViewInit {
   }
 
   addReplyToCurrentComment(currentComment: DisplayComment) {
-    if(!currentComment.showReplyTextbox){
+    if (!currentComment.showReplyTextbox) {
       currentComment.showReplyTextbox = true;
       return;
     }
@@ -136,5 +148,17 @@ export class ForumComponent implements AfterViewInit {
 
   hideReplyBox(comment: DisplayComment) {
     comment.showReplyTextbox = false;
+  }
+
+  showComment(id: string, topicId: string) {
+    if (id) {
+      setTimeout(() => {
+        var elem = document.getElementById(id + '');
+        console.log(elem);
+        elem.scrollIntoView();
+      }, 2000);
+      console.log('showing comment');
+      this.location.replaceState(`/${Routes.forum}/${topicId}/${id}`);
+    }
   }
 }

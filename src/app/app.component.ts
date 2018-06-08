@@ -5,6 +5,8 @@ import { AuthService } from './services/AuthService';
 import { Routes } from './constants/Routes';
 import { DisplayGuest } from './models/DisplayGuest';
 import { MobileUtils } from './utils/MobileUtils';
+import { NotificationsService } from './services/NotificationsService';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-root',
@@ -18,13 +20,19 @@ export class AppComponent implements AfterViewChecked {
     this.refreshNavigationLinks();
   }
 
-  constructor(public authService: AuthService, private router: Router) {
+  constructor(public authService: AuthService, private router: Router,
+              private notificationsService: NotificationsService,
+              private titleService: Title) {
     this.authService = authService;
     this.authService.logEvent.subscribe(logEvent => {
       this.refreshNavigationLinks();
     });
     this.setMobileView(window);
     window.onresize = () => this.setMobileView(window);
+    window.onload = () => this.getNotificationCount()
+    NotificationsService.NotificationCount.subscribe(x => {
+      this.titleService.setTitle(`(${x}) ${this.titleService.getTitle()}`);
+    });
   }
   title = 'app';
   showSideBar = false;
@@ -36,6 +44,12 @@ export class AppComponent implements AfterViewChecked {
     this.isMobileView = this.screenWidth < 500;
     MobileUtils.updateIsMobileView(this.isMobileView);
     console.log(`sw=${this.screenWidth}&ismobile=${this.isMobileView}`);
+  }
+
+  getNotificationCount() {
+    this.notificationsService.getNotificationCountForUser().subscribe(x => {
+      NotificationsService.updateNotificationCount(x);
+    });
   }
 
   routeForLogin() {

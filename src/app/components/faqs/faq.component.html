@@ -20,9 +20,9 @@
     <div [class]="panel.getCssClass('title')" (click)="toggle(panel)">
       <i class="dropdown icon"></i>
       {{panel.title.title}}
-      <div class="ui red basic horizontal label titleLabel" *ngFor="let tag of panel.title.tags">{{tag}}</div>
-      <div class="ui red basic horizontal label titleLabel" *ngFor="let tag of panel.title.tags">{{tag}}</div>
-      <div class="ui red basic horizontal label titleLabel" *ngFor="let tag of panel.title.tags">{{tag}}</div>
+      <div class="ui red mini basic horizontal label titleLabel" *ngFor="let tag of panel.title.tags">{{tag}}</div>
+      <div class="ui red mini basic horizontal label titleLabel" *ngFor="let tag of panel.title.tags">{{tag}}</div>
+      <div class="ui red mini basic horizontal label titleLabel" *ngFor="let tag of panel.title.tags">{{tag}}</div>
       <div class="ui divider"></div>
     </div>
     <div [class]="panel.getCssClass('content')">
@@ -31,7 +31,7 @@
           <a class="ui label copyFaqLink" [attr.href]="panel.getHref()" target="_blank" data-tooltip="Get Link" data-inverted="">
             <i class="share icon" style="margin:0;"></i>
           </a>
-          <div class="ui blue basic horizontal label" *ngFor="let tag of panel.content.tags">{{tag}}</div>
+          <div class="ui blue mini basic horizontal label" *ngFor="let tag of panel.content.tags">{{tag}}</div>
         </div>
         <p>{{panel.content.content}}</p>
       </div>

@@ -26,6 +26,7 @@ import { ForumComponent } from './components/forum/forum.component';
 import { ForumService } from './services/ForumService';
 import { AvatarService } from './services/AvatarService';
 import { ImageCropperComponent } from "ng2-image-cropper"
+import { NotificationsService } from './services/NotificationsService';
 
 const appRoutes: Routes = [
   { path: AppRoutes.home, component: HomeComponent },
@@ -62,7 +63,7 @@ const appRoutes: Routes = [
     )
   ],
   exports: [RouterModule],
-  providers: [AuthService, SlackAuthService, RecipeService, ForumService, AvatarService],
+  providers: [AuthService, SlackAuthService, RecipeService, ForumService, AvatarService, NotificationsService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

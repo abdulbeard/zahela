@@ -51,10 +51,32 @@
   background-repeat: repeat;
 }
 
+.header.item {
+  height: 10vh;
+  width: 20vh;
+  display: block;
+  width: 44vw;
+  padding: 1vw !important;
+}
+
+svg {
+  position: inherit !important;
+}
+
+.mobile .right.menu {
+  width: 28vw;
+  float: right;
+}
+
+.mobile .mainMenuItem {
+  width: 28vw;
+}
 
 
 /*this is for the fancy stuff on the sidebar*/
 @import url(http://fonts.googleapis.com/css?family=Open+Sans:800);
+@import url('https://fonts.googleapis.com/css?family=Alex+Brush');
+
 
 .text {
   fill: none;

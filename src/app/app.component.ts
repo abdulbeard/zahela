@@ -48,7 +48,8 @@ export class AppComponent implements AfterViewChecked {
 
   getNotificationCount() {
     this.notificationsService.getNotificationCountForUser().subscribe(x => {
-      NotificationsService.updateNotificationCount(x);
+      var count = x.json();
+      NotificationsService.updateNotificationCount(count);
     });
   }
 

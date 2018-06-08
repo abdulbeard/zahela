@@ -8,8 +8,8 @@ import { Subject } from "rxjs";
 export class NotificationsService {
     constructor(private http: Http){}
 
-    public getNotificationCountForUser(): Observable<number> {
-        return Observable.of(3);
+    public getNotificationCountForUser(): Observable<Response> {
+        return this.http.get(`${environment.backendUrl}/user/notificationcount`);
     }
 
     private static notificationCount: number;

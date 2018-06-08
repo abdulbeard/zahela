@@ -10,7 +10,8 @@ import { Location } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { Routes } from '../../constants/Routes';
 import { AvatarService } from '../../services/AvatarService';
-import { ImageCropperComponent, CropperSettings  } from 'ng2-image-cropper'
+import { ImageCropperComponent, CropperSettings } from 'ng2-image-cropper'
+import { NotificationsService } from '../../services/NotificationsService';
 
 @Component({
   selector: 'app-account',
@@ -26,7 +27,12 @@ export class AccountComponent implements AfterViewInit {
   cropper: ImageCropperComponent;
 
   constructor(private location: Location, private route: ActivatedRoute,
-    private avatarService: AvatarService) {
+    private avatarService: AvatarService,
+    private notificationsService: NotificationsService) {
+    NotificationsService.NotificationCount.subscribe(x => {
+      this.notificationCount = x;
+      this.accountMenu[1].displayText = this.notificationCount > 0 ? `(${this.notificationCount}) Updates` : "Updates" ;
+    });
     var tabToSelect = this.accountMenu[0];
     route.params.subscribe(param => {
       var selectedTabFromUrl = param["selectedTab"];
@@ -94,6 +100,8 @@ export class AccountComponent implements AfterViewInit {
   private data: any;
   public cropperSettings: CropperSettings;
 
+  private notificationCount: number;
+
   accountMenuSelected(menu: DisplayMenu) {
     this.accountMenu.map(x => {
       x.active = x.name === menu.name;
@@ -142,7 +150,7 @@ export class AccountComponent implements AfterViewInit {
   }
 
   showMenuItem(displayMenu: DisplayMenu) {
-    if (displayMenu.displayText == "RSVP") {
+    if (displayMenu.name == "rsvp") {
       //console.log("rsvp");
       this.showRsvp = true;
       this.showUpdates = false;
@@ -151,7 +159,7 @@ export class AccountComponent implements AfterViewInit {
       this.showYolo = false;
       this.showSolo = false;
     }
-    else if (displayMenu.displayText == "Updates") {
+    else if (displayMenu.name == "updates") {
       //console.log("updates");
       this.showRsvp = false;
       this.showUpdates = true;
@@ -160,7 +168,7 @@ export class AccountComponent implements AfterViewInit {
       this.showYolo = false;
       this.showSolo = false;
     }
-    else if (displayMenu.displayText == "Dietary Restrictions") {
+    else if (displayMenu.name == "dietaryRestrictions") {
       //console.log("dietary restrictions");
       this.showRsvp = false;
       this.showUpdates = false;
@@ -169,7 +177,7 @@ export class AccountComponent implements AfterViewInit {
       this.showYolo = false;
       this.showSolo = false;
     }
-    else if (displayMenu.displayText == "Polo") {
+    else if (displayMenu.name == "polo") {
       //console.log("polo");
       this.showRsvp = false;
       this.showUpdates = false;
@@ -178,7 +186,7 @@ export class AccountComponent implements AfterViewInit {
       this.showYolo = false;
       this.showSolo = false;
     }
-    else if (displayMenu.displayText == "Solo") {
+    else if (displayMenu.name == "solo") {
       //console.log("solo");
       this.showRsvp = false;
       this.showUpdates = false;
@@ -187,7 +195,7 @@ export class AccountComponent implements AfterViewInit {
       this.showYolo = false;
       this.showSolo = true;
     }
-    else if (displayMenu.displayText == "Yolo") {
+    else if (displayMenu.name == "yolo") {
       //console.log("yolo");
       this.showRsvp = false;
       this.showUpdates = false;
@@ -227,7 +235,7 @@ export class AccountComponent implements AfterViewInit {
     console.log(this.cropper);
   }
 
-  imageCropped(event: any){
+  imageCropped(event: any) {
     console.log(event);
     this.croppedImage = this.cropper.image.image;
   }

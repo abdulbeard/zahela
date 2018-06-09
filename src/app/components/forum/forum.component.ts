@@ -18,7 +18,13 @@ import { DisplayGuest } from '../../models/DisplayGuest';
 })
 export class ForumComponent implements AfterViewInit {
   ngAfterViewInit(): void {
+    if (this.commentId && !this.selectedCommentFromUrl) {
+      this.topicSelected(new ForumTopic("", this.topicId, "", true));
+      this.selectedCommentFromUrl = true;
+    }
   }
+  selectedCommentFromUrl = false;
+
   constructor(private route: ActivatedRoute, private location: Location, private forumService: ForumService,
     private authService: AuthService) {
 
@@ -80,18 +86,12 @@ export class ForumComponent implements AfterViewInit {
             x => { this.topicMessages = x; console.log(this.topicMessages); },
             error => console.log(error));
           this.location.replaceState(`/${Routes.forum}/${element.Id}`);
+          this.showComment(this.commentId, topicId);
           return false;
         }
         else { element.Active = false; }
       });
     }
-    this.showComment(this.commentId, topicId);
-    console.log('before');
-    // if(this.commentId){
-    //   console.log('got in here');
-    //   this.showComment(this.commentId, topicId);
-    //   this.location.replaceState(`/${Routes.forum}/${topicId}/${this.commentId}`);
-    // }
   }
 
   addReplyToParentComment(parentComment: DisplayComment, currentComment: DisplayComment) {
@@ -146,6 +146,10 @@ export class ForumComponent implements AfterViewInit {
     }
   }
 
+  isCurrentlySelectedComment(displayComment: DisplayComment): boolean {
+    return displayComment.id === this.commentId;
+  }
+
   hideReplyBox(comment: DisplayComment) {
     comment.showReplyTextbox = false;
   }
@@ -154,11 +158,11 @@ export class ForumComponent implements AfterViewInit {
     if (id) {
       setTimeout(() => {
         var elem = document.getElementById(id + '');
-        console.log(elem);
-        elem.scrollIntoView();
-      }, 2000);
-      console.log('showing comment');
+        elem.scrollIntoView({behavior: "smooth"});
+        // elem.scrollIntoView({behavior: "smooth", block: "start", inline: "start"});
+      }, 1000);
       this.location.replaceState(`/${Routes.forum}/${topicId}/${id}`);
     }
+    console.log(id);
   }
 }

@@ -118,3 +118,19 @@
     background-color: rgb(211, 211, 211, 0.4) !important;
     margin-bottom: .5em !important;
 }
+
+.comment .content .text p {
+    margin-top: 2vh;
+}
+
+
+@keyframes selectedComment {
+    0% { box-shadow: 0 0 -10px #c4a300; }
+    40% { box-shadow: 0 0 20px #c4a300; }
+    60% { box-shadow: 0 0 20px #c4a300; }
+    100% { box-shadow: 0 0 -10px #c4a300; }
+  }
+  
+  .selectedComment {
+    animation: selectedComment 5000ms 3s;
+  }

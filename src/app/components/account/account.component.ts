@@ -31,7 +31,7 @@ export class AccountComponent implements AfterViewInit {
     private notificationsService: NotificationsService) {
     NotificationsService.NotificationCount.subscribe(x => {
       this.notificationCount = x;
-      this.accountMenu[1].displayText = this.notificationCount > 0 ? `(${this.notificationCount}) Updates` : "Updates" ;
+      this.accountMenu[2].displayText = this.notificationCount > 0 ? `(${this.notificationCount}) Updates` : "Updates" ;
     });
     var tabToSelect = this.accountMenu[0];
     route.params.subscribe(param => {
@@ -80,6 +80,7 @@ export class AccountComponent implements AfterViewInit {
   ]
 
   accountMenu: DisplayMenu[] = [
+    new DisplayMenu("account", false, "Account"),
     new DisplayMenu("rsvp", false, "RSVP"),
     new DisplayMenu("updates", false, "Updates"),
     new DisplayMenu("dietaryRestrictions", false, "Dietary Restrictions"),
@@ -94,6 +95,7 @@ export class AccountComponent implements AfterViewInit {
   private showPolo: boolean = false;
   private showSolo: boolean = false;
   private showYolo: boolean = false;
+  private showAccount: boolean = false;
 
   private imageData: string;
   private croppedImage: string;
@@ -150,6 +152,16 @@ export class AccountComponent implements AfterViewInit {
   }
 
   showMenuItem(displayMenu: DisplayMenu) {
+    if (displayMenu.name == "account") {
+      //console.log("rsvp");
+      this.showRsvp = false;
+      this.showUpdates = false;
+      this.showDietaryRestrictions = false;
+      this.showPolo = false;
+      this.showYolo = false;
+      this.showSolo = false;
+      this.showAccount = true;
+    }
     if (displayMenu.name == "rsvp") {
       //console.log("rsvp");
       this.showRsvp = true;
@@ -158,6 +170,7 @@ export class AccountComponent implements AfterViewInit {
       this.showPolo = false;
       this.showYolo = false;
       this.showSolo = false;
+      this.showAccount = false;
     }
     else if (displayMenu.name == "updates") {
       //console.log("updates");
@@ -167,6 +180,7 @@ export class AccountComponent implements AfterViewInit {
       this.showPolo = false;
       this.showYolo = false;
       this.showSolo = false;
+      this.showAccount = false;
     }
     else if (displayMenu.name == "dietaryRestrictions") {
       //console.log("dietary restrictions");
@@ -176,6 +190,7 @@ export class AccountComponent implements AfterViewInit {
       this.showPolo = false;
       this.showYolo = false;
       this.showSolo = false;
+      this.showAccount = false;
     }
     else if (displayMenu.name == "polo") {
       //console.log("polo");
@@ -185,6 +200,7 @@ export class AccountComponent implements AfterViewInit {
       this.showPolo = true;
       this.showYolo = false;
       this.showSolo = false;
+      this.showAccount = false;
     }
     else if (displayMenu.name == "solo") {
       //console.log("solo");
@@ -194,6 +210,7 @@ export class AccountComponent implements AfterViewInit {
       this.showPolo = false;
       this.showYolo = false;
       this.showSolo = true;
+      this.showAccount = false;
     }
     else if (displayMenu.name == "yolo") {
       //console.log("yolo");
@@ -203,6 +220,7 @@ export class AccountComponent implements AfterViewInit {
       this.showPolo = false;
       this.showYolo = true;
       this.showSolo = false;
+      this.showAccount = false;
     }
   }
 

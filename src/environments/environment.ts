@@ -8,5 +8,6 @@ export const environment = {
   slackToken: "xoxp-89114187346-89114187490-312400465808-3882dc00c7267851ebb6863169048250",
   slackAppClientId: "",
   slackAppClientSecret: "",
-  backendUrl: "http://localhost:55330"
+  backendUrl: "http://localhost:55330",
+  currentVersion: "1.0.0"
 };

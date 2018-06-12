@@ -14,12 +14,18 @@ export class VersionService {
             "Content-Type": "application/json"
         });
         let options = new RequestOptions({ headers: headers });
-        if (new Date().getTime() - VersionService.lastChecked.getTime() > 10000) { //600000
+        if (new Date().getTime() - VersionService.lastChecked.getTime() > 600000) { //10mins
             return this.http.get(`${environment.backendUrl}/frontend/version`, options).map(x => {
                 console.log('hey, im loggin here!');
                 VersionService.lastChecked = new Date();
                 return x.json() !== environment.currentVersion;
-            }, error => { console.log('failure', error);VersionService.lastChecked = new Date(); })
+            }, error => { 
+                VersionService.lastChecked = new Date(); 
+                console.log(error); })
+            .catch((err, caught) => {
+                VersionService.lastChecked = new Date();
+                return Observable.of(false);
+            })
         }
         else {
             return Observable.of(false);

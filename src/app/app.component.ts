@@ -61,7 +61,7 @@ export class AppComponent implements AfterViewChecked {
       if (x === true) {
         window.location.reload(true);
       }
-      else { console.log(x) }
+      else { console.log('no changes detected') }
     }, error => console.log(error));
   }
 

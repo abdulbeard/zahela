@@ -7,6 +7,7 @@ import { DisplayGuest } from './models/DisplayGuest';
 import { MobileUtils } from './utils/MobileUtils';
 import { NotificationsService } from './services/NotificationsService';
 import { Title } from '@angular/platform-browser';
+import { VersionService } from './services/VersionService';
 
 @Component({
   selector: 'app-root',
@@ -21,18 +22,20 @@ export class AppComponent implements AfterViewChecked {
   }
 
   constructor(public authService: AuthService, private router: Router,
-              private notificationsService: NotificationsService,
-              private titleService: Title) {
+    private notificationsService: NotificationsService,
+    private titleService: Title,
+    private versionService: VersionService) {
     this.authService = authService;
     this.authService.logEvent.subscribe(logEvent => {
       this.refreshNavigationLinks();
     });
-    this.setMobileView(window);
-    window.onresize = () => this.setMobileView(window);
-    window.onload = () => this.getNotificationCount()
     NotificationsService.NotificationCount.subscribe(x => {
       this.titleService.setTitle(`(${x}) ${this.titleService.getTitle()}`);
     });
+    this.setMobileView(window);
+    window.onresize = () => this.setMobileView(window);
+    window.onload = () => this.getNotificationCount();
+    window.onfocus = () => this.checkForUpdates();
   }
   title = 'app';
   showSideBar = false;
@@ -51,6 +54,15 @@ export class AppComponent implements AfterViewChecked {
       var count = x.json();
       NotificationsService.updateNotificationCount(count);
     });
+  }
+
+  checkForUpdates() {
+    this.versionService.checkForVersionChange().subscribe(x => {
+      if (x === true) {
+        window.location.reload(true);
+      }
+      else { console.log(x) }
+    }, error => console.log(error));
   }
 
   routeForLogin() {

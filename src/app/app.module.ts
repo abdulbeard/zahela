@@ -28,11 +28,22 @@ import { AvatarService } from './services/AvatarService';
 import { ImageCropperComponent } from "ng2-image-cropper"
 import { NotificationsService } from './services/NotificationsService';
 import { VersionService } from './services/VersionService';
+import { ProfileComponent } from './components/account/Profile/profile.component';
+import { UpdatesComponent } from './components/account/Updates/updates.component';
+import { RsvpComponent } from './components/account/RSVP/rsvp.component';
+import { DietaryRestrictionsComponent } from './components/account/DietaryRestrictions/dietary-restrictions.component';
+import { PoloComponent } from './components/account/Polo/polo.component';
 
 const appRoutes: Routes = [
   { path: AppRoutes.home, component: HomeComponent },
-  { path: AppRoutes.account, component: AccountComponent, canActivate: [AuthService] },
-  { path: AppRoutes.accountExtended, component: AccountComponent, canActivate: [AuthService] },
+  { path: AppRoutes.account, component: AccountComponent, children: [
+    { path: '', redirectTo: AppRoutes.accountProfile, pathMatch: 'full' },
+    { path: AppRoutes.accountProfile, component: ProfileComponent, canActivate: [AuthService] },
+    { path: AppRoutes.accountUpdates, component: UpdatesComponent, canActivate: [AuthService] },
+    { path: AppRoutes.accountRsvp, component: RsvpComponent, canActivate: [AuthService] },
+    { path: AppRoutes.accountDietaryRestrictions, component: DietaryRestrictionsComponent, canActivate: [AuthService] },
+    { path: AppRoutes.accountPolo, component: PoloComponent, canActivate: [AuthService] },
+  ], canActivate: [AuthService] },
   { path: AppRoutes.messagesExtended, component: MessagesComponent },
   { path: AppRoutes.messages, component: MessagesComponent },
   { path: AppRoutes.friends, component: FriendsComponent, canActivate: [AuthService], },
@@ -55,7 +66,8 @@ const appRoutes: Routes = [
   declarations: [
     AppComponent, HtmlSanitizer, UrlSanitizer, SlackFeedComponent, MessagesComponent, HomeComponent, FriendsComponent, 
     AdminComponent, PlaylistComponent, LoginComponent, AccountComponent, FaqComponent, RecipeComponent, RecipeDetailComponent,
-    ForumComponent, ImageCropperComponent
+    ForumComponent, ImageCropperComponent, ProfileComponent, UpdatesComponent, RsvpComponent, DietaryRestrictionsComponent,
+    PoloComponent
   ],
   imports: [
     BrowserModule, HttpModule, FormsModule, RouterModule.forRoot(

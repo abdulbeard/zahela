@@ -75,12 +75,14 @@ export class DietaryRestrictionsDisplayGuest extends DisplayGuest {
     public active: boolean;
     public allergies: Array<string>;
     public dietaryRestrictions: Array<string>;
+    public religiousRestrictions: Array<string>;
     public freeformRestrictions: string;
     public freeformAllergies: string;
     constructor(name: string, categories: string[], description: string, email: string, gender: Gender) {
         super(name, categories, description, "", "", "", "", email, [], "", "", gender);
         this.allergies = [];
         this.dietaryRestrictions = [];
+        this.religiousRestrictions = [];
     }
     getCssClass(currentClass: string): string {
         return `${this.active ? "active" : ""} ${currentClass}`;

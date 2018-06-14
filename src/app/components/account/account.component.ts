@@ -12,6 +12,7 @@ import { Routes } from '../../constants/Routes';
 import { AvatarService } from '../../services/AvatarService';
 import { ImageCropperComponent, CropperSettings } from 'ng2-image-cropper'
 import { NotificationsService } from '../../services/NotificationsService';
+import { FaviconUtils } from '../../utils/FaviconUtils';
 
 @Component({
   selector: 'app-account',
@@ -29,18 +30,18 @@ export class AccountComponent implements AfterViewInit {
   constructor(private location: Location, private route: ActivatedRoute,
     private avatarService: AvatarService,
     private notificationsService: NotificationsService) {
-    var yolo = route.snapshot.params["selectedTab"];
-    this.accountMenu.map(x => {
-      if (x.name === yolo) {
-        //x.active = true;
-      }
-    });
     NotificationsService.NotificationCount.subscribe(x => {
       this.notificationCount = x;
       var updatesAccountMenu = this.accountMenu[2];
-      this.accountMenu[2].displayText = 
-        this.notificationCount > 0 ? `(${this.notificationCount}) ${updatesAccountMenu.displayText}` : 
-                                      `${updatesAccountMenu.displayText}`;
+      if (this.notificationCount > 0) {
+        updatesAccountMenu.displayText = `(${this.notificationCount}) ${updatesAccountMenu.displayText}`;
+        if (this.notificationCount > 4) {
+          FaviconUtils.toNotificationsPending();
+        }
+      }
+      else {
+        FaviconUtils.toNormal();
+      }
     });
   }
 

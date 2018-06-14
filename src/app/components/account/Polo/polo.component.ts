@@ -8,6 +8,8 @@ import * as $ from 'jquery';
 import { SlackReactionsService } from '../../../services/SlackReactionsService';
 import { DisplayChannel } from '../../../models/DisplayChannel';
 import { ImageCropperComponent, CropperSettings } from 'ng2-image-cropper';
+import { AuthService } from '../../../services/AuthService';
+import { AvatarService } from '../../../services/AvatarService';
 
 @Component({
   selector: 'app-account-polo',
@@ -19,13 +21,11 @@ import { ImageCropperComponent, CropperSettings } from 'ng2-image-cropper';
 export class PoloComponent implements AfterViewInit {
   @ViewChild('cropper', undefined)
   cropper: ImageCropperComponent;
-  
+
   ngAfterViewInit(): void {
   }
-  constructor(private emojiDefinitions: EmojiDefinitions, private emojiService: EmojiService,
-    private slackMessagesService: SlackMessagesService, private userService: UserService,
-    private slackMessageParsingService: SlackMessageParsingService) {
-          this.cropperSettings = new CropperSettings();
+  constructor(private authService: AuthService, private avatarService: AvatarService) {
+    this.cropperSettings = new CropperSettings();
     this.cropperSettings.noFileInput = false;
     //this.cropperSettings.rounded = true;
     this.cropperSettings.keepAspect = true;
@@ -36,6 +36,7 @@ export class PoloComponent implements AfterViewInit {
     this.cropperSettings.preserveSize = true;
     this.cropperSettings.cropperDrawSettings.strokeColor = 'rgba(255,255,255,1)';
     this.cropperSettings.cropperDrawSettings.strokeWidth = 1;
+    this.cropperSettings.fileType = "image/jpeg"
     this.data = {};
   }
 
@@ -43,21 +44,25 @@ export class PoloComponent implements AfterViewInit {
   private croppedImage: string;
   private data: any;
   public cropperSettings: CropperSettings;
-  
+
   onFileChange(event) {
     let reader = new FileReader();
+    let currentUser = this.authService.getCurrentDisplayUser();
     if (event.target.files && event.target.files.length > 0) {
       let file = event.target.files[0];
       reader.onload = () => {
         var imagePayload = {
-          Name: file.name,
-          Size: file.size,
-          Type: file.type,
-          Data: reader.result.split(',')[1]
+          UserId: currentUser.name,
+          Image: {
+            Name: file.name,
+            Size: file.size,
+            Type: file.type,
+            Data: reader.result.split(',')[1]
+          }
         };
         console.log(imagePayload);
         this.imageData = reader.result;
-        //this.avatarService.uploadImage(imagePayload).subscribe(x => console.log(x), error => console.log(error));
+        this.avatarService.uploadImage(imagePayload).subscribe(x => console.log(x), error => console.log(error));
       };
       var image: any = new Image();
       var that = this;
@@ -70,15 +75,29 @@ export class PoloComponent implements AfterViewInit {
   }
 
   saveImage() {
-    console.log(this.cropper);
+    this.avatarService.uploadImage(this.getImageUploadRequest()).subscribe(x => console.log(x), error => console.log(error));
   }
 
   imageCropped(event: any) {
-    console.log(event);
     this.croppedImage = this.cropper.image.image;
   }
 
   get imageDataExists(): boolean {
     return this.imageData && this.imageData.length > 0;
+  }
+
+  getImageUploadRequest() {
+    var split = this.croppedImage.split(',');
+    var data = split[1];
+    var fileType = ((split[0].split(';')[0]).split(':')[1]);
+    var currentUser = this.authService.getCurrentDisplayUser();
+    console.log(currentUser);
+    return {
+      UserId: currentUser.name,
+      Image: {
+        Type: fileType,
+        Data: data
+      }
+    };
   }
 }

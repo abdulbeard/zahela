@@ -124,15 +124,15 @@
           </div>
           <h3 class="ui center aligned dividing header">End of Messages</h3>
           <br/>
-          <div class="ui form">
-            <div class="field reply">
-              <textarea rows="3" [(ngModel)]="newComment" placeholder="Post new message"></textarea>
-            </div>
-            <a class="ui mini blue label" (click)="submitComment()">
-              Post
-            </a>
-          </div>
           <br/>
+        </div>
+        <div class="ui form">
+          <div class="field reply">
+            <textarea rows="3" [(ngModel)]="newComment" placeholder="Post new message"></textarea>
+          </div>
+          <a class="ui mini blue label" (click)="submitComment()">
+            Post
+          </a>
         </div>
         <!-- <div class="ui feed" [class.isMobile]="this.isMobileView" (click)="hideMobileTopics()">
           <div *ngFor="let message of topicMessages" class="event">

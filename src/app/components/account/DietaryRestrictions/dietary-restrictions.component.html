@@ -1,0 +1,50 @@
+<div class="ui container">
+    <div class="ui accordion">
+        <div *ngFor="let guest of linkedGuests; let i = index;">
+            <div [class]="guest.getCssClass('title')" (click)="toggle(guest)">
+                <i class="dropdown icon"></i>
+                <img class="ui avatar image" src="assets/male-2.svg"> {{guest.name}}
+                <div class="ui green horizontal label titleLabel" *ngFor="let tag of guest.religiousRestrictions" [attr.data-tooltip]="'Religious'"
+                    data-inverted="">{{tag}}</div>
+                <div class="ui blue horizontal label titleLabel" *ngFor="let tag of guest.dietaryRestrictions" [attr.data-tooltip]="'Dietary'"
+                    data-inverted="">{{tag}}</div>
+                <div class="ui red horizontal label titleLabel" *ngFor="let tag of guest.allergies" [attr.data-tooltip]="'Allergy'" data-inverted="">{{tag}}</div>
+                <div class="ui divider"></div>
+            </div>
+            <div [class]="guest.getCssClass('content')">
+                <div class="ui segment">
+                    <p>Please choose any number of categories below, or instead write to us</p>
+                    <div>
+                        <a class="ui label moreInfoLink" href="http://www.webster.edu/specialevents/planning/food-information.html" target="_blank"
+                            data-tooltip="More information on definitions" data-inverted="">
+                            <i class="question circle icon" style="margin:0;"></i>
+                        </a>
+                        <a class="ui inverted green mini button" *ngFor="let tag of religiousRestrictions" [class.selected]="guestHasReligiousRestriction(tag.name, guest)"
+                            (click)="addReligiousRestriction(tag.name, guest)" [attr.data-tooltip]="tag.desc" data-inverted="">{{tag.name}}
+                        </a>
+                        <a class="ui inverted blue mini button" *ngFor="let tag of dietaryRestrictionDefinitions" [class.selected]="guestHasDietaryRestriction(tag.name, guest)"
+                            (click)="addDietaryRestriction(tag.name, guest)" [attr.data-tooltip]="tag.desc" data-inverted="">{{tag.name}}
+                        </a>
+                    </div>
+                    <form class="ui reply form">
+                        <div class="field">
+                            <textarea name="freeformRestrictions" [(ngModel)]="guest.freeformRestrictions" rows="3"></textarea>
+                        </div>
+                    </form>
+                    <div class="ui horizontal divider"></div>
+                    <p>If you have any food allergies, please let us know:</p>
+                    <a class="ui inverted red mini button" *ngFor="let tag of commonFoodAllergies" [class.selected]="guestHasAllergy(tag.name, guest)"
+                        (click)="addAllergy(tag.name, guest)" [attr.data-tooltip]="tag.desc" data-inverted="">{{tag.name}}</a>
+                    <form class="ui reply form">
+                        <div class="field">
+                            <textarea name="freeformAllergies" [(ngModel)]="guest.freeformAllergies" placeholder="Or let us know in your own words" rows="3"></textarea>
+                        </div>
+                        <a class="ui blue label" (click)="save(guest)">
+                            <i class="icon edit"></i>Save
+                        </a>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,68 @@
+.ui.container {
+    padding-left: 1em;
+    padding-right: 1em;
+}
+
+.event {
+    border: 1px solid darkgrey;
+    border-radius: 3px;
+    background-color: lightgrey !important;
+    margin-bottom: .5em !important;
+}
+
+.accountMenu {
+    border-bottom: 0 !important;
+    overflow-x: scroll;
+}
+
+.accountMenu::-webkit-scrollbar-thumb {
+    background: #888; 
+    border-radius: 0;
+}
+
+.accountMenu::-webkit-scrollbar {
+    height: 0;
+}
+
+.item {
+    margin: 0 !important;
+}
+
+.container h1 {
+    text-align: center;
+}
+
+.titleLabel, .moreInfoLink {
+    float: right;
+}
+
+.ui.inverted.green.mini.button.selected {
+    color: white;
+    background-color: #2ecc40
+}
+
+.ui.inverted.blue.mini.button.selected {
+    color: white;
+    background-color: #54c8ff
+}
+
+.ui.inverted.red.mini.button.selected {
+    color: white;
+    background-color: #ff5144;
+}
+
+.cropperClass {
+    background-color: rgba(124, 7, 7, 0.7);
+}
+
+.croppingClass {
+    background-color: rgba(19, 19, 228, 0.7);
+}
+
+.ui.inverted.button {
+    margin-top: 3px;
+}
+
+.ui.reply.form {
+    margin-top: 3px;
+}

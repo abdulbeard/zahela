@@ -125,12 +125,12 @@
 
 
 @keyframes selectedComment {
-    0% { box-shadow: 0 0 -10px #c4a300; }
-    40% { box-shadow: 0 0 20px #c4a300; }
-    60% { box-shadow: 0 0 20px #c4a300; }
-    100% { box-shadow: 0 0 -10px #c4a300; }
+    0% { box-shadow: 0 0 20px #ff0000; }
+    40% { box-shadow: 0 0 20px #ff0000; }
+    60% { box-shadow: 0 0 20px #ff0000; }
+    100% { box-shadow: 0 0 -10px #ff0000; }
   }
   
   .selectedComment {
-    animation: selectedComment 5000ms 3s;
+    animation: selectedComment 5000ms 1s;
   }

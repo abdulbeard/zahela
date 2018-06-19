@@ -28,6 +28,9 @@ import { AvatarService } from './services/AvatarService';
 import { ImageCropperComponent } from "ng2-image-cropper"
 import { NotificationsService } from './services/NotificationsService';
 import { VersionService } from './services/VersionService';
+import { JwtHelper } from 'angular2-jwt';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
+import { TokenInterceptor } from './interceptors/TokenInterceptor';
 
 const appRoutes: Routes = [
   { path: AppRoutes.home, component: HomeComponent },
@@ -61,10 +64,42 @@ const appRoutes: Routes = [
     BrowserModule, HttpModule, FormsModule, RouterModule.forRoot(
       appRoutes, 
       { enableTracing: false } // <-- debugging purposes only
-    )
+    ),
+    HttpClientModule,
+    HttpModule,
+    // JwtModule.forRoot({
+    //   config: {
+    //     whitelistedDomains: ['localhost:55330', 'https://zahela-backend.azurewebsites.net'],
+    //     blacklistedRoutes: ['localhost:3001/auth/'],
+    //     tokenGetter: () => {
+    //       var token = localStorage.getItem('access_token');
+    //       if(!token){
+    //         token = CookieUtils.getCookie('access_token');
+    //       }
+    //       return token;
+    //     },
+    //     headerName: "Authorization",
+    //     authScheme: "Bearer ",
+    //     throwNoTokenError: false,
+    //   }
+    // })
   ],
   exports: [RouterModule],
-  providers: [AuthService, SlackAuthService, RecipeService, ForumService, AvatarService, NotificationsService, VersionService],
+  providers: [
+      AuthService, 
+      SlackAuthService, 
+      RecipeService, 
+      ForumService, 
+      AvatarService, 
+      NotificationsService, 
+      VersionService,
+      JwtHelper,
+      {
+        provide: HTTP_INTERCEPTORS,
+        useClass: TokenInterceptor,
+        multi: true
+      },
+    ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

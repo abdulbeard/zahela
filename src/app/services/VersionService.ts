@@ -2,10 +2,11 @@ import { Injectable } from "@angular/core";
 import { Observable } from "rxjs/Observable";
 import { Http, RequestOptions, Headers, Response } from "@angular/http";
 import { environment } from '../../environments/environment'
+import { JwtHelper } from "angular2-jwt";
 
 @Injectable()
 export class VersionService {
-    constructor(private http: Http) { }
+    constructor(private http: Http, private jwtHelper: JwtHelper) { }
     private static lastChecked = new Date();
 
     checkForVersionChange(): Observable<boolean> {

@@ -23,6 +23,7 @@
     "@angular/platform-browser-dynamic": "^4.2.4",
     "@angular/router": "^4.2.4",
     "@types/semantic-ui": "^2.2.6",
+    "angular2-jwt": "^0.2.3",
     "core-js": "^2.4.1",
     "jquery": "^3.3.1",
     "ng2-image-cropper": "0.0.3",

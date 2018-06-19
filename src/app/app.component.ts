@@ -8,6 +8,7 @@ import { MobileUtils } from './utils/MobileUtils';
 import { NotificationsService } from './services/NotificationsService';
 import { Title } from '@angular/platform-browser';
 import { VersionService } from './services/VersionService';
+import { TokenUtils } from './utils/TokenUtils';
 
 @Component({
   selector: 'app-root',
@@ -51,7 +52,8 @@ export class AppComponent implements AfterViewChecked {
 
   getNotificationCount() {
     this.notificationsService.getNotificationCountForUser().subscribe(x => {
-      var count = x.json();
+      var count = x.body;
+      TokenUtils.setToken(x.headers.get('access-token'));
       NotificationsService.updateNotificationCount(count);
     });
   }

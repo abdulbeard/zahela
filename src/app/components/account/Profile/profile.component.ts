@@ -7,6 +7,7 @@ import { DisplayComment } from '../../../models/DisplayComment';
 import * as $ from 'jquery';
 import { SlackReactionsService } from '../../../services/SlackReactionsService';
 import { DisplayChannel } from '../../../models/DisplayChannel';
+import { DisplayGuest, Gender } from '../../../models/DisplayGuest';
 
 @Component({
   selector: 'app-account-profile',
@@ -18,41 +19,69 @@ import { DisplayChannel } from '../../../models/DisplayChannel';
 export class ProfileComponent implements AfterViewInit {
   ngAfterViewInit(): void {
   }
-  constructor(private emojiDefinitions: EmojiDefinitions, private emojiService: EmojiService,
-    private slackMessagesService: SlackMessagesService, private userService: UserService,
-    private slackMessageParsingService: SlackMessageParsingService) {
+
+  private emailIsPublic: boolean = true;
+  private twitterIsPublic: boolean = true;
+  private facebookIsPublic: boolean = true;
+  private instagramIsPublic: boolean = true;
+
+  private contactInfos: Array<any> = []
+
+  getSharedStatusText(entity: string, status: boolean) : string {
+    console.log(this.contactInfos);
+    return status ? `${entity} is visible to all guests` : `${entity} is only visible to the hosts.`;
   }
 
-  channels: DisplayChannel[] = [
-    new DisplayChannel("#random", "random", true),
-    new DisplayChannel("#general", "general", false)
-  ]
+  private inEditMode: boolean = false;
+  private user: DisplayGuest = new DisplayGuest("Abdul", ["self", "awesome"], "I like big butts and I cannot lie",
+  "www.facebook.com", "www.twitter.com", "www.instagram.com", "", "abdul.zaheer@ncr.com", 
+  ["spelunking", "calligraphy", "heavy metal", "spelunking", "calligraphy", "heavy metal", "spelunking", "calligraphy", "heavy metal"], 
+  "www.google.com", "www.google.com", Gender.Male);
 
-  channelSelected(channel: DisplayChannel) {
-    var htmlElement = document.getElementById(channel.id);
-    this.changeActiveItemOnMenu(htmlElement);
-    this.showContent(channel);
+  private enterEditMode() {
+    this.inEditMode = true;
   }
 
-  private showContent(channel: DisplayChannel){
-    var allChannelContents = $('.channelContent').toArray();
-    allChannelContents.forEach(element => {
-      if(element.id === channel.channelContentId()){
-        $(element).show();
-      }
-      else{
-        $(element).hide();
-      }
+  private save() {
+    this.inEditMode = false;
+  }
+
+  private cancel() {
+    this.inEditMode = false;
+  }
+
+  constructor() {
+    this.contactInfos.push({
+      Type: "Email", 
+      Uri: this.user.email, 
+      IsPublic: this.emailIsPublic, 
+      Placeholder: "Email Address",
+      Model: this.user.email,
+      Icon: "envelope"
     });
-  }
-
-  private changeActiveItemOnMenu(item: HTMLElement) {
-    $(item)
-      .addClass('active')
-      .closest('.ui.menu')
-      .find('.item')
-      .not($(item))
-      .removeClass('active')
-      ;
+    this.contactInfos.push({
+      Type: "Instagram", 
+      Uri: this.user.instagramUrl, 
+      IsPublic: this.instagramIsPublic, 
+      Placeholder: "Instagram User",
+      Model: this.user.instagramUrl,
+      Icon: "instagram"
+    });
+    this.contactInfos.push({
+      Type: "Twitter", 
+      Uri: this.user.twitterUrl, 
+      IsPublic: this.twitterIsPublic, 
+      Placeholder: "Twitter User",
+      Model: this.user.twitterUrl,
+      Icon: "twitter"
+    });
+    this.contactInfos.push({
+      Type: "Facebook", 
+      Uri: this.user.facebookUrl, 
+      IsPublic: this.facebookIsPublic, 
+      Placeholder: "Facebook User",
+      Model: this.user.facebookUrl,
+      Icon: "facebook"
+    });
   }
 }

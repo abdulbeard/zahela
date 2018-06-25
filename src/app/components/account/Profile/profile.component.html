@@ -1,3 +1,75 @@
-<div>
-<h2>Profile works!</h2>
+<div class="ui centered grid">
+    <div class="ui form">
+        <div class="fields">
+            <div class="six wide field" [class.disabled]="!inEditMode">
+                <label>First name</label>
+                <input type="text" placeholder="First Name" 
+                    [(ngModel)]="user.name">
+            </div>
+            <div class="six wide field" [class.disabled]="!inEditMode">
+                <label>Last name</label>
+                <input type="text" placeholder="Last Name" [(ngModel)]="user.name">
+            </div>
+            <div class="four wide field" [class.disabled]="!inEditMode">
+                <label>Username</label>
+                <input type="text" placeholder="Username" [(ngModel)]="user.name">
+            </div>
+        </div>
+        <div class="fields">
+            <div class="sixteen wide field">
+                <label class="ui input" [class.disabled]="!inEditMode">Description (&lt; 150 words)</label>
+                <textarea type="text" class="ui input" placeholder="Describe yourself briefly" 
+                    [(ngModel)]="user.description" 
+                    *ngIf="!inEditMode" disabled>
+                </textarea>
+                <textarea type="text" class="ui input" placeholder="Describe yourself briefly" 
+                    [(ngModel)]="user.description" 
+                    *ngIf="inEditMode">
+                </textarea>
+            </div>
+        </div>
+        <div class="fields" *ngFor="let contactInfo of contactInfos" >
+            <div class="eight wide field ui left icon input">
+                <input type="text" class="ui input" [attr.placeholder]="contactInfo.Placeholder"
+                    [(ngModel)]="contactInfo.Model" *ngIf="!inEditMode" disabled>
+                <input type="text" class="ui input" [attr.placeholder]="contactInfo.Placeholder"
+                    [(ngModel)]="contactInfo.Model" *ngIf="inEditMode">
+                <i [class]="contactInfo.Icon + ' icon'"></i>
+            </div>
+            <div class="ui toggle checkbox six wide field">
+                <input type="checkbox" [(ngModel)]="contactInfo.IsPublic" *ngIf="!inEditMode" disabled>
+                <input type="checkbox" [(ngModel)]="contactInfo.IsPublic" *ngIf="inEditMode">
+                <label class="ui input" [class.disabled]="!inEditMode">
+                    {{ getSharedStatusText(contactInfo.Type, contactInfo.IsPublic) }}
+                </label>
+            </div>
+        </div>
+        <div class="fields">
+            <div class="sixteen wide field">
+                <label>Interests</label>
+                <div class="ui blue mini labels">
+                    <div class="ui mini label" *ngFor="let interest of this.user.interests">{{interest}}</div>
+                </div>
+            </div>
+        </div>
+        <div class="fields">
+            <div class="four wide field ui action input" [class.disabled]="!inEditMode">
+                <input type="text" placeholder="Add Interest" *ngIf="!inEditMode" disabled>
+                <input type="text" placeholder="Add Interest" *ngIf="inEditMode">
+                <button class="ui blue button" [class.disabled]="!inEditMode">Add</button>
+            </div>
+        </div>
+    </div>
 </div>
+<div class="ui centered grid">
+    <div class="ui blue button" (click)="enterEditMode()" *ngIf="!inEditMode">
+        Edit
+    </div>
+    <div class="ui green button" (click)="save()" *ngIf="inEditMode">
+        Save
+    </div>
+    <div class="ui red button" (click)="cancel()" *ngIf="inEditMode">
+        Cancel
+    </div>
+</div>
+<br/><br/>

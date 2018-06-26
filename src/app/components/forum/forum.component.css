@@ -50,6 +50,15 @@
     float: left;
     margin-left: 2vw;
     width: 83vw;
+    height: 100%;
+}
+
+.topic.content div {
+    height: 100%;
+}
+
+div.content {
+    height: 100%;
 }
 
 .topic.content.mobile {
@@ -64,7 +73,7 @@
     width: 85vw;
     float: right;
     background: slategray;
-    height: 75vh;
+    min-height: 75vh;
     overflow-y: scroll;
 }
 
@@ -133,4 +142,8 @@
   
   .selectedComment {
     animation: selectedComment 5000ms 1s;
+  }
+
+  .footer {
+      margin-top: 100vw;
   }

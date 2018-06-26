@@ -28,6 +28,10 @@
     margin: 0 !important;
 }
 
+.item:hover {
+    color: #db2828 !important;
+}
+
 .container h1 {
     text-align: center;
 }

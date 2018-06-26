@@ -7,7 +7,7 @@
     <i class="file alternate icon"></i>{{topic.Name}}
   </a>
 </div>
-<div class="">
+<div class="content">
   <div class="ui blue secondary vertical pointing menu topics" [class.invisible]="this.isMobileView">
     <button class="item ui centered blue button createNewTopic">
       Create New Topic
@@ -49,18 +49,6 @@
                 <p>{{message.text}}</p>
               </div>
               <div class="actions">
-                <!-- <a title="like">
-                  <i class="green thumbs up icon"></i>
-                </a>
-                <a title="dislike">
-                  <i class="red thumbs down icon"></i>
-                </a> -->
-                <!-- <a class="ui mini label">
-                  <i class="green thumbs up icon"></i>
-                </a>
-                <a class="ui mini label">
-                  <i class="red thumbs down icon"></i>
-                </a> -->
                 <button class="ui inverted green mini icon button" title="like">
                   <i class="thumbs up icon"></i>
                 </button>
@@ -83,12 +71,6 @@
                     <p>{{threadedMessage.text}}</p>
                   </div>
                   <div class="actions">
-                    <!-- <a title="like">
-                      <i class="green thumbs up icon"></i>
-                    </a>
-                    <a title="dislike">
-                      <i class="red thumbs down icon"></i>
-                    </a> -->
                     <button class="ui inverted green mini icon button" title="like">
                       <i class="thumbs up icon"></i>
                     </button>
@@ -134,37 +116,8 @@
             Post
           </a>
         </div>
-        <!-- <div class="ui feed" [class.isMobile]="this.isMobileView" (click)="hideMobileTopics()">
-          <div *ngFor="let message of topicMessages" class="event">
-            <div class="label">
-              <img [src]="message.user.img">
-            </div>
-            <div class="content">
-              <div class="summary">
-                <a>{{message.user.name}}</a>
-                <div class="date" [title]="message.timestamp">
-                  {{message.timestamp | date:'shortTime'}}
-                </div>
-              </div>
-              <div class="extra text">{{message.text}}</div>
-              <div class="meta">
-                <a class="like">
-                  <i class="like icon"></i> 5 Likes
-                  <i class="thumbs up icon"></i> 5 Likes
-                  <i class="utensils icon"></i> 5 Likes
-                </a>
-              </div>
-            </div>
-          </div>
-          <textarea>lkjlkjlkj</textarea>
-        </div> -->
+        <br/><br/><br/>
       </div>
-      <!-- <div class="ui container" style="width:85vw;">
-        <div class="ui action input" style="width:100%">
-          <input type="text" [(ngModel)]="newComment" placeholder="Compose your message...">
-          <div class="ui button" (click)="submitComment()">Reply</div>
-        </div>
-      </div> -->
     </div>
   </div>
 </div>

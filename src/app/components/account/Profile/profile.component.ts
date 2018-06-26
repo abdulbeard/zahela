@@ -34,7 +34,7 @@ export class ProfileComponent implements AfterViewInit {
 
   private inEditMode: boolean = false;
   private user: DisplayGuest = new DisplayGuest("Abdul", ["self", "awesome"], "I like big butts and I cannot lie",
-  "www.facebook.com", "www.twitter.com", "www.instagram.com", "", "abdul.zaheer@ncr.com", 
+  "www.facebook.com", "www.twitter.com", "www.instagram.com", "", "whatchulooking@for.com", 
   ["spelunking", "calligraphy", "heavy metal", "spelunking", "calligraphy", "heavy metal", "spelunking", "calligraphy", "heavy metal"], 
   "www.google.com", "www.google.com", Gender.Male);
 

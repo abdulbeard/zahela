@@ -10,6 +10,8 @@ import { DisplayChannel } from '../../../models/DisplayChannel';
 import { ImageCropperComponent, CropperSettings } from 'ng2-image-cropper';
 import { AuthService } from '../../../services/AuthService';
 import { AvatarService } from '../../../services/AvatarService';
+import { ModalService, ModalConfigBase } from '../../../services/ModalService';
+import { ModalComponent } from '../../modals/recipe/modal.component';
 
 @Component({
   selector: 'app-account-polo',
@@ -99,5 +101,16 @@ export class PoloComponent implements AfterViewInit {
         Data: data
       }
     };
+  }
+
+  showModal(){
+    ModalService.showModal(new ModalConfigBase({
+      text:"aaaaaaa",
+    },
+    ModalComponent,
+    (success: boolean) => {
+      console.log(this, success);
+      return false;
+    }));
   }
 }

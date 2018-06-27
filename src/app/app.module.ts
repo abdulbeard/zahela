@@ -36,6 +36,8 @@ import { UpdatesComponent } from './components/account/Updates/updates.component
 import { RsvpComponent } from './components/account/RSVP/rsvp.component';
 import { DietaryRestrictionsComponent } from './components/account/DietaryRestrictions/dietary-restrictions.component';
 import { PoloComponent } from './components/account/Polo/polo.component';
+import { ModalComponent } from './components/modals/recipe/modal.component';
+import { ModalService } from './services/ModalService';
 
 const appRoutes: Routes = [
   { path: AppRoutes.home, component: HomeComponent },
@@ -70,7 +72,7 @@ const appRoutes: Routes = [
     AppComponent, HtmlSanitizer, UrlSanitizer, SlackFeedComponent, MessagesComponent, HomeComponent, FriendsComponent, 
     AdminComponent, PlaylistComponent, LoginComponent, AccountComponent, FaqComponent, RecipeComponent, RecipeDetailComponent,
     ForumComponent, ImageCropperComponent, ProfileComponent, UpdatesComponent, RsvpComponent, DietaryRestrictionsComponent,
-    PoloComponent
+    PoloComponent, ModalComponent
   ],
   imports: [
     BrowserModule, HttpModule, FormsModule, RouterModule.forRoot(
@@ -96,6 +98,9 @@ const appRoutes: Routes = [
     //   }
     // })
   ],
+  entryComponents: [
+    ModalComponent,
+  ],
   exports: [RouterModule],
   providers: [
       AuthService, 
@@ -105,6 +110,7 @@ const appRoutes: Routes = [
       AvatarService, 
       NotificationsService, 
       VersionService,
+      ModalService,
       JwtHelper,
       {
         provide: HTTP_INTERCEPTORS,

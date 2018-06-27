@@ -1,3 +1,8 @@
+<div class="modal-wrapper" [class.hidden]="!showModal">
+    <div class="modal-content">
+        <ng-template #modalContent></ng-template>
+    </div>
+</div>
 <div class="ui large secondary pointing menu mobile" *ngIf="this.isMobileView">
     <a class="item mainMenuItem" routerLinkActive="active" *ngIf="showHomeLink" (click)="showSidebar()">
         <i class="content icon"></i>

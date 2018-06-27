@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild, ViewContainerRef, ComponentFactoryResolver } from '@angular/core';
 import { AfterViewChecked } from '@angular/core';
 import { RouterModule, ActivatedRoute, NavigationExtras, Router } from '@angular/router'
 import { AuthService } from './services/AuthService';
@@ -9,6 +9,8 @@ import { NotificationsService } from './services/NotificationsService';
 import { Title } from '@angular/platform-browser';
 import { VersionService } from './services/VersionService';
 import { TokenUtils } from './utils/TokenUtils';
+import { ModalService } from './services/ModalService';
+import { ModalComponent } from './components/modals/recipe/modal.component';
 
 @Component({
   selector: 'app-root',
@@ -18,6 +20,9 @@ import { TokenUtils } from './utils/TokenUtils';
 })
 export class AppComponent implements AfterViewChecked {
 
+  @ViewChild('modalContent', { read: ViewContainerRef })
+  modalContent: ViewContainerRef;
+  
   ngAfterViewChecked(): void {
     this.refreshNavigationLinks();
   }
@@ -25,7 +30,8 @@ export class AppComponent implements AfterViewChecked {
   constructor(public authService: AuthService, private router: Router,
     private notificationsService: NotificationsService,
     private titleService: Title,
-    private versionService: VersionService) {
+    private versionService: VersionService,
+    private componentFactoryResolver: ComponentFactoryResolver) {
     this.authService = authService;
     this.authService.logEvent.subscribe(logEvent => {
       this.refreshNavigationLinks();
@@ -37,11 +43,27 @@ export class AppComponent implements AfterViewChecked {
     window.onresize = () => this.setMobileView(window);
     window.onload = () => this.getNotificationCount();
     window.onfocus = () => this.checkForUpdates();
+
+    ModalService.modalObservable.subscribe(x => {
+      if (x.visible) {
+        let componentFactory = this.componentFactoryResolver.resolveComponentFactory(ModalComponent);
+        this.modalContent.clear();
+        let componentRef = this.modalContent.createComponent(componentFactory);
+        componentRef.instance['data'] = x.data;
+        componentRef.instance['onDismiss'] = x.onDismiss;
+        this.showModal = true;
+      }
+      else {
+        this.modalContent.clear();
+        this.showModal = false;
+       }
+    });
   }
   title = 'app';
   showSideBar = false;
   screenWidth: number = 1000;
   isMobileView: boolean = false;
+  showModal: boolean = false;
 
   setMobileView(window: Window) {
     this.screenWidth = window.innerWidth;

@@ -5,8 +5,10 @@
 
 .ui.large.secondary.pointing.menu {
     overflow-x: scroll;
-    border-bottom: 0 !important;
+    /* border-bottom: 0 !important; */
     background: linear-gradient(to right, lightblue, aliceblue);
+    margin-top: auto;
+    margin-bottom: 1.5vh;
 }
 
 .ui.large.secondary.pointing.menu.mobile {
@@ -170,13 +172,13 @@ svg {
 }
 
 .footer .links {
-  overflow-x: scroll;
   width: 88vw;
   padding-top: 3vh;
 }
 
 .logo {
-  width: 10vw;
+  margin-left: 2vw;
+  width: 7vw;
   float: left;
   color: white;
 }

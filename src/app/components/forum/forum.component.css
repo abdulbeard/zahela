@@ -132,6 +132,10 @@ div.content {
     margin-top: 2vh;
 }
 
+.content {
+    display: inline-block;
+}
+
 
 @keyframes selectedComment {
     0% { box-shadow: 0 0 20px #ff0000; }

@@ -1,3 +1,28 @@
 .ui.stackable.cards {
     padding-left: 1em;
+    padding-top: 10vh;
+}
+
+.ui.stackable.cards.cardSelected {
+    padding-top: 30vh;
+}
+
+p.description-text {
+    max-width: auto;
+    width: auto 500ch;
+    white-space: nowrap;
+    overflow: hidden;
+    display: block;
+    text-overflow: ellipsis;
+}
+
+.ui.card.selected {
+    position: relative;
+    top: -20vh;
+}
+
+.ui.card.selected p.description-text {
+    width: auto;
+    text-overflow: unset;
+    white-space: normal;
 }

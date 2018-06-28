@@ -30,14 +30,13 @@ export class AccountComponent implements AfterViewInit {
   constructor(private location: Location, private route: ActivatedRoute,
     private avatarService: AvatarService,
     private notificationsService: NotificationsService) {
+    this.notificationCount = NotificationsService.getCurrentNotificationCount();
+    this.updateNotificationCount();
     NotificationsService.NotificationCount.subscribe(x => {
       this.notificationCount = x;
-      var updatesAccountMenu = this.accountMenu[2];
-      if (this.notificationCount > 0) {
-        updatesAccountMenu.displayText = `(${this.notificationCount}) ${updatesAccountMenu.displayText}`;
-        if (this.notificationCount > 4) {
-          FaviconUtils.toNotificationsPending();
-        }
+      this.updateNotificationCount();
+      if (this.notificationCount > 4) {
+        FaviconUtils.toNotificationsPending();
       }
       else {
         FaviconUtils.toNormal();
@@ -46,6 +45,13 @@ export class AccountComponent implements AfterViewInit {
   }
 
   private notificationCount: number;
+
+  private updateNotificationCount(): void {
+    var updatesAccountMenu = this.accountMenu[2];
+    if (this.notificationCount > 0) {
+      updatesAccountMenu.displayText = `(${this.notificationCount}) ${updatesAccountMenu.displayText}`;
+    }
+  }
 
   accountMenu: DisplayMenu[] = [
     new DisplayMenu(Routes.accountProfile, false, "Profile"),

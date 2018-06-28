@@ -38,6 +38,7 @@ import { DietaryRestrictionsComponent } from './components/account/DietaryRestri
 import { PoloComponent } from './components/account/Polo/polo.component';
 import { ModalComponent } from './components/modals/recipe/modal.component';
 import { ModalService } from './services/ModalService';
+import { FriendsService } from './services/FriendsService';
 
 const appRoutes: Routes = [
   { path: AppRoutes.home, component: HomeComponent },
@@ -52,6 +53,7 @@ const appRoutes: Routes = [
   { path: AppRoutes.messagesExtended, component: MessagesComponent },
   { path: AppRoutes.messages, component: MessagesComponent },
   { path: AppRoutes.friends, component: FriendsComponent, canActivate: [AuthService], },
+  { path: AppRoutes.friendsExtended, component: FriendsComponent, canActivate: [AuthService], },
   { path: AppRoutes.admin, component: AdminComponent, canActivate: [AuthService] },
   { path: AppRoutes.hukaChaka, component: HomeComponent, canActivate: [AuthService] },
   { path: AppRoutes.login, component: LoginComponent },
@@ -111,6 +113,7 @@ const appRoutes: Routes = [
       NotificationsService, 
       VersionService,
       ModalService,
+      FriendsService,
       JwtHelper,
       {
         provide: HTTP_INTERCEPTORS,

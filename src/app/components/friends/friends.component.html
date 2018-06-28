@@ -1,8 +1,13 @@
-<div class="ui stackable cards">
-  <div *ngFor="let friend of friends; let i = index;" class="ui blue card">
-    <div class="ui slide masked reveal image">
+<div class="ui stackable cards" [class.cardSelected]="cardSelected">
+  <div *ngFor="let friend of friends; let i = index;" class="ui blue link card" 
+    [class.selected]="isSelectedFriend(friend)"
+    (click)="selectFriend(friend)">
+    <!-- <div class="ui slide masked reveal image">
       <img [src]="friend.primaryImage | sanitizeUrl" class="visible content">
       <img [src]="friend.secondaryImage | sanitizeUrl" class="hidden content">
+    </div> -->
+    <div class="ui image">
+      <img [src]="friend.primaryImage | sanitizeUrl" class="visible content">
     </div>
     <div class="content">
       <a class="header">{{friend.name}}</a>
@@ -11,7 +16,7 @@
         <span>Friend since January 2013</span>
       </div>
       <div class="description">
-        <p>{{friend.description}}</p>
+        <p class="description-text">{{friend.description}}</p>
         <p>{{friend.getPronounText(true)}} loves spending time on {{friend.getInterestsText()}}</p>
       </div>
     </div>

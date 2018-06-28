@@ -8,7 +8,7 @@
     /* border-bottom: 0 !important; */
     background: linear-gradient(to right, lightblue, aliceblue);
     margin-top: auto;
-    margin-bottom: 1.5vh;
+    /* margin-bottom: auto; */
 }
 
 .ui.large.secondary.pointing.menu.mobile {
@@ -168,17 +168,18 @@ svg {
   background-color: black;
   color: white;
   text-align: center;
-  min-height: 12vh;
+  min-height: 17vh;
 }
 
 .footer .links {
-  width: 88vw;
-  padding-top: 3vh;
+  width: 70vw;
+  padding-top: 4vh;
 }
 
 .logo {
   margin-left: 2vw;
-  width: 7vw;
+  padding-top: 1vw;
+  width: 15vw;
   float: left;
   color: white;
 }

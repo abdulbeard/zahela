@@ -10,6 +10,7 @@ export class Routes {
     public static readonly messagesExtended: string = 'messages/:channel';
     public static readonly messages: string = 'messages';
     public static readonly friends: string = 'friends';
+    public static readonly friendsExtended: string = 'friends/:id';
     public static readonly admin: string = 'admin';
     public static readonly hukaChaka: string = 'hukaChaka';
     public static readonly login: string = 'login';

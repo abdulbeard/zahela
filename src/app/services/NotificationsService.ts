@@ -20,4 +20,7 @@ export class NotificationsService {
         NotificationsService.notificationCount = notificationCount;
         this.notificationCountSubject.next(notificationCount);
     }
+    public static getCurrentNotificationCount() : number {
+        return this.notificationCount;
+    }
 }

@@ -19,3 +19,7 @@ div {
     width: 80%;
     min-height: 10vh;
   }
+
+.ui.segment {
+    margin: auto;
+}

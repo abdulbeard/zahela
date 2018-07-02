@@ -39,6 +39,8 @@ import { PoloComponent } from './components/account/Polo/polo.component';
 import { ModalComponent } from './components/modals/recipe/modal.component';
 import { ModalService } from './services/ModalService';
 import { FriendsService } from './services/FriendsService';
+import { GuestCardComponent } from './components/guest-card/guest-card.component';
+import { GuestDetailComponent } from './components/guest-detail/guest-detail.component';
 
 const appRoutes: Routes = [
   { path: AppRoutes.home, component: HomeComponent },
@@ -74,7 +76,7 @@ const appRoutes: Routes = [
     AppComponent, HtmlSanitizer, UrlSanitizer, SlackFeedComponent, MessagesComponent, HomeComponent, FriendsComponent, 
     AdminComponent, PlaylistComponent, LoginComponent, AccountComponent, FaqComponent, RecipeComponent, RecipeDetailComponent,
     ForumComponent, ImageCropperComponent, ProfileComponent, UpdatesComponent, RsvpComponent, DietaryRestrictionsComponent,
-    PoloComponent, ModalComponent
+    PoloComponent, ModalComponent, GuestCardComponent, GuestDetailComponent
   ],
   imports: [
     BrowserModule, HttpModule, FormsModule, RouterModule.forRoot(

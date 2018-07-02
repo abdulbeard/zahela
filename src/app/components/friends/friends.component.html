@@ -1,11 +1,14 @@
-<div class="ui stackable cards" [class.cardSelected]="cardSelected">
+<app-guest-detail [guest]="friends[0]"></app-guest-detail>
+
+<!-- <div class="ui stackable cards" [class.cardSelected]="cardSelected">
+  <app-guest-card *ngFor="let friend of friends" [guest]="friend"></app-guest-card>
+</div> -->
+
+
+<!-- <div class="ui stackable cards" [class.cardSelected]="cardSelected">
   <div *ngFor="let friend of friends; let i = index;" class="ui blue link card" 
     [class.selected]="isSelectedFriend(friend)"
     (click)="selectFriend(friend)">
-    <!-- <div class="ui slide masked reveal image">
-      <img [src]="friend.primaryImage | sanitizeUrl" class="visible content">
-      <img [src]="friend.secondaryImage | sanitizeUrl" class="hidden content">
-    </div> -->
     <div class="ui image">
       <img [src]="friend.primaryImage | sanitizeUrl" class="visible content">
     </div>
@@ -34,4 +37,4 @@
       </div>
     </div>
   </div>
-</div>
+</div> -->

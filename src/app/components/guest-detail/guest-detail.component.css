@@ -1,0 +1,28 @@
+p.description-text {
+    max-width: auto;
+    width: auto 500ch;
+    white-space: nowrap;
+    overflow: hidden;
+    display: block;
+    text-overflow: ellipsis;
+}
+
+.ui.card.selected {
+    position: relative;
+    top: -20vh;
+}
+
+.ui.card {
+    margin-right: 1vw;
+}
+
+.ui.card.selected p.description-text {
+    width: auto;
+    text-overflow: unset;
+    white-space: normal;
+}
+
+.ui.segment {
+    display: inline-block;
+    width: 90vw;
+}

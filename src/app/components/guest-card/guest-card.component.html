@@ -1,0 +1,30 @@
+<div class="ui blue link card" 
+  (click)="selectFriend(friend)">
+  <div class="ui image">
+    <img [src]="guest.primaryImage | sanitizeUrl" class="visible content">
+  </div>
+  <div class="content">
+    <a class="header">{{guest.name}}</a>
+    <div *ngFor="let category of guest.categories" class="ui red horizontal label">{{category}}</div>
+    <div class="meta">
+      <span>Friend since January 2013</span>
+    </div>
+    <div class="description">
+      <p class="description-text">{{guest.description}}</p>
+      <p>{{guest.getPronounText(true)}} loves spending time on {{guest.getInterestsText()}}</p>
+    </div>
+  </div>
+  <div class="extra content">
+    <div class="right floated">
+      <a *ngIf="guest.facebookUrl" [href]="guest.facebookUrl" target="_blank">
+        <i class="facebook icon"></i>
+      </a>
+      <a *ngIf="guest.slackUrl" [href]="guest.slackUrl" target="_blank">
+        <i class="slack icon"></i>
+      </a>
+      <a *ngIf="guest.email" [href]="guest.getMailToHref()">
+        <i class="mail icon"></i>
+      </a>
+    </div>
+  </div>
+</div>

@@ -169,6 +169,7 @@ svg {
   color: white;
   text-align: center;
   min-height: 17vh;
+  display: inline-block;
 }
 
 .footer .links {

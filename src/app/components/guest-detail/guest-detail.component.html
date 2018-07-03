@@ -14,7 +14,18 @@
       quo, usu odio brute at. Qui te porro electram, ea dico facete utroque quo. Populo quodsi te eam, wisi everti eos ex,
       eum elitr altera utamur at. Quodsi convenire mnesarchum eu per, quas minimum postulant per id.</p>
   </div>
-  <!-- <div class="ui left floated left aligned column"> -->
+  <div class="ui horizontal divider">
+    <h2>TESTIMONIALS</h2>
+    <!-- TESTIMONIALS -->
+  </div>
+  <div class="ui form">
+    <div class="field reply">
+      <textarea rows="3" [(ngModel)]="newComment" [placeholder]="'Say something about '+guest.name"></textarea>
+    </div>
+    <a class="ui mini blue label" (click)="submitTestimonial()">
+      Post
+    </a>
+  </div>
   <div class="ui feed">
     <div class="event">
       <div class="label">
@@ -39,4 +50,3 @@
       </div>
   </div>
   </div>
-  <!-- </div> -->

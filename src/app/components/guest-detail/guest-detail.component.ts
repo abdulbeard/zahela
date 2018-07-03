@@ -20,4 +20,9 @@ export class GuestDetailComponent implements AfterViewInit {
   selectFriend(friend: DisplayGuest) {
     console.log(friend);
   }
+
+  public newTestimonial: string;
+  public submitTestimonial() {
+    console.log(this.newTestimonial);
+  }
 }

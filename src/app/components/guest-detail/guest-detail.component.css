@@ -40,3 +40,7 @@ p.description-text {
     background-color: lightgrey !important;
     margin-bottom: .5em !important;
 }
+
+.ui.horizontal.divider {
+    padding: 2vw;
+}

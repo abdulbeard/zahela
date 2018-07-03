@@ -26,3 +26,17 @@ p.description-text {
     display: inline-block;
     width: 90vw;
 }
+
+.ui.container {
+    display: inline-block;
+}
+
+.ui.feed {
+    width: 90vw;
+}
+.event {
+    border: 1px solid darkgrey;
+    border-radius: 3px;
+    background-color: lightgrey !important;
+    margin-bottom: .5em !important;
+}

@@ -65,7 +65,7 @@ export class DisplayGuest {
         if (this.gender === Gender.Female) {
             return firstCapital ? "She is" : "she is";
         }
-        if (this.gender === Gender.NonSpecific) {
+        if (this.gender === Gender.NonBinary) {
             return firstCapital ? "They are" : "they are";
         }
     }
@@ -92,5 +92,5 @@ export class DietaryRestrictionsDisplayGuest extends DisplayGuest {
 export enum Gender {
     Male,
     Female,
-    NonSpecific
+    NonBinary
 }

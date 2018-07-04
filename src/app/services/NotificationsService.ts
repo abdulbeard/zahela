@@ -10,7 +10,7 @@ export class NotificationsService {
     constructor(private http: Http, private httpClient: HttpClient){}
 
     public getNotificationCountForUser(): Observable<HttpResponse<number>> {
-        return this.httpClient.get<number>(`${environment.backendUrl}/user/notificationcount`, {observe: 'response'});
+        return this.httpClient.get<number>(`${environment.backendUrl}/user/notificationcount/9ce7ab2f-eebd-4658-bf28-1fbfded6a967`, {observe: 'response'});
     }
 
     private static notificationCount: number;

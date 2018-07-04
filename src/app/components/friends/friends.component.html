@@ -1,8 +1,11 @@
-<app-guest-detail [guest]="friends[0]"></app-guest-detail>
+<!-- <app-guest-detail [guest]="friends[0]"></app-guest-detail> -->
 
-<!-- <div class="ui stackable cards" [class.cardSelected]="cardSelected">
-  <app-guest-card *ngFor="let friend of friends" [guest]="friend"></app-guest-card>
-</div> -->
+<div class="ui stackable cards" [class.cardSelected]="cardSelected">
+  <app-guest-card *ngFor="let friend of friends" 
+    [guest]="friend"
+    (click)="selectFriend(friend)">
+  </app-guest-card>
+</div>
 
 
 <!-- <div class="ui stackable cards" [class.cardSelected]="cardSelected">

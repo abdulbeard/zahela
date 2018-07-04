@@ -1,6 +1,7 @@
 import { Injectable } from "@angular/core";
 import { DisplayGuest, Gender } from "../models/DisplayGuest";
 import { Observable } from "rxjs/Observable";
+import { ObserveOnMessage } from "rxjs/operators/observeOn";
 
 @Injectable()
 export class FriendsService {
@@ -13,6 +14,25 @@ export class FriendsService {
             this.friend3, 
             this.friend4,
         ]);
+    }
+
+    getGuestById(id: string) : Observable<DisplayGuest> {
+        if(id === this.friend.name){
+            return Observable.of(this.friend);
+        }
+        if(id === this.friend1.name){
+            return Observable.of(this.friend1);
+        }
+        if(id === this.friend2.name){
+            return Observable.of(this.friend2);
+        }
+        if(id === this.friend3.name){
+            return Observable.of(this.friend3);
+        }
+        if(id === this.friend4.name){
+            return Observable.of(this.friend4);
+        }
+        return Observable.of(DisplayGuest.default());
     }
 
 

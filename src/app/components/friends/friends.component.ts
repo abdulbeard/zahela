@@ -8,8 +8,9 @@ import * as $ from 'jquery';
 import { SlackReactionsService } from '../../services/SlackReactionsService';
 import { DisplayChannel } from '../../models/DisplayChannel';
 import { DisplayGuest, Gender } from '../../models/DisplayGuest';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { FriendsService } from '../../services/FriendsService';
+import { Routes } from '../../constants/Routes';
 
 @Component({
   selector: 'app-friends',
@@ -21,14 +22,8 @@ import { FriendsService } from '../../services/FriendsService';
 export class FriendsComponent implements AfterViewInit {
   ngAfterViewInit(): void {
   }
-  constructor(private route: ActivatedRoute, private c: ChangeDetectorRef,
-    private friendsService: FriendsService) {
-    this.route.params.subscribe(param => {
-      this.friendId = param["id"];
-      console.log(this.friendId);
-    }, (Error) => {
-      console.log(Error);
-    });
+  constructor(private friendsService: FriendsService, 
+    private router: Router) {
     this.friendsService.getFriendsForUser().subscribe(x => {
       this.friends = x;
     });
@@ -46,11 +41,9 @@ export class FriendsComponent implements AfterViewInit {
   }
 
   selectFriend(friend: DisplayGuest) {
-    this.c.detectChanges();
+    this.router.navigateByUrl(`${Routes.friends}\/${friend.name}`);
   }
 
   private friendId: string;
-
-  
   
 }

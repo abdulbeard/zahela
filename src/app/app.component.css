@@ -210,3 +210,9 @@ svg {
 .hidden {
   display: none;
 }
+
+* {
+  /* font-family: 'Alex Brush';
+  font-size: 30px; */
+  font-family: 'Montserrat';
+}

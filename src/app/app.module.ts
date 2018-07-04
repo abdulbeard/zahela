@@ -55,7 +55,7 @@ const appRoutes: Routes = [
   { path: AppRoutes.messagesExtended, component: MessagesComponent },
   { path: AppRoutes.messages, component: MessagesComponent },
   { path: AppRoutes.friends, component: FriendsComponent, canActivate: [AuthService], },
-  { path: AppRoutes.friendsExtended, component: FriendsComponent, canActivate: [AuthService], },
+  { path: AppRoutes.friendsExtended, component: GuestDetailComponent, canActivate: [AuthService], },
   { path: AppRoutes.admin, component: AdminComponent, canActivate: [AuthService] },
   { path: AppRoutes.hukaChaka, component: HomeComponent, canActivate: [AuthService] },
   { path: AppRoutes.login, component: LoginComponent },

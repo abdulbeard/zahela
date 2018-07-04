@@ -1,22 +1,35 @@
 <div class="ui centered grid">
   <div class="ui segment">
-    <h1>Abdul DaBauss</h1>
-    <img class="ui medium left floated rounded image" [src]="guest.primaryImage | sanitizeUrl">
-    <!-- <img class="ui small left floated image" src="/images/wireframe/text-image.png"> -->
-    <p>Te eum doming eirmod, nominati pertinacia argumentum ad his. Ex eam alia facete scriptorem, est autem aliquip detraxit
-      at. Usu ocurreret referrentur at, cu epicurei appellantur vix. Cum ea laoreet recteque electram, eos choro alterum
-      definiebas in. Vim dolorum definiebas an. Mei ex natum rebum iisque.</p>
-    <!-- <img class="ui small right floated image" src="/images/wireframe/text-image.png"> -->
-    <p>Audiam quaerendum eu sea, pro omittam definiebas ex. Te est latine definitiones. Quot wisi nulla ex duo. Vis sint solet
-      expetenda ne, his te phaedrum referrentur consectetuer. Id vix fabulas oporteat, ei quo vide phaedrum, vim vivendum
-      maiestatis in.</p>
-    <p>Eu quo homero blandit intellegebat. Incorrupte consequuntur mei id. Mei ut facer dolores adolescens, no illum aperiri
-      quo, usu odio brute at. Qui te porro electram, ea dico facete utroque quo. Populo quodsi te eam, wisi everti eos ex,
-      eum elitr altera utamur at. Quodsi convenire mnesarchum eu per, quas minimum postulant per id.</p>
-  </div>
-  <div class="ui horizontal divider">
-    <h2>TESTIMONIALS</h2>
-    <!-- TESTIMONIALS -->
+    <h1>{{guest.name}}</h1>
+    <img 
+      *ngIf="guest.primaryImage" 
+      class="ui medium left floated rounded image" 
+      [src]="guest.primaryImage | sanitizeUrl">
+    <p>{{guest.description}}</p>
+    <p>{{guest.getPronounText(true)}} interested in: </p>
+    <div class="ui list">
+      <div class="item" *ngFor="let interest of guest.interests" >
+        <i class="hand point right icon"></i>
+        <div class="content">
+          <div class="header">{{interest}}</div>
+          <!-- <div class="description">This text will always have a left margin to make sure it sits alongside your icon</div> -->
+        </div>
+      </div>
+    </div>
+    <div class="contact-info">
+      <button class="ui circular facebook icon button">
+        <i class="facebook icon"></i>
+      </button>
+      <button class="ui circular twitter icon button">
+        <i class="twitter icon"></i>
+      </button>
+      <button class="ui circular instagram icon button">
+        <i class="instagram icon"></i>
+      </button>
+      <button class="ui circular envelope icon button">
+        <i class="envelope icon"></i>
+      </button>
+    </div>
   </div>
   <div class="ui form">
     <div class="field reply">
@@ -25,6 +38,9 @@
     <a class="ui mini blue label" (click)="submitTestimonial()">
       Post
     </a>
+  </div>
+  <div class="ui horizontal divider">
+    <h4>Testimonials from others</h4>
   </div>
   <div class="ui feed">
     <div class="event">

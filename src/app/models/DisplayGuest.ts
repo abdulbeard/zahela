@@ -60,13 +60,13 @@ export class DisplayGuest {
 
     public getPronounText(firstCapital: boolean): string {
         if (this.gender === Gender.Male) {
-            return firstCapital ? "He" : "he";
+            return firstCapital ? "He is" : "he is";
         }
         if (this.gender === Gender.Female) {
-            return firstCapital ? "She" : "she";
+            return firstCapital ? "She is" : "she is";
         }
         if (this.gender === Gender.NonSpecific) {
-            return firstCapital ? "They" : "they";
+            return firstCapital ? "They are" : "they are";
         }
     }
 }

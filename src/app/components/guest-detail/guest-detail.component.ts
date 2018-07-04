@@ -1,5 +1,7 @@
 import { Component, OnInit, AfterViewInit, Input } from '@angular/core';
 import { DisplayGuest } from '../../models/DisplayGuest';
+import { ActivatedRoute } from '@angular/router';
+import { FriendsService } from '../../services/FriendsService';
 
 @Component({
   selector: 'app-guest-detail',
@@ -14,7 +16,15 @@ export class GuestDetailComponent implements AfterViewInit {
   @Input()
   guest: DisplayGuest;
   
-  constructor() {    
+  constructor(private route: ActivatedRoute, private friendsService: FriendsService) {    
+    this.route.params.subscribe(x => {
+      let guestId = x["id"];
+      if (guestId) {
+        this.friendsService.getGuestById(guestId).subscribe(x => {
+          this.guest = x;
+        });
+      }
+    });
   }
 
   selectFriend(friend: DisplayGuest) {

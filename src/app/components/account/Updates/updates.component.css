@@ -6,8 +6,8 @@
 .event {
     border: 1px solid darkgrey;
     border-radius: 3px;
-    background-color: lightgrey !important;
     margin-bottom: .5em !important;
+    background-color: rgba(211,211,211, 0.5) !important;
 }
 
 .accountMenu {

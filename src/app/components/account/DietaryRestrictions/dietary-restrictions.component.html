@@ -1,7 +1,7 @@
 <div class="ui container">
     <div class="ui accordion">
         <div *ngFor="let guest of linkedGuests; let i = index;">
-            <div [class]="guest.user.getCssClass('title')" (click)="toggle(guest)">
+            <div [class]="guest.getCssClass('title')" (click)="toggle(guest)">
                 <i class="dropdown icon"></i>
                 <img class="ui avatar image" [src]="guest.user.AvatarImage | sanitizeUrl"> {{guest.user.UserName}}
                 <div class="ui green horizontal label titleLabel" *ngFor="let tag of guest.user.ReligiousRestrictions" [attr.data-tooltip]="'Religious'"
@@ -11,7 +11,7 @@
                 <div class="ui red horizontal label titleLabel" *ngFor="let tag of guest.user.Allergies" [attr.data-tooltip]="'Allergy'" data-inverted="">{{tag}}</div>
                 <div class="ui divider"></div>
             </div>
-            <div [class]="guest.user.getCssClass('content')">
+            <div [class]="guest.getCssClass('content')">
                 <div class="ui segment">
                     <p>Please choose any number of categories below, or instead write to us</p>
                     <div>

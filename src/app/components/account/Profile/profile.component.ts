@@ -25,7 +25,6 @@ export class ProfileComponent implements AfterViewInit {
   private contactInfos: Array<any> = []
 
   getSharedStatusText(entity: string, status: boolean) : string {
-    console.log(this.contactInfos);
     return status ? `${entity} is visible to all guests` : `${entity} is only visible to the hosts.`;
   }
 

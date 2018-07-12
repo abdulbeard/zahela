@@ -1,14 +1,11 @@
 <div class="ui centered grid">
   <div class="ui segment">
     <h1>{{guest.Username}}</h1>
-    <img 
-      *ngIf="guest.AvatarImage" 
-      class="ui medium left floated rounded image" 
-      [src]="guest.AvatarImage | sanitizeUrl">
+    <img *ngIf="guest.AvatarImage" class="ui medium left floated rounded image" [src]="guest.AvatarImage | sanitizeUrl">
     <p>{{guest.Description}}</p>
     <p>{{guest.getPronounText(true)}} interested in: </p>
     <div class="ui list">
-      <div class="item" *ngFor="let interest of guest.interests" >
+      <div class="item" *ngFor="let interest of guest.Interests">
         <i class="hand point right icon"></i>
         <div class="content">
           <div class="header">{{interest}}</div>
@@ -17,18 +14,18 @@
       </div>
     </div>
     <div class="contact-info">
-      <button class="ui circular facebook icon button">
+      <a *ngIf="guest.FacebookUrl.IsPublic" class="ui circular facebook icon button" [attr.href]="guest.FacebookUrl.Uri" target="__blank">
         <i class="facebook icon"></i>
-      </button>
-      <button class="ui circular twitter icon button">
+      </a>
+      <a *ngIf="guest.TwitterUrl.IsPublic" class="ui circular twitter icon button" [href]="guest.TwitterUrl.Uri" target="__blank">
         <i class="twitter icon"></i>
-      </button>
-      <button class="ui circular instagram icon button">
+      </a>
+      <a *ngIf="guest.InstagramUrl.IsPublic" class="ui circular instagram icon button" [href]="guest.InstagramUrl.Uri" target="__blank">
         <i class="instagram icon"></i>
-      </button>
-      <button class="ui circular envelope icon button">
+      </a>
+      <a *ngIf="guest.Email.IsPublic" class="ui circular envelope icon button" [href]="'mailTo: ' + guest.Email.Uri" target="__blank">
         <i class="envelope icon"></i>
-      </button>
+      </a>
     </div>
   </div>
   <div class="ui form">
@@ -64,5 +61,5 @@
           </a>
         </div>
       </div>
-  </div>
+    </div>
   </div>

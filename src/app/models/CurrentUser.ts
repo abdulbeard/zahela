@@ -43,8 +43,8 @@ export class User {
     Type: UserType;
 
     public static default(): User {
-        return new User("Jon", "Doe", ["Anonymous"], "The Doest of Jons", new ContactInfo("www.facebook.com", true),
-            new ContactInfo("www.twitter.com", true), new ContactInfo("www.instagram.com", true),
+        return new User("Jon", "Doe", ["Anonymous"], "The Doest of Jons", new ContactInfo("https://www.facebook.com", true),
+            new ContactInfo("https://www.twitter.com", true), new ContactInfo("https://www.instagram.com", true),
             new ContactInfo("jon@doe.com", true), ["Joning", "Doe-ing", "Pingpong"], "https://zahelastorage.blob.core.windows.net/zahela-assets/defaultAvatars/male-1.svg",
             [
                 "https://zahelastorage.blob.core.windows.net/zahela-assets/defaultAvatars/male-1.svg", 
@@ -52,15 +52,15 @@ export class User {
             ],
             Gender.Male, 
             [
-                new User("Jane", "Smith", ["Anonymous"], "The Doest of Jons", new ContactInfo("www.facebook.com", true),
-                    new ContactInfo("www.twitter.com", true), new ContactInfo("www.instagram.com", true),
+                new User("Jane", "Smith", ["Anonymous"], "The Doest of Jons", new ContactInfo("https://www.facebook.com", true),
+                    new ContactInfo("https://www.twitter.com", true), new ContactInfo("https://www.instagram.com", true),
                     new ContactInfo("jon@doe.com", true), ["Joning", "Doe-ing", "Pingpong"], "https://zahelastorage.blob.core.windows.net/zahela-assets/defaultAvatars/male-1.svg",
                     ["https://zahelastorage.blob.core.windows.net/zahela-assets/defaultAvatars/male-1.svg", "https://zahelastorage.blob.core.windows.net/zahela-assets/defaultAvatars/male-2.svg"],
                     Gender.Male, 
                     null, ["Peanuts"], ["Pescetarian"], ["Islam"], "I dont wike beef/chicken",
                     "Kinda don't like pansies", RSVPStatus.Coming, UserType.GuestUser),
-                new User("John", "Spawn", ["Anonymous"], "The Doest of Jons", new ContactInfo("www.facebook.com", true),
-                    new ContactInfo("www.twitter.com", true), new ContactInfo("www.instagram.com", true),
+                new User("John", "Spawn", ["Anonymous"], "The Doest of Jons", new ContactInfo("https://www.facebook.com", true),
+                    new ContactInfo("https://www.twitter.com", true), new ContactInfo("https://www.instagram.com", true),
                     new ContactInfo("jon@doe.com", true), ["Joning", "Doe-ing", "Pingpong"], "https://zahelastorage.blob.core.windows.net/zahela-assets/defaultAvatars/male-1.svg",
                     ["https://zahelastorage.blob.core.windows.net/zahela-assets/defaultAvatars/male-1.svg", "https://zahelastorage.blob.core.windows.net/zahela-assets/defaultAvatars/male-2.svg"],
                     Gender.Male, 

@@ -18,10 +18,13 @@ export class DietaryRestrictionsComponent implements AfterViewInit {
   ngAfterViewInit(): void {
   }
   constructor(authService: AuthService) {
-    this.linkedGuests = authService.getCurrentDisplayUser().LinkedGuests.map(x => new AccordionUser(x, false));
+    var user = authService.getCurrentDisplayUser();
+    if (user && user.LinkedGuests) {
+      this.linkedGuests = user.LinkedGuests.map(x => new AccordionUser(x, false));
+    }
   }
 
-  linkedGuests: AccordionUser[];
+  linkedGuests: AccordionUser[] = [];
 
   religiousRestrictions: Array<any> = [
     { name: "Bahå'i" },
@@ -50,45 +53,45 @@ export class DietaryRestrictionsComponent implements AfterViewInit {
     { name: "Shellfish", desc: "all shellfish products" }
   ]
 
-  guestHasDietaryRestriction(tag: string, guest: User): boolean {
-    return guest.DietaryRestrictions.includes(tag);
+  guestHasDietaryRestriction(tag: string, guest: AccordionUser): boolean {
+    return guest.user.DietaryRestrictions.includes(tag);
   }
 
-  guestHasReligiousRestriction(tag: string, guest: User): boolean {
-    return guest.ReligiousRestrictions.includes(tag);
+  guestHasReligiousRestriction(tag: string, guest: AccordionUser): boolean {
+    return guest.user.ReligiousRestrictions.includes(tag);
   }
 
-  guestHasAllergy(tag: string, guest: User): boolean {
-    return guest.Allergies.includes(tag);
+  guestHasAllergy(tag: string, guest: AccordionUser): boolean {
+    return guest.user.Allergies.includes(tag);
   }
 
-  addAllergy(tag: string, guest: User) {
-    if (guest.Allergies.includes(tag)) {
-      guest.Allergies = guest.Allergies.filter(x => x !== tag);
+  addAllergy(tag: string, guest: AccordionUser) {
+    if (guest.user.Allergies.includes(tag)) {
+      guest.user.Allergies = guest.user.Allergies.filter(x => x !== tag);
     }
     else {
-      guest.Allergies.push(tag);
+      guest.user.Allergies.push(tag);
     }
   }
 
-  addDietaryRestriction(tag: string, guest: User) {
-    if (guest.DietaryRestrictions.includes(tag)) {
-      guest.DietaryRestrictions = guest.DietaryRestrictions.filter(x => x !== tag);
+  addDietaryRestriction(tag: string, guest: AccordionUser) {
+    if (guest.user.DietaryRestrictions.includes(tag)) {
+      guest.user.DietaryRestrictions = guest.user.DietaryRestrictions.filter(x => x !== tag);
     }
     else {
-      guest.DietaryRestrictions.push(tag);
+      guest.user.DietaryRestrictions.push(tag);
     }
   }
-  addReligiousRestriction(tag: string, guest: User) {
-    if (guest.ReligiousRestrictions.includes(tag)) {
-      guest.ReligiousRestrictions = guest.ReligiousRestrictions.filter(x => x !== tag);
+  addReligiousRestriction(tag: string, guest: AccordionUser) {
+    if (guest.user.ReligiousRestrictions.includes(tag)) {
+      guest.user.ReligiousRestrictions = guest.user.ReligiousRestrictions.filter(x => x !== tag);
     }
     else {
-      guest.ReligiousRestrictions.push(tag);
+      guest.user.ReligiousRestrictions.push(tag);
     }
   }
 
-  save(guest: User) {
+  save(guest: AccordionUser) {
     console.log(guest);
   }
   

@@ -1,12 +1,9 @@
 import { Component, OnInit, AfterViewInit, ViewChild } from '@angular/core';
 import { EmojiDefinitions, EmojiService } from '../../../services/EmojiService';
 import { SlackMessageParsingService } from '../../../services/SlackMessageParsingService';
-import { SlackMessagesService, MessagesResponse } from '../../../services/SlackMessagesService';
+import { SlackMessagesService } from '../../../services/SlackMessagesService';
 import { UserService } from '../../../services/UserService';
-import { DisplayComment } from '../../../models/DisplayComment';
-import * as $ from 'jquery';
 import { SlackReactionsService } from '../../../services/SlackReactionsService';
-import { DisplayChannel } from '../../../models/DisplayChannel';
 import { ImageCropperComponent, CropperSettings } from 'ng2-image-cropper';
 import { AuthService } from '../../../services/AuthService';
 import { AvatarService } from '../../../services/AvatarService';
@@ -54,7 +51,7 @@ export class PoloComponent implements AfterViewInit {
       let file = event.target.files[0];
       reader.onload = () => {
         var imagePayload = {
-          UserId: currentUser.name,
+          UserId: currentUser.Username,
           Image: {
             Name: file.name,
             Size: file.size,
@@ -95,7 +92,7 @@ export class PoloComponent implements AfterViewInit {
     var currentUser = this.authService.getCurrentDisplayUser();
     console.log(currentUser);
     return {
-      UserId: currentUser.name,
+      UserId: currentUser.Username,
       Image: {
         Type: fileType,
         Data: data

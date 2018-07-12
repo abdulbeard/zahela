@@ -57,17 +57,17 @@ export class User {
                     new ContactInfo("jon@doe.com", true), ["Joning", "Doe-ing", "Pingpong"], "https://zahelastorage.blob.core.windows.net/zahela-assets/defaultAvatars/male-1.svg",
                     ["https://zahelastorage.blob.core.windows.net/zahela-assets/defaultAvatars/male-1.svg", "https://zahelastorage.blob.core.windows.net/zahela-assets/defaultAvatars/male-2.svg"],
                     Gender.Male, 
-                    null, ["Peanuts", "unfunny people"], ["pescatarian"], ["muslim"], "I dont wike beef/chicken",
+                    null, ["Peanuts"], ["Pescetarian"], ["Islam"], "I dont wike beef/chicken",
                     "Kinda don't like pansies", RSVPStatus.Coming, UserType.GuestUser),
                 new User("John", "Spawn", ["Anonymous"], "The Doest of Jons", new ContactInfo("www.facebook.com", true),
                     new ContactInfo("www.twitter.com", true), new ContactInfo("www.instagram.com", true),
                     new ContactInfo("jon@doe.com", true), ["Joning", "Doe-ing", "Pingpong"], "https://zahelastorage.blob.core.windows.net/zahela-assets/defaultAvatars/male-1.svg",
                     ["https://zahelastorage.blob.core.windows.net/zahela-assets/defaultAvatars/male-1.svg", "https://zahelastorage.blob.core.windows.net/zahela-assets/defaultAvatars/male-2.svg"],
                     Gender.Male, 
-                    null, ["Peanuts", "unfunny people"], ["pescatarian"], ["muslim"], "I dont wike beef/chicken",
+                    null, ["Peanuts"], ["Pescetarian"], ["Islam"], "I dont wike beef/chicken",
                     "Kinda don't like pansies", RSVPStatus.Coming, UserType.GuestUser)
             ]
-            , ["Peanuts", "unfunny people"], ["pescatarian"], ["muslim"], "I dont wike beef/chicken",
+            , ["Peanuts"], ["Pescatarian"], ["Islam"], "I dont wike beef/chicken",
             "Kinda don't like pansies", RSVPStatus.Coming, UserType.GuestUser);
     }
 

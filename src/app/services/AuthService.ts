@@ -8,10 +8,9 @@ import {
 } from '@angular/router';
 import { Observable, Subject } from "rxjs";
 import { Routes } from '../constants/Routes';
-import { CurrentUser } from "../models/CurrentUser";
+import { CurrentUser, User } from "../models/CurrentUser";
 import { CookieUtils } from "../utils/CookieUtils";
 import { UserPermission, UserRole } from "../constants/UserPermissions";
-import { DisplayGuest } from "../models/DisplayGuest";
 import { SlackAuthService, SlackOAuthAccessResponse } from "./SlackAuthService";
 
 @Injectable()
@@ -21,7 +20,7 @@ export class AuthService implements CanActivate, CanLoad {
     constructor(private router: Router, private slackAuthService: SlackAuthService) {
         var userCookie = CookieUtils.getCookie("user");
         if (userCookie.indexOf("SuperUser") >= 0) {
-            this.currentUser = new CurrentUser(new UserPermission(UserRole.Admin, [], []), DisplayGuest.default(), true);
+            this.currentUser = new CurrentUser(new UserPermission(UserRole.Admin, [], []), User.default(), true);
             this.logEventSubject.next(true);
             this.loggedIn = true;
         }
@@ -58,8 +57,8 @@ export class AuthService implements CanActivate, CanLoad {
         return this.currentUser ? this.currentUser : CurrentUser.guest();
     }
 
-    public getCurrentDisplayUser(): DisplayGuest {
-        return this.getCurrentUser() ? this.getCurrentUser().guestInfo : DisplayGuest.default();
+    public getCurrentDisplayUser(): User {
+        return this.getCurrentUser() ? this.getCurrentUser().guestInfo : User.default();
     }
 
     private isInUrlList(url: string, urlList: string[], addForwardSlash?: boolean) {
@@ -91,7 +90,7 @@ export class AuthService implements CanActivate, CanLoad {
         if (successful) {
             console.log("setting cookiee");
             CookieUtils.setCookie("user", "SuperUser", 365, "");
-            this.currentUser = new CurrentUser(new UserPermission(UserRole.Admin, [], []), DisplayGuest.default(), true);
+            this.currentUser = new CurrentUser(new UserPermission(UserRole.Admin, [], []), User.default(), true);
             this.logEventSubject.next(true);
             this.loggedIn = true;
             return true;

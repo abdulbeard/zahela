@@ -3,14 +3,11 @@ import { EmojiDefinitions, EmojiService } from '../../services/EmojiService';
 import { SlackMessageParsingService } from '../../services/SlackMessageParsingService';
 import { SlackMessagesService, MessagesResponse } from '../../services/SlackMessagesService';
 import { UserService } from '../../services/UserService';
-import { DisplayComment } from '../../models/DisplayComment';
-import * as $ from 'jquery';
 import { SlackReactionsService } from '../../services/SlackReactionsService';
-import { DisplayChannel } from '../../models/DisplayChannel';
-import { DisplayGuest, Gender } from '../../models/DisplayGuest';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { FriendsService } from '../../services/FriendsService';
 import { Routes } from '../../constants/Routes';
+import { User } from '../../models/CurrentUser';
 
 @Component({
   selector: 'app-friends',
@@ -29,19 +26,19 @@ export class FriendsComponent implements AfterViewInit {
     });
   }
 
-  private friends: Array<DisplayGuest>;
+  private friends: Array<User>;
 
   get cardSelected() {
     if (this.friendId) return true;
     return false;
   }
 
-  isSelectedFriend(friend: DisplayGuest) {
-    return this.friendId === friend.name;
+  isSelectedFriend(friend: User) {
+    return this.friendId === friend.Username;
   }
 
-  selectFriend(friend: DisplayGuest) {
-    this.router.navigateByUrl(`${Routes.friends}\/${friend.name}`);
+  selectFriend(friend: User) {
+    this.router.navigateByUrl(`${Routes.friends}\/${friend.Username}`);
   }
 
   private friendId: string;

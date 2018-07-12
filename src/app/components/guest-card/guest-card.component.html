@@ -1,16 +1,16 @@
 <div class="ui blue link card" 
   (click)="selectFriend(friend)">
   <div class="ui image">
-    <img [src]="guest.primaryImage | sanitizeUrl" class="visible content">
+    <img [src]="guest.AvatarImage | sanitizeUrl" class="visible content">
   </div>
   <div class="content">
-    <a class="header">{{guest.name}}</a>
-    <div *ngFor="let category of guest.categories" class="ui red horizontal label">{{category}}</div>
+    <a class="header">{{guest.Username}}</a>
+    <div *ngFor="let category of guest.Categories" class="ui red horizontal label">{{category}}</div>
     <div class="meta">
       <span>Friend since January 2013</span>
     </div>
     <div class="description">
-      <p class="description-text">{{guest.description}}</p>
+      <p class="description-text">{{guest.Description}}</p>
       <p>{{guest.getPronounText(true)}} loves spending time on {{guest.getInterestsText()}}</p>
     </div>
   </div>

@@ -7,7 +7,6 @@ import { DisplayComment } from '../../models/DisplayComment';
 import * as $ from 'jquery';
 import { SlackReactionsService } from '../../services/SlackReactionsService';
 import { DisplayChannel } from '../../models/DisplayChannel';
-import { } from 'semantic-ui-visibility';
 import { AfterViewChecked } from '@angular/core/src/metadata/lifecycle_hooks';
 
 @Component({

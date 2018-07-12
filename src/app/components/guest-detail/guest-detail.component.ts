@@ -1,7 +1,7 @@
 import { Component, OnInit, AfterViewInit, Input } from '@angular/core';
-import { DisplayGuest } from '../../models/DisplayGuest';
 import { ActivatedRoute } from '@angular/router';
 import { FriendsService } from '../../services/FriendsService';
+import { User } from '../../models/CurrentUser';
 
 @Component({
   selector: 'app-guest-detail',
@@ -14,7 +14,7 @@ export class GuestDetailComponent implements AfterViewInit {
   }
 
   @Input()
-  guest: DisplayGuest;
+  guest: User;
   
   constructor(private route: ActivatedRoute, private friendsService: FriendsService) {    
     this.route.params.subscribe(x => {
@@ -27,7 +27,7 @@ export class GuestDetailComponent implements AfterViewInit {
     });
   }
 
-  selectFriend(friend: DisplayGuest) {
+  selectFriend(friend: User) {
     console.log(friend);
   }
 

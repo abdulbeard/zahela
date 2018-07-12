@@ -1,14 +1,13 @@
 import { Component, OnInit, AfterViewInit } from '@angular/core';
-import { UserService } from '../../services/UserService';
 import { ForumService } from '../../services/ForumService';
 import { ForumTopic } from '../../models/ForumTopic';
 import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 import { Routes } from '../../constants/Routes';
-import { BasicDisplayComment, User, DisplayComment } from '../../models/DisplayComment';
+import { DisplayComment } from '../../models/DisplayComment';
 import { MobileUtils } from '../../utils/MobileUtils';
 import { AuthService } from '../../services/AuthService';
-import { DisplayGuest } from '../../models/DisplayGuest';
+import { User } from '../../models/CurrentUser';
 
 @Component({
   selector: 'app-forum',
@@ -63,7 +62,7 @@ export class ForumComponent implements AfterViewInit {
   currentTopic: ForumTopic;
   isMobileView: boolean;
   showForumTopicsMobileSidebar: boolean;
-  currentUser: DisplayGuest;
+  currentUser: User;
   newComment: string;
 
   mobileSidebarTopicSelected(topic: ForumTopic) {
@@ -81,7 +80,7 @@ export class ForumComponent implements AfterViewInit {
           topicId = element.Id;
           element.Active = true;
           this.currentTopic = element;
-          this.forumService.getMessagesForTopic(element.Id, this.currentUser.name).subscribe(
+          this.forumService.getMessagesForTopic(element.Id, this.currentUser.Username).subscribe(
             //this.forumService.getThreadedMessagesForTopic(element.Id, this.currentUser.name).subscribe(            
             x => { this.topicMessages = x; console.log(this.topicMessages); },
             error => console.log(error));
@@ -107,7 +106,7 @@ export class ForumComponent implements AfterViewInit {
         parentComment.threadComments = new Array<DisplayComment>();
       }
       this.forumService.addComment(
-        new DisplayComment({ name: this.currentUser.name, img: "" }, currentComment.currentReply, new Date()),
+        new DisplayComment({ name: this.currentUser.Username, img: "" }, currentComment.currentReply, new Date()),
         this.currentTopic.Id, parentComment.id).subscribe(x => {
           currentComment.currentReply = "";
         }, error => console.log(error));
@@ -125,7 +124,7 @@ export class ForumComponent implements AfterViewInit {
       if (!currentComment.currentReply.startsWith("@")) {
         currentComment.currentReply = `@${currentComment.user.name} ${currentComment.currentReply}`;
         this.forumService.addComment(
-          new DisplayComment({ name: this.currentUser.name, img: "" }, currentComment.currentReply, new Date()),
+          new DisplayComment({ name: this.currentUser.Username, img: "" }, currentComment.currentReply, new Date()),
           this.currentTopic.Id, currentComment.id).subscribe(x => {
             currentComment.currentReply = "";
           }, error => console.log(error));
@@ -139,7 +138,7 @@ export class ForumComponent implements AfterViewInit {
     if (this.newComment) {
       console.log('tryna submit new comment');
       this.forumService.addComment(
-        new DisplayComment({ name: this.currentUser.name, img: "" }, this.newComment, new Date()),
+        new DisplayComment({ name: this.currentUser.Username, img: "" }, this.newComment, new Date()),
         this.currentTopic.Id, "").subscribe(x => {
           this.newComment = "";
         }, error => console.log(error));

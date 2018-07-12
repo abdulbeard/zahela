@@ -1,11 +1,11 @@
 <div class="ui centered grid">
   <div class="ui segment">
-    <h1>{{guest.name}}</h1>
+    <h1>{{guest.Username}}</h1>
     <img 
-      *ngIf="guest.primaryImage" 
+      *ngIf="guest.AvatarImage" 
       class="ui medium left floated rounded image" 
-      [src]="guest.primaryImage | sanitizeUrl">
-    <p>{{guest.description}}</p>
+      [src]="guest.AvatarImage | sanitizeUrl">
+    <p>{{guest.Description}}</p>
     <p>{{guest.getPronounText(true)}} interested in: </p>
     <div class="ui list">
       <div class="item" *ngFor="let interest of guest.interests" >
@@ -33,7 +33,7 @@
   </div>
   <div class="ui form">
     <div class="field reply">
-      <textarea rows="3" [(ngModel)]="newComment" [placeholder]="'Say something about '+guest.name"></textarea>
+      <textarea rows="3" [(ngModel)]="newComment" [placeholder]="'Say something about '+guest.Username"></textarea>
     </div>
     <a class="ui mini blue label" (click)="submitTestimonial()">
       Post

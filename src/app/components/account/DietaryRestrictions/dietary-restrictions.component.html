@@ -3,12 +3,12 @@
         <div *ngFor="let guest of linkedGuests; let i = index;">
             <div [class]="guest.getCssClass('title')" (click)="toggle(guest)">
                 <i class="dropdown icon"></i>
-                <img class="ui avatar image" src="assets/male-2.svg"> {{guest.name}}
-                <div class="ui green horizontal label titleLabel" *ngFor="let tag of guest.religiousRestrictions" [attr.data-tooltip]="'Religious'"
+                <img class="ui avatar image" [src]="guest.AvatarImage"> {{guest.UserName}}
+                <div class="ui green horizontal label titleLabel" *ngFor="let tag of guest.ReligiousRestrictions" [attr.data-tooltip]="'Religious'"
                     data-inverted="">{{tag}}</div>
-                <div class="ui blue horizontal label titleLabel" *ngFor="let tag of guest.dietaryRestrictions" [attr.data-tooltip]="'Dietary'"
+                <div class="ui blue horizontal label titleLabel" *ngFor="let tag of guest.DietaryRestrictions" [attr.data-tooltip]="'Dietary'"
                     data-inverted="">{{tag}}</div>
-                <div class="ui red horizontal label titleLabel" *ngFor="let tag of guest.allergies" [attr.data-tooltip]="'Allergy'" data-inverted="">{{tag}}</div>
+                <div class="ui red horizontal label titleLabel" *ngFor="let tag of guest.Allergies" [attr.data-tooltip]="'Allergy'" data-inverted="">{{tag}}</div>
                 <div class="ui divider"></div>
             </div>
             <div [class]="guest.getCssClass('content')">
@@ -28,7 +28,7 @@
                     </div>
                     <form class="ui reply form">
                         <div class="field">
-                            <textarea name="freeformRestrictions" [(ngModel)]="guest.freeformRestrictions" rows="3"></textarea>
+                            <textarea name="freeformRestrictions" [(ngModel)]="guest.FreeformRestrictions" rows="3"></textarea>
                         </div>
                     </form>
                     <div class="ui horizontal divider"></div>
@@ -37,7 +37,7 @@
                         (click)="addAllergy(tag.name, guest)" [attr.data-tooltip]="tag.desc" data-inverted="">{{tag.name}}</a>
                     <form class="ui reply form">
                         <div class="field">
-                            <textarea name="freeformAllergies" [(ngModel)]="guest.freeformAllergies" placeholder="Or let us know in your own words" rows="3"></textarea>
+                            <textarea name="freeformAllergies" [(ngModel)]="guest.FreeformAllergies" placeholder="Or let us know in your own words" rows="3"></textarea>
                         </div>
                         <a class="ui blue label" (click)="save(guest)">
                             <i class="icon edit"></i>Save

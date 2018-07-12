@@ -1,13 +1,10 @@
-import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { Component, AfterViewInit } from '@angular/core';
 import { EmojiDefinitions, EmojiService } from '../../../services/EmojiService';
 import { SlackMessageParsingService } from '../../../services/SlackMessageParsingService';
-import { SlackMessagesService, MessagesResponse } from '../../../services/SlackMessagesService';
+import { SlackMessagesService } from '../../../services/SlackMessagesService';
 import { UserService } from '../../../services/UserService';
-import { DisplayComment } from '../../../models/DisplayComment';
-import * as $ from 'jquery';
 import { SlackReactionsService } from '../../../services/SlackReactionsService';
-import { DisplayChannel } from '../../../models/DisplayChannel';
-import { DisplayGuest, Gender } from '../../../models/DisplayGuest';
+import { User } from '../../../models/CurrentUser';
 
 @Component({
   selector: 'app-account-profile',
@@ -33,10 +30,11 @@ export class ProfileComponent implements AfterViewInit {
   }
 
   private inEditMode: boolean = false;
-  private user: DisplayGuest = new DisplayGuest("Abdul", ["self", "awesome"], "I like big butts and I cannot lie",
-  "www.facebook.com", "www.twitter.com", "www.instagram.com", "", "whatchulooking@for.com", 
-  ["spelunking", "calligraphy", "heavy metal", "spelunking", "calligraphy", "heavy metal", "spelunking", "calligraphy", "heavy metal"], 
-  "www.google.com", "www.google.com", Gender.Male);
+  private user: User = User.default();
+  // new DisplayGuest("Abdul", ["self", "awesome"], "I like big butts and I cannot lie",
+  // "www.facebook.com", "www.twitter.com", "www.instagram.com", "", "whatchulooking@for.com", 
+  // ["spelunking", "calligraphy", "heavy metal", "spelunking", "calligraphy", "heavy metal", "spelunking", "calligraphy", "heavy metal"], 
+  // "www.google.com", "www.google.com", Gender.Male);
 
   private enterEditMode() {
     this.inEditMode = true;
@@ -50,38 +48,39 @@ export class ProfileComponent implements AfterViewInit {
     this.inEditMode = false;
   }
 
-  constructor() {
-    this.contactInfos.push({
-      Type: "Email", 
-      Uri: this.user.email, 
-      IsPublic: this.emailIsPublic, 
-      Placeholder: "Email Address",
-      Model: this.user.email,
-      Icon: "envelope"
-    });
-    this.contactInfos.push({
-      Type: "Instagram", 
-      Uri: this.user.instagramUrl, 
-      IsPublic: this.instagramIsPublic, 
-      Placeholder: "Instagram User",
-      Model: this.user.instagramUrl,
-      Icon: "instagram"
-    });
-    this.contactInfos.push({
-      Type: "Twitter", 
-      Uri: this.user.twitterUrl, 
-      IsPublic: this.twitterIsPublic, 
-      Placeholder: "Twitter User",
-      Model: this.user.twitterUrl,
-      Icon: "twitter"
-    });
-    this.contactInfos.push({
-      Type: "Facebook", 
-      Uri: this.user.facebookUrl, 
-      IsPublic: this.facebookIsPublic, 
-      Placeholder: "Facebook User",
-      Model: this.user.facebookUrl,
-      Icon: "facebook"
-    });
+  private addContactInfos() {
+    this.contactInfos.push(
+      new DisplayContactInfo(
+        "Email", this.user.Email.Uri, this.user.Email.IsPublic, "Email Address", this.user.Email.Uri, "envelope"));
+    this.contactInfos.push(
+      new DisplayContactInfo(
+        "Instagram", this.user.InstagramUrl.Uri, this.user.InstagramUrl.IsPublic, "Instagram User", this.user.InstagramUrl.Uri, "instagram"));
+    this.contactInfos.push(
+      new DisplayContactInfo(
+        "Twitter", this.user.TwitterUrl.Uri, this.user.TwitterUrl.IsPublic, "Twitter User", this.user.TwitterUrl.Uri, "twitter"));
+    this.contactInfos.push(
+      new DisplayContactInfo(
+        "Facebook", this.user.FacebookUrl.Uri, this.user.FacebookUrl.IsPublic, "Facebook User", this.user.FacebookUrl.Uri, "facebook"));
   }
+
+  constructor() {
+    this.addContactInfos();
+  }
+}
+
+export class DisplayContactInfo {
+  constructor(type: string, uri: string, isPublic: boolean, placeholder: string, model: string, icon: string) {
+    this.Type = type;
+    this.Uri = uri;
+    this.IsPublic = isPublic;
+    this.Model = model;
+    this.Icon = icon;
+  }
+
+  Type: string; 
+  Uri: string; 
+  IsPublic: boolean;
+  Placeholder: string;
+  Model: string;
+  Icon: string;
 }

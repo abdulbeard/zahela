@@ -3,7 +3,6 @@ import { AfterViewChecked } from '@angular/core';
 import { RouterModule, ActivatedRoute, NavigationExtras, Router } from '@angular/router'
 import { AuthService } from './services/AuthService';
 import { Routes } from './constants/Routes';
-import { DisplayGuest } from './models/DisplayGuest';
 import { MobileUtils } from './utils/MobileUtils';
 import { NotificationsService } from './services/NotificationsService';
 import { Title } from '@angular/platform-browser';
@@ -11,6 +10,7 @@ import { VersionService } from './services/VersionService';
 import { TokenUtils } from './utils/TokenUtils';
 import { ModalService } from './services/ModalService';
 import { ModalComponent } from './components/modals/recipe/modal.component';
+import { User } from './models/CurrentUser';
 
 @Component({
   selector: 'app-root',
@@ -98,7 +98,7 @@ export class AppComponent implements AfterViewChecked {
     this.router.navigate([Routes.login], navigationExtras);
   }
 
-  getDisplayGuest(): DisplayGuest {
+  getDisplayGuest(): User {
     return this.authService.getCurrentDisplayUser();
   }
 

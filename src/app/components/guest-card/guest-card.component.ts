@@ -1,5 +1,5 @@
 import { Component, OnInit, AfterViewInit, Input } from '@angular/core';
-import { DisplayGuest } from '../../models/DisplayGuest';
+import { User } from '../../models/CurrentUser';
 
 @Component({
   selector: 'app-guest-card',
@@ -12,12 +12,12 @@ export class GuestCardComponent implements AfterViewInit {
   }
 
   @Input()
-  guest: DisplayGuest;
+  guest: User;
   
   constructor() {    
   }
 
-  selectFriend(friend: DisplayGuest) {
+  selectFriend(friend: User) {
     console.log(friend);
   }
 }

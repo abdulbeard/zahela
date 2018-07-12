@@ -4,26 +4,26 @@
             <div class="six wide field" [class.disabled]="!inEditMode">
                 <label>First name</label>
                 <input type="text" placeholder="First Name" 
-                    [(ngModel)]="user.name">
+                    [(ngModel)]="user.FirstName">
             </div>
             <div class="six wide field" [class.disabled]="!inEditMode">
                 <label>Last name</label>
-                <input type="text" placeholder="Last Name" [(ngModel)]="user.name">
+                <input type="text" placeholder="Last Name" [(ngModel)]="user.LastName">
             </div>
             <div class="four wide field" [class.disabled]="!inEditMode">
                 <label>Username</label>
-                <input type="text" placeholder="Username" [(ngModel)]="user.name">
+                <input type="text" placeholder="Username" [(ngModel)]="user.Username">
             </div>
         </div>
         <div class="fields">
             <div class="sixteen wide field">
                 <label class="ui input" [class.disabled]="!inEditMode">Description (&lt; 150 words)</label>
                 <textarea type="text" class="ui input" placeholder="Describe yourself briefly" 
-                    [(ngModel)]="user.description" 
+                    [(ngModel)]="user.Description" 
                     *ngIf="!inEditMode" disabled>
                 </textarea>
                 <textarea type="text" class="ui input" placeholder="Describe yourself briefly" 
-                    [(ngModel)]="user.description" 
+                    [(ngModel)]="user.Description" 
                     *ngIf="inEditMode">
                 </textarea>
             </div>
@@ -48,7 +48,7 @@
             <div class="sixteen wide field">
                 <label>Interests</label>
                 <div class="ui blue mini labels">
-                    <div class="ui mini label" *ngFor="let interest of this.user.interests">{{interest}}</div>
+                    <div class="ui mini label" *ngFor="let interest of this.user.Interests">{{interest}}</div>
                 </div>
             </div>
         </div>

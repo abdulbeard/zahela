@@ -1,12 +1,17 @@
 import { Injectable } from "@angular/core";
-import { DisplayGuest, Gender } from "../models/DisplayGuest";
 import { Observable } from "rxjs/Observable";
-import { ObserveOnMessage } from "rxjs/operators/observeOn";
+import { User } from "../models/CurrentUser";
 
 @Injectable()
 export class FriendsService {
-    constructor() {}
-    getFriendsForUser() : Observable<Array<DisplayGuest>> {
+    constructor() {
+        this.friend.Username = "Abdul Beard";
+        this.friend1.Username = "Abdul Beard1";
+        this.friend2.Username = "Abdul Beard2";
+        this.friend3.Username = "Abdul Beard3";
+        this.friend4.Username = "Abdul Beard4";
+    }
+    getFriendsForUser() : Observable<Array<User>> {
         return Observable.of([
             this.friend, 
             this.friend1, 
@@ -16,98 +21,28 @@ export class FriendsService {
         ]);
     }
 
-    getGuestById(id: string) : Observable<DisplayGuest> {
-        if(id === this.friend.name){
+    getGuestById(id: string) : Observable<User> {
+        if(id === this.friend.Username){
             return Observable.of(this.friend);
         }
-        if(id === this.friend1.name){
+        if(id === this.friend1.Username){
             return Observable.of(this.friend1);
         }
-        if(id === this.friend2.name){
+        if(id === this.friend2.Username){
             return Observable.of(this.friend2);
         }
-        if(id === this.friend3.name){
+        if(id === this.friend3.Username){
             return Observable.of(this.friend3);
         }
-        if(id === this.friend4.name){
+        if(id === this.friend4.Username){
             return Observable.of(this.friend4);
         }
-        return Observable.of(DisplayGuest.default());
+        return Observable.of(User.default());
     }
 
-
-
-
-
-    friend: DisplayGuest = new DisplayGuest(
-        "Abdul Beard",
-        ["friends", "coworkers", "badass"],
-        // "My super duper bestest friend. There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in the middle of text. All the Lorem Ipsum generators on the Internet tend to repeat predefined chunks as necessary, making this the first true generator on the Internet. It uses a dictionary of over 200 Latin words, combined with a handful of model sentence structures, to generate Lorem Ipsum which looks reasonable. The generated Lorem Ipsum is therefore always free from repetition, injected humour, or non-characteristic words etc.",
-        "All the Lorem Ipsum generators on the Internet tend to repeat predefined chunks as necessary, making this the first true generator on the Internet. It uses a dictionary of over 200 Latin words, combined with a handful of model sentence structures, to generate Lorem Ipsum which looks reasonable. The generated Lorem Ipsum is therefore always free from repetition, injected humour, or non-characteristic words etc.",
-        "https://www.facebook.com/abdulkhaliqzaheer",
-        "",
-        "",
-        "https://twosistersandamuslim.slack.com/messages/D2M36DM7T",
-        "yolo@solo.com",
-        ["coding", "philosophy", "IronMaiden"],
-        "../../../assets/profile_pic_1.jpg",
-        "../../../assets/profile_pic_2.jpg",
-        Gender.Female
-      );
-      friend1: DisplayGuest = new DisplayGuest(
-        "Abdul Beard1",
-        ["friends", "coworkers", "badass"],
-        "My super duper bestest friend. Can't write much more bruh",
-        "https://www.facebook.com/abdulkhaliqzaheer",
-        "",
-        "",
-        "https://twosistersandamuslim.slack.com/messages/D2M36DM7T",
-        "yolo@solo.com",
-        ["coding", "philosophy", "IronMaiden"],
-        "../../../assets/profile_pic_1.jpg",
-        "../../../assets/profile_pic_2.jpg",
-        Gender.Female
-      );
-      friend2: DisplayGuest = new DisplayGuest(
-        "Abdul Beard2",
-        ["friends", "coworkers", "badass"],
-        "My super duper bestest friend. Can't write much more bruh",
-        "https://www.facebook.com/abdulkhaliqzaheer",
-        "",
-        "",
-        "https://twosistersandamuslim.slack.com/messages/D2M36DM7T",
-        "yolo@solo.com",
-        ["coding", "philosophy", "IronMaiden"],
-        "../../../assets/profile_pic_1.jpg",
-        "../../../assets/profile_pic_2.jpg",
-        Gender.Female
-      );
-      friend3: DisplayGuest = new DisplayGuest(
-        "Abdul Beard3",
-        ["friends", "coworkers", "badass"],
-        "My super duper bestest friend. Can't write much more bruh",
-        "https://www.facebook.com/abdulkhaliqzaheer",
-        "",
-        "",
-        "https://twosistersandamuslim.slack.com/messages/D2M36DM7T",
-        "yolo@solo.com",
-        ["coding", "philosophy", "IronMaiden"],
-        "../../../assets/profile_pic_1.jpg",
-        "../../../assets/profile_pic_2.jpg",
-        Gender.Female
-      );
-      friend4: DisplayGuest = new DisplayGuest(
-        "Abdul Beard4",
-        ["friends", "coworkers", "badass"],
-        "My super duper bestest friend. Can't write much more bruh",
-        "https://www.facebook.com/abdulkhaliqzaheer",
-        "",
-        "",
-        "https://twosistersandamuslim.slack.com/messages/D2M36DM7T",
-        "yolo@solo.com",
-        ["coding", "philosophy", "IronMaiden"],
-        "../../../assets/profile_pic_1.jpg",
-        "../../../assets/profile_pic_2.jpg",
-        Gender.Female
-      );
+    friend: User = User.default();
+    friend1: User = User.default();
+    friend2: User = User.default();
+    friend3: User = User.default();
+    friend4: User = User.default();
 }

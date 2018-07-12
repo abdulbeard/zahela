@@ -1,11 +1,5 @@
 import { Component, OnInit, AfterViewInit, ViewChild } from '@angular/core';
-import { UserService } from '../../services/UserService';
-import { DisplayComment } from '../../models/DisplayComment';
-import * as $ from 'jquery';
-import { SlackReactionsService } from '../../services/SlackReactionsService';
-import { DisplayChannel } from '../../models/DisplayChannel';
 import { DisplayMenu } from '../../models/DisplayMenu';
-import { DietaryRestrictionsDisplayGuest, Gender } from '../../models/DisplayGuest';
 import { Location } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { Routes } from '../../constants/Routes';

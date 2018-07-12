@@ -1,13 +1,11 @@
 import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { EmojiDefinitions, EmojiService } from '../../../services/EmojiService';
 import { SlackMessageParsingService } from '../../../services/SlackMessageParsingService';
-import { SlackMessagesService, MessagesResponse } from '../../../services/SlackMessagesService';
+import { SlackMessagesService } from '../../../services/SlackMessagesService';
 import { UserService } from '../../../services/UserService';
-import { DisplayComment } from '../../../models/DisplayComment';
-import * as $ from 'jquery';
 import { SlackReactionsService } from '../../../services/SlackReactionsService';
-import { DisplayChannel } from '../../../models/DisplayChannel';
-import { DietaryRestrictionsDisplayGuest, Gender } from '../../../models/DisplayGuest';
+import { User } from '../../../models/CurrentUser';
+import { AuthService } from '../../../services/AuthService';
 
 @Component({
   selector: 'app-account-dietary-restrictions',
@@ -19,15 +17,11 @@ import { DietaryRestrictionsDisplayGuest, Gender } from '../../../models/Display
 export class DietaryRestrictionsComponent implements AfterViewInit {
   ngAfterViewInit(): void {
   }
-  constructor(private emojiDefinitions: EmojiDefinitions, private emojiService: EmojiService,
-    private slackMessagesService: SlackMessagesService, private userService: UserService,
-    private slackMessageParsingService: SlackMessageParsingService) {
+  constructor(authService: AuthService) {
+    this.linkedGuests = authService.getCurrentDisplayUser().LinkedGuests.map(x => new AccordionUser(x, false));
   }
-  linkedGuests: DietaryRestrictionsDisplayGuest[] = [
-    new DietaryRestrictionsDisplayGuest("Abdul", ["badass"], "also badass", "bad@ass.com", Gender.Male),
-    new DietaryRestrictionsDisplayGuest("Abdul1", ["badass1"], "also1 badass", "bad1@ass.com", Gender.Male),
-    new DietaryRestrictionsDisplayGuest("Abdul2", ["badass2"], "also2 badass", "bad2@ass.com", Gender.Male)
-  ]
+
+  linkedGuests: AccordionUser[];
 
   religiousRestrictions: Array<any> = [
     { name: "Bahå'i" },
@@ -56,49 +50,49 @@ export class DietaryRestrictionsComponent implements AfterViewInit {
     { name: "Shellfish", desc: "all shellfish products" }
   ]
 
-  guestHasDietaryRestriction(tag: string, guest: DietaryRestrictionsDisplayGuest): boolean {
-    return guest.dietaryRestrictions.includes(tag);
+  guestHasDietaryRestriction(tag: string, guest: User): boolean {
+    return guest.DietaryRestrictions.includes(tag);
   }
 
-  guestHasReligiousRestriction(tag: string, guest: DietaryRestrictionsDisplayGuest): boolean {
-    return guest.religiousRestrictions.includes(tag);
+  guestHasReligiousRestriction(tag: string, guest: User): boolean {
+    return guest.ReligiousRestrictions.includes(tag);
   }
 
-  guestHasAllergy(tag: string, guest: DietaryRestrictionsDisplayGuest): boolean {
-    return guest.allergies.includes(tag);
+  guestHasAllergy(tag: string, guest: User): boolean {
+    return guest.Allergies.includes(tag);
   }
 
-  addAllergy(tag: string, guest: DietaryRestrictionsDisplayGuest) {
-    if (guest.allergies.includes(tag)) {
-      guest.allergies = guest.allergies.filter(x => x !== tag);
+  addAllergy(tag: string, guest: User) {
+    if (guest.Allergies.includes(tag)) {
+      guest.Allergies = guest.Allergies.filter(x => x !== tag);
     }
     else {
-      guest.allergies.push(tag);
+      guest.Allergies.push(tag);
     }
   }
 
-  addDietaryRestriction(tag: string, guest: DietaryRestrictionsDisplayGuest) {
-    if (guest.dietaryRestrictions.includes(tag)) {
-      guest.dietaryRestrictions = guest.dietaryRestrictions.filter(x => x !== tag);
+  addDietaryRestriction(tag: string, guest: User) {
+    if (guest.DietaryRestrictions.includes(tag)) {
+      guest.DietaryRestrictions = guest.DietaryRestrictions.filter(x => x !== tag);
     }
     else {
-      guest.dietaryRestrictions.push(tag);
+      guest.DietaryRestrictions.push(tag);
     }
   }
-  addReligiousRestriction(tag: string, guest: DietaryRestrictionsDisplayGuest) {
-    if (guest.religiousRestrictions.includes(tag)) {
-      guest.religiousRestrictions = guest.religiousRestrictions.filter(x => x !== tag);
+  addReligiousRestriction(tag: string, guest: User) {
+    if (guest.ReligiousRestrictions.includes(tag)) {
+      guest.ReligiousRestrictions = guest.ReligiousRestrictions.filter(x => x !== tag);
     }
     else {
-      guest.religiousRestrictions.push(tag);
+      guest.ReligiousRestrictions.push(tag);
     }
   }
 
-  save(guest: DietaryRestrictionsDisplayGuest) {
+  save(guest: User) {
     console.log(guest);
   }
   
-  private toggle(panel: DietaryRestrictionsDisplayGuest) {
+  private toggle(panel: AccordionUser) {
     this.linkedGuests.map((elem, index) => {
       if (elem !== panel) {
         elem.active = false;
@@ -112,5 +106,18 @@ export class DietaryRestrictionsComponent implements AfterViewInit {
         }
       }
     })
+  }
+}
+
+export class AccordionUser {
+  constructor(user: User, active: boolean) {
+    this.user = user;
+    this.active = active;
+  };
+  user: User;
+  active: boolean;
+
+  getCssClass(currentClass: string): string {
+    return `${this.active ? "active" : ""} ${currentClass}`;
   }
 }

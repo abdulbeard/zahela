@@ -12,6 +12,11 @@
     margin-left: 2.5rem;
 }
 
+.ui.inverted.segment {
+    color: black;
+    background-color: rgba(0, 0, 0, .1);
+}
+
 .faqContent, .title {
     margin-right: 2.5rem;
     margin-left: 2.5rem;

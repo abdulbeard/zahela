@@ -3,15 +3,13 @@ import { EmojiDefinitions, EmojiService } from '../../services/EmojiService';
 import { SlackMessageParsingService } from '../../services/SlackMessageParsingService';
 import { SlackMessagesService, MessagesResponse } from '../../services/SlackMessagesService';
 import { UserService } from '../../services/UserService';
-import { DisplayComment } from '../../models/DisplayComment';
-import * as $ from 'jquery';
 import { SlackReactionsService } from '../../services/SlackReactionsService';
-import { DisplayChannel } from '../../models/DisplayChannel';
 import { DisplayFaq, FaqTitle, FaqContent } from '../../models/DisplayFaq';
 import { FaqService } from '../../services/FaqService';
 import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 import { Routes } from '../../constants/Routes';
+import { UserSessionService } from '../../services/UserSessionService';
 
 @Component({
   selector: 'app-faq',
@@ -22,17 +20,14 @@ import { Routes } from '../../constants/Routes';
 })
 export class FaqComponent implements OnInit {
   ngOnInit(): void {
-    if (this.faqFromUrl) {
-      this.accordion.map(faq => {
-        faq.active = faq.id === this.faqFromUrl ? true : false;
-      })
-    }
+    this.openFaqFromUrl();
   }
   constructor(private faqService: FaqService, private userService: UserService,
     private route: ActivatedRoute, private location: Location) {
     faqService.getFaqs().subscribe(faqs => {
       this.masterList = faqs;
       this.accordion = faqs.sort(DisplayFaq.sort).reverse();
+      this.openFaqFromUrl();
     }, Error => {
       console.log(Error);
     })
@@ -54,32 +49,51 @@ export class FaqComponent implements OnInit {
   private faqFromUrl: string;
   question: string = "";
 
-  search(searchString?: string) {
+  openFaqFromUrl() {
+    if (this.faqFromUrl && this.accordion) {
+      this.accordion.map(faq => {
+        faq.active = faq.id === this.faqFromUrl ? true : false;
+      })
+    }
+  }
+
+  search(searchString?: string, backspacePressed?: boolean) {
     searchString = searchString ? searchString : this.question;
     if (searchString) {
       var split = searchString.split(' ').map(entry => entry.trim().toLowerCase());
+      if(backspacePressed){
+        this.accordion = this.masterList;
+      }
       this.accordion = this.accordion.filter(faq => {
         var tagsToSearch = faq.title.tags.map(x => x.toLowerCase()).concat(faq.content.tags.map(x => x.toLowerCase()));
-        console.log(tagsToSearch);
-        console.log(split);
+        // console.log(tagsToSearch);
+        // console.log(split);
         return split.some(x => tagsToSearch.includes(x) || tagsToSearch.some(y => y.startsWith(x)));
       })
       if(this.accordion.length == 0) this.accordion = this.masterList;
     }
     else {
+      console.log('setting ot masterlist');
       this.accordion = this.masterList;
     }
   }
 
   doFilter(filter: string) {
-    // this.accordion = this.masterList.filter(faq => {
-    //   return (faq.title.tags.includes(filter) || faq.content.tags.includes(filter))
-    // });
-    this.search(filter);
+    this.question = filter;
+    this.search();
   }
 
-  removeFilter() {
+  removeFilter(event: any) {
+    event.stopPropagation();
+    this.question = "";
+    this.search();
+  }
 
+  private askQuestion() {
+    var user = UserSessionService.getCurrentUser();
+    this.faqService.askQuestion(user, this.question).subscribe(x => {
+      console.log(x);
+    });
   }
 
   private toggle(panel: DisplayFaq) {
@@ -99,13 +113,11 @@ export class FaqComponent implements OnInit {
     })
   }
 
-  onKeyUp() {
+  onKeyUp(event: any) {
     var that = this;
     this.delay(function () {
       var value = (<HTMLInputElement>document.getElementById("faq_question")).value;
-      console.log(value);
-      that.search(value);
-      //alert('Time elapsed!' + value);
+      that.search(value, event.keyCode === 8);
     }, 300);
   }
 

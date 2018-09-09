@@ -4,6 +4,7 @@ import { CookieUtils } from "./CookieUtils";
 import { JwtHelper } from "angular2-jwt";
 import { User } from "../models/CurrentUser";
 import { AuthService } from "../services/AuthService";
+import { UserSessionService } from "../services/UserSessionService";
 
 export class TokenUtils {
     constructor(){}
@@ -23,6 +24,7 @@ export class TokenUtils {
         var decodedToken = helper.decodeToken(token);
         var user = <User> JSON.parse(decodedToken.user);
         console.log(user);
+        UserSessionService.setCurrentUser(user);
         AuthService.setCurrentUserGuestInfo(user);
     }
 

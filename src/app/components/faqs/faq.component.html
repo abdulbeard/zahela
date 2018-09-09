@@ -1,14 +1,18 @@
 <br/>
 <div class="userInput">
   <div class="ui fluid icon input">
-    <input type="text" id="faq_question" name="question" placeholder="Search for or ask a question" [(ngModel)]="question" (keyup)="onKeyUp()">
-    <i class="inverted circular search link icon"></i>
+    <input type="text" id="faq_question" name="question" placeholder="Search for or ask a question" [(ngModel)]="question" (keyup)="onKeyUp($event)">
+    <i class="inverted circular search link icon" (click)="onKeyUp()"></i>
   </div>
   <br/>
-  <div class="ui green button">Ask this question</div>
+  <div class="ui inverted basic green button" (click)="askQuestion()">Ask this question</div>
 </div>
 <div class="ui inverted segment filterTags">Filters: &nbsp;&nbsp;&nbsp;
-  <a class="ui large blue horizontal label filter" *ngFor="let filter of filters" (click)="doFilter(filter)">{{filter}}</a>
+  <a class="ui large blue horizontal label filter" 
+    *ngFor="let filter of filters" 
+    (click)="doFilter(filter)">{{filter}}
+    <i *ngIf="this.question === filter" class="delete icon" (click)="removeFilter($event)"></i>
+  </a>
 </div>
 <br/>
 <div class="ui centered grid">
@@ -21,8 +25,6 @@
       <i class="dropdown icon"></i>
       {{panel.title.title}}
       <div class="ui red mini basic horizontal label titleLabel" *ngFor="let tag of panel.title.tags">{{tag}}</div>
-      <div class="ui red mini basic horizontal label titleLabel" *ngFor="let tag of panel.title.tags">{{tag}}</div>
-      <div class="ui red mini basic horizontal label titleLabel" *ngFor="let tag of panel.title.tags">{{tag}}</div>
       <div class="ui divider"></div>
     </div>
     <div [class]="panel.getCssClass('content')">
@@ -33,7 +35,8 @@
           </a>
           <div class="ui blue mini basic horizontal label" *ngFor="let tag of panel.content.tags">{{tag}}</div>
         </div>
-        <p>{{panel.content.content}}</p>
+        <p [innerHtml]="panel.content.content | sanitizeHtml">{{panel.content.content}}</p>
+        <!-- <p>{{panel.content.content}}</p> -->
       </div>
     </div>  
   </div>

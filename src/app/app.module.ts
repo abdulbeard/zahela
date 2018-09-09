@@ -41,6 +41,7 @@ import { ModalService } from './services/ModalService';
 import { FriendsService } from './services/FriendsService';
 import { GuestCardComponent } from './components/guest-card/guest-card.component';
 import { GuestDetailComponent } from './components/guest-detail/guest-detail.component';
+import { UserService } from './services/UserService';
 
 const appRoutes: Routes = [
   { path: AppRoutes.home, component: HomeComponent },
@@ -114,6 +115,7 @@ const appRoutes: Routes = [
       AvatarService, 
       NotificationsService, 
       VersionService,
+      UserService,
       ModalService,
       FriendsService,
       JwtHelper,

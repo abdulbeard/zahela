@@ -73,6 +73,7 @@ export class ForumComponent implements AfterViewInit {
   hideMobileTopics() { this.showForumTopicsMobileSidebar = false; return true; }
 
   topicSelected(topic: ForumTopic) {
+    console.log(this.currentUser);
     var topicId: string;
     if (this.topics) {
       this.topics.forEach(element => {
@@ -80,6 +81,7 @@ export class ForumComponent implements AfterViewInit {
           topicId = element.Id;
           element.Active = true;
           this.currentTopic = element;
+          console.log(this.currentUser);
           this.forumService.getMessagesForTopic(element.Id, this.currentUser.Username).subscribe(
             //this.forumService.getThreadedMessagesForTopic(element.Id, this.currentUser.name).subscribe(            
             x => { this.topicMessages = x; console.log(this.topicMessages); },

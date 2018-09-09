@@ -1,51 +1,37 @@
 <div class="ui container rsvp">
-    <h1 class="ui middle aligned">THIS IS RSVP</h1>
-    <div class="ui segment">
-      <p>Zaheer and Marcela cordially invite you to partay!</p>
+  <h1 class="ui middle aligned">THIS IS RSVP</h1>
+  <div class="ui segment">
+    <p>Zaheer and Marcela cordially invite you to partay!</p>
+  </div>
+  <div>Let us know if you'll be able to make it and join in our happiness.</div>
+  <div class="ui middle aligned divided list">
+    <div class="item">
+      <div class="right floated content">
+        <div [class]="rsvpComingButtonClass(this.user)" title="you got it!" (click)="rsvpOptionSelected(this.user, 'Coming')">
+          <i class="thumbs up icon"></i>
+        </div>
+        <div [class]="rsvpNotComingButtonClass(this.user)" title="nope" (click)="rsvpOptionSelected(this.user, 'NotComing')">
+          <i class="thumbs down icon"></i>
+        </div>
+      </div>
+      <img class="ui avatar image" [src]="this.user.AvatarImage">
+      <div class="content">
+        {{this.user.FirstName}} {{this.user.LastName}}
+      </div>
     </div>
-    <div>Let us know if you'll be able to make it and join in our happiness.</div>
-    <div class="ui middle aligned divided list">
-      <div class="item">
-        <div class="right floated content">
-          <div class="ui blue icon button" title="you got it!">
-            <i class="thumbs up icon"></i>
-          </div>
-          <div class="ui basic inverted red icon button" title="nope">
-            <i class="thumbs down icon"></i>
-          </div>
+    <div class="item" *ngFor="let lg of this.user.LinkedGuests">
+      <div class="right floated content">
+        <div [class]="rsvpComingButtonClass(lg)" title="you got it!" (click)="rsvpOptionSelected(lg, 'Coming')">
+          <i class="thumbs up icon"></i>
         </div>
-        <img class="ui avatar image" src="assets/male-2.svg">
-        <div class="content">
-          Lena
+        <div [class]="rsvpNotComingButtonClass(lg)" title="nope" (click)="rsvpOptionSelected(lg, 'NotComing')">
+          <i class="thumbs down icon"></i>
         </div>
       </div>
-      <div class="item">
-        <div class="right floated content">
-          <div class="ui blue icon button" title="you got it!">
-            <i class="thumbs up icon"></i>
-          </div>
-          <div class="ui basic inverted red icon button" title="nope">
-            <i class="thumbs down icon"></i>
-          </div>
-        </div>
-        <img class="ui avatar image" src="assets/male-2.svg">
-        <div class="content">
-          Lindsay
-        </div>
-      </div>
-      <div class="item">
-        <div class="right floated content">
-          <div class="ui blue icon button" title="you got it!">
-            <i class="thumbs up icon"></i>
-          </div>
-          <div class="ui basic inverted red icon button" title="nope">
-            <i class="thumbs down icon"></i>
-          </div>
-        </div>
-        <img class="ui avatar image" src="assets/male-2.svg">
-        <div class="content">
-          Mark
-        </div>
+      <img class="ui avatar image" [src]="lg.AvatarImage">
+      <div class="content">
+        {{lg.FirstName}} {{lg.LastName}}
       </div>
     </div>
   </div>
+</div>

@@ -1,58 +1,50 @@
-import { Component, OnInit, AfterViewInit } from '@angular/core';
-import { EmojiDefinitions, EmojiService } from '../../../services/EmojiService';
-import { SlackMessageParsingService } from '../../../services/SlackMessageParsingService';
-import { SlackMessagesService, MessagesResponse } from '../../../services/SlackMessagesService';
+import { Component, AfterViewInit } from '@angular/core';
+import { User, RSVPStatus } from '../../../models/CurrentUser';
+import { AuthService } from '../../../services/AuthService';
 import { UserService } from '../../../services/UserService';
-import { DisplayComment } from '../../../models/DisplayComment';
-import * as $ from 'jquery';
-import { SlackReactionsService } from '../../../services/SlackReactionsService';
-import { DisplayChannel } from '../../../models/DisplayChannel';
 
 @Component({
   selector: 'app-account-rsvp',
   templateUrl: './rsvp.component.html',
   styleUrls: ['./rsvp.component.css'],
-  providers: [EmojiDefinitions, EmojiService, SlackMessagesService, UserService,
-    SlackMessageParsingService, SlackReactionsService]
+  providers: []
 })
 export class RsvpComponent implements AfterViewInit {
   ngAfterViewInit(): void {
   }
-  constructor(private emojiDefinitions: EmojiDefinitions, private emojiService: EmojiService,
-    private slackMessagesService: SlackMessagesService, private userService: UserService,
-    private slackMessageParsingService: SlackMessageParsingService) {
+
+  private user: User;
+
+  constructor(private authService: AuthService, private userService: UserService) {
+    this.user = authService.getCurrentDisplayUser();
+    this.user.RSVPStatus = RSVPStatus.NotComing;
   }
 
-  channels: DisplayChannel[] = [
-    new DisplayChannel("#random", "random", true),
-    new DisplayChannel("#general", "general", false)
-  ]
-
-  channelSelected(channel: DisplayChannel) {
-    var htmlElement = document.getElementById(channel.id);
-    this.changeActiveItemOnMenu(htmlElement);
-    this.showContent(channel);
+  rsvpComingButtonClass(user: User) : string {
+    return user.RSVPStatus === RSVPStatus.Coming ? "ui blue icon button" : "ui basic inverted blue icon button";
   }
 
-  private showContent(channel: DisplayChannel){
-    var allChannelContents = $('.channelContent').toArray();
-    allChannelContents.forEach(element => {
-      if(element.id === channel.channelContentId()){
-        $(element).show();
-      }
-      else{
-        $(element).hide();
-      }
+  rsvpNotComingButtonClass(user: User): string {
+    return user.RSVPStatus === RSVPStatus.NotComing ? "ui red icon button" : "ui basic inverted red icon button";
+  }
+
+  rsvpOptionSelected(user: User, rsvpStatus: string) {
+    user.RSVPStatus = RSVPStatus[rsvpStatus];
+    this.userService.updateRSVPStatus(user, user.RSVPStatus).subscribe(x => {
+      console.log(x);
     });
   }
 
-  private changeActiveItemOnMenu(item: HTMLElement) {
-    $(item)
-      .addClass('active')
-      .closest('.ui.menu')
-      .find('.item')
-      .not($(item))
-      .removeClass('active')
-      ;
-  }
+
+  // get rsvpComingButtonClass() : string {
+  //   return this.user.RSVPStatus === RSVPStatus.Coming ? "ui blue icon button" : "ui basic inverted blue icon button";
+  // }
+
+  // get rsvpNotComingButtonClass(): string {
+  //   return this.user.RSVPStatus === RSVPStatus.NotComing ? "ui red icon button" : "ui basic inverted red icon button";
+  // }
+
+  // rsvpOptionSelected(rsvpStatus: string) {
+  //   this.user.RSVPStatus = RSVPStatus[rsvpStatus];
+  // }
 }

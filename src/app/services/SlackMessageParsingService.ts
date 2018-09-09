@@ -24,7 +24,7 @@ export class SlackMessageParsingService {
             var slackMessage = slackMessages.messages[i];
             displayComment.text = this.parse(slackMessage.text);
             displayComment.timestamp = new Date(parseFloat(slackMessage.ts) * 1000.0);
-            displayComment.user = this.userService.getUserInfo(slackMessage.user);
+            //displayComment.user = this.userService.getUserInfo(slackMessage.user);
             displayComment.threadComments = new Array<DisplayComment>();
             displayComment.textIsHtml = true;
             displayComment.slackHref = this.getSlackHref(slackMessage.ts, channel);
@@ -44,7 +44,7 @@ export class SlackMessageParsingService {
                                 text: textContainsEmoji ? EmojiService.replaceEmojisWithHtml(displayComment.text = this.parse(message.text)) : this.parse(message.text),
                                 threadComments: [],
                                 timestamp: new Date(parseFloat(message.ts) * 1000.0),
-                                user: this.userService.getUserInfo(message.user),
+                                user: null, //this.userService.getUserInfo(message.user),
                                 slackHref: this.getSlackHref(slackMessage.thread_ts, channel),
                                 reactions: this.getDisplayReactions(message.reactions),
                                 textIsHtml: true,//textContainsEmoji,
@@ -73,7 +73,7 @@ export class SlackMessageParsingService {
                 reaction.users.push("U2M2V7TQC");
                 var displayReaction = this.slackReactionsService.get(reactionName);
                 displayReaction.numOfUsers = reaction.count;
-                displayReaction.text = `${reaction.users.map(x => this.userService.getUserInfo(x).name).join(',')} reacted with ${reactionName}`;
+                //displayReaction.text = `${reaction.users.map(x => this.userService.getUserInfo(x).name).join(',')} reacted with ${reactionName}`;
                 result.push(displayReaction);
             });
         }
@@ -96,7 +96,7 @@ export class SlackMessageParsingService {
         var regexMatches = text.match(this.linkRegex);
         if (regexMatches && regexMatches.length > 0) {
             for (var i = 0; i < regexMatches.length; i++) {
-                var user = this.userService.getUserInfo(regexMatches[i].replace(/<@/g, "").replace(/>/g, ""));
+                var user = null; //this.userService.getUserInfo(regexMatches[i].replace(/<@/g, "").replace(/>/g, ""));
                 if (regexMatches[i].startsWith('<@')) {
                     text = text.replace(regexMatches[i], `<a class='user_tag'>@${user.name}</a>`);
                 }

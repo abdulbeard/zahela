@@ -43,7 +43,7 @@ export class User {
     Type: UserType;
 
     public static default(): User {
-        return new User("Jon", "Doe", ["Anonymous"], "The Doest of Jons", new ContactInfo("https://www.facebook.com", true),
+        return new User("User1", "Jon", "Doe", ["Anonymous"], "The Doest of Jons", new ContactInfo("https://www.facebook.com", true),
             new ContactInfo("https://www.twitter.com", true), new ContactInfo("https://www.instagram.com", true),
             new ContactInfo("jon@doe.com", true), ["Joning", "Doe-ing", "Pingpong"], "https://zahelastorage.blob.core.windows.net/zahela-assets/defaultAvatars/male-1.svg",
             [
@@ -52,14 +52,14 @@ export class User {
             ],
             Gender.Male, 
             [
-                new User("Jane", "Smith", ["Anonymous"], "The Doest of Jons", new ContactInfo("https://www.facebook.com", true),
+                new User("Jane Smith", "Jane", "Smith", ["Anonymous"], "The Doest of Jons", new ContactInfo("https://www.facebook.com", true),
                     new ContactInfo("https://www.twitter.com", true), new ContactInfo("https://www.instagram.com", true),
                     new ContactInfo("jon@doe.com", true), ["Joning", "Doe-ing", "Pingpong"], "https://zahelastorage.blob.core.windows.net/zahela-assets/defaultAvatars/male-1.svg",
                     ["https://zahelastorage.blob.core.windows.net/zahela-assets/defaultAvatars/male-1.svg", "https://zahelastorage.blob.core.windows.net/zahela-assets/defaultAvatars/male-2.svg"],
                     Gender.Male, 
                     null, ["Peanuts"], ["Pescetarian"], ["Islam"], "I dont wike beef/chicken",
                     "Kinda don't like pansies", RSVPStatus.Coming, UserType.GuestUser),
-                new User("John", "Spawn", ["Anonymous"], "The Doest of Jons", new ContactInfo("https://www.facebook.com", true),
+                new User("John Spawn", "John", "Spawn", ["Anonymous"], "The Doest of Jons", new ContactInfo("https://www.facebook.com", true),
                     new ContactInfo("https://www.twitter.com", true), new ContactInfo("https://www.instagram.com", true),
                     new ContactInfo("jon@doe.com", true), ["Joning", "Doe-ing", "Pingpong"], "https://zahelastorage.blob.core.windows.net/zahela-assets/defaultAvatars/male-1.svg",
                     ["https://zahelastorage.blob.core.windows.net/zahela-assets/defaultAvatars/male-1.svg", "https://zahelastorage.blob.core.windows.net/zahela-assets/defaultAvatars/male-2.svg"],
@@ -71,11 +71,12 @@ export class User {
             "Kinda don't like pansies", RSVPStatus.Coming, UserType.GuestUser);
     }
 
-    constructor(firstname: string, lastname: string, categories: string[], description: string, facebookInfo: ContactInfo,
+    constructor(username: string, firstname: string, lastname: string, categories: string[], description: string, facebookInfo: ContactInfo,
         twitterInfo: ContactInfo, instagramInfo: ContactInfo, email: ContactInfo, interests: string[],
         avatar: string, images: string[], gender: Gender, linkedGuests: User[], allergies: string[],
         dietaryRestrictions: string[], religiousRestrictions: string[], freeformRestrictions: string,
         freeformAllergies: string, rsvpStatus: RSVPStatus, type: UserType) {
+        this.Username = username;
         this.FirstName = firstname;
         this.LastName = lastname;
         this.Categories = categories;

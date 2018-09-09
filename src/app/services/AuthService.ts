@@ -16,13 +16,20 @@ import { SlackAuthService, SlackOAuthAccessResponse } from "./SlackAuthService";
 @Injectable()
 export class AuthService implements CanActivate, CanLoad {
     loggedIn: boolean = false;
-    currentUser: CurrentUser;
+    private static currentUser: CurrentUser;
     constructor(private router: Router, private slackAuthService: SlackAuthService) {
         var userCookie = CookieUtils.getCookie("user");
+        console.log(userCookie);
         if (userCookie.indexOf("SuperUser") >= 0) {
-            this.currentUser = new CurrentUser(new UserPermission(UserRole.Admin, [], []), User.default(), true);
+            AuthService.currentUser = new CurrentUser(new UserPermission(UserRole.Admin, [], []), User.default(), true);
             this.logEventSubject.next(true);
             this.loggedIn = true;
+        }
+    }
+
+    public static setCurrentUserGuestInfo(user: User) {
+        if (AuthService.currentUser) { 
+            AuthService.currentUser.guestInfo = user; 
         }
     }
 
@@ -54,11 +61,12 @@ export class AuthService implements CanActivate, CanLoad {
     }
 
     private getCurrentUser(): CurrentUser {
-        return this.currentUser ? this.currentUser : CurrentUser.guest();
+        return AuthService.currentUser ? AuthService.currentUser : CurrentUser.guest();
     }
 
     public getCurrentDisplayUser(): User {
-        return this.getCurrentUser() ? this.getCurrentUser().guestInfo : User.default();
+        var currentDisplayUser = this.getCurrentUser();
+        return currentDisplayUser ? currentDisplayUser.guestInfo : User.default();
     }
 
     private isInUrlList(url: string, urlList: string[], addForwardSlash?: boolean) {
@@ -90,7 +98,7 @@ export class AuthService implements CanActivate, CanLoad {
         if (successful) {
             console.log("setting cookiee");
             CookieUtils.setCookie("user", "SuperUser", 365, "");
-            this.currentUser = new CurrentUser(new UserPermission(UserRole.Admin, [], []), User.default(), true);
+            AuthService.currentUser = new CurrentUser(new UserPermission(UserRole.Admin, [], []), User.default(), true);
             this.logEventSubject.next(true);
             this.loggedIn = true;
             return true;
@@ -109,7 +117,7 @@ export class AuthService implements CanActivate, CanLoad {
     public logout() {
         CookieUtils.deleteCookie("user");
         this.loggedIn = false;
-        this.currentUser = null;
+        AuthService.currentUser = null;
         this.router.navigate([Routes.home]);
         this.logEventSubject.next(false);
     }

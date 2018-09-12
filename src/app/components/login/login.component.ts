@@ -74,20 +74,34 @@ export class LoginComponent implements AfterViewInit, AfterViewChecked {
     //   this.authService.loginEvent(false);
     // });
 
-    if (this.authService.loginWithSlack(this.slackCode)) {
-      console.log(this.returnUrl);
-      this.router.navigateByUrl(this.returnUrl);
-    }
-    else {
-      this.loginError = "You done goofed";
-    }
-    if (this.authService.login(this.username, this.password)) {
-      console.log(this.returnUrl);
-      this.router.navigateByUrl(this.returnUrl);
-    }
-    else {
-      this.loginError = "You done wrong";
-    }
+    // if (this.authService.loginWithSlack(this.slackCode)) {
+    //   console.log(this.returnUrl);
+    //   this.router.navigateByUrl(this.returnUrl);
+    // }
+    // else {
+    //   this.loginError = "You done goofed";
+    // }
+
+    this.authService.login(this.username, this.password).subscribe(x => {});
+    this.authService.logEvent.subscribe(x => {
+      console.log(x);
+      if(x) {
+        console.log(`about to navigate to ${this.returnUrl}`);
+        this.router.navigateByUrl(this.returnUrl);
+      }
+      else {
+        this.loginError = "You done wrong";
+      }
+      console.log('success');
+    });
+
+    // if (this.authService.login(this.username, this.password)) {
+    //   console.log(this.returnUrl);
+    //   this.router.navigateByUrl(this.returnUrl);
+    // }
+    // else {
+    //   this.loginError = "You done wrong";
+    // }
   }
 
   requestConnection() {

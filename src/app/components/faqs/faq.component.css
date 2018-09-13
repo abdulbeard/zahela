@@ -39,3 +39,20 @@
     border-radius: 2px;
     margin: 2px !important;
 }
+
+.ui.centered.grid h1 {
+    font-family: 'Raleway', sans-serif !important;
+}
+
+.title.accordionItem {
+    font-family: 'Raleway', sans-serif !important;
+    font-size: 18px !important;
+    font-weight: bold;
+}
+
+.faqContent {
+    margin-left: 5vw;
+    font-weight: bold;
+    font-family: 'Scope One', serif;
+    font-size: 17px !important;
+}

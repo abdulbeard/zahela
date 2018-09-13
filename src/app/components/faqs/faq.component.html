@@ -1,11 +1,12 @@
 <br/>
 <div class="userInput">
   <div class="ui fluid icon input">
-    <input type="text" id="faq_question" name="question" placeholder="Search for or ask a question" [(ngModel)]="question" (keyup)="onKeyUp($event)">
+    <!-- <input type="text" id="faq_question" name="question" placeholder="Search for or ask a question" [(ngModel)]="question" (keyup)="onKeyUp($event)"> -->
+    <input type="text" id="faq_question" name="question" placeholder="Search with a keyword, like 'where', or 'dress'" [(ngModel)]="question" (keyup)="onKeyUp($event)">
     <i class="inverted circular search link icon" (click)="onKeyUp()"></i>
   </div>
   <br/>
-  <div class="ui inverted basic green button" (click)="askQuestion()">Ask this question</div>
+  <!-- <div class="ui basic green button" (click)="askQuestion()">Ask this question</div> -->
 </div>
 <div class="ui inverted segment filterTags">Filters: &nbsp;&nbsp;&nbsp;
   <a class="ui large blue horizontal label filter" 
@@ -24,18 +25,19 @@
     <div [class]="panel.getCssClass('title')" (click)="toggle(panel)">
       <i class="dropdown icon"></i>
       {{panel.title.title}}
-      <div class="ui red mini basic horizontal label titleLabel" *ngFor="let tag of panel.title.tags">{{tag}}</div>
+      <!-- <div class="ui red mini basic horizontal label titleLabel" *ngFor="let tag of panel.title.tags">{{tag}}</div> -->
       <div class="ui divider"></div>
     </div>
     <div [class]="panel.getCssClass('content')">
-      <div class="ui segment faqContent">
+      <div class="faqContent">
         <div *ngIf="panel.content.tags">
           <a class="ui label copyFaqLink" [attr.href]="panel.getHref()" target="_blank" data-tooltip="Get Link" data-inverted="">
             <i class="share icon" style="margin:0;"></i>
           </a>
-          <div class="ui blue mini basic horizontal label" *ngFor="let tag of panel.content.tags">{{tag}}</div>
+          <!-- <div class="ui blue mini basic horizontal label" *ngFor="let tag of panel.content.tags">{{tag}}</div> -->
         </div>
         <p [innerHtml]="panel.content.content | sanitizeHtml">{{panel.content.content}}</p>
+        <div class="ui divider"></div>
         <!-- <p>{{panel.content.content}}</p> -->
       </div>
     </div>  

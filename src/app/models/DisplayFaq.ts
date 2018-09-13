@@ -21,10 +21,10 @@ export class DisplayFaq {
     }
     public static sort(one: DisplayFaq, two: DisplayFaq) {
         if (one.score < two.score) {
-            return -1;
+            return 1;
         }
         if (two.score < one.score) {
-            return 1;
+            return -1;
         }
         // a must be equal to b
         return 0;

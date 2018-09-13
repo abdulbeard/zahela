@@ -21,7 +21,18 @@ export enum UserRole {
 }
 
 export class UserPermissions {
-    public static readonly Guest: UserPermission = new UserPermission(UserRole.Guest, [Routes.admin, Routes.faq, Routes.recipe, Routes.faqExtended, Routes.accountExtended, Routes.playlist, Routes.messages, Routes.friends, Routes.account, Routes.forum, Routes.forumDetail], []);
+    public static readonly Guest: UserPermission = new UserPermission(UserRole.Guest, [
+        Routes.admin, 
+        // Routes.faq, 
+        Routes.recipe, 
+        // Routes.faqExtended, 
+        Routes.accountExtended, 
+        Routes.playlist, 
+        Routes.messages, 
+        Routes.friends, 
+        Routes.account, 
+        Routes.forum, 
+        Routes.forumDetail], []);
     public static readonly RegisteredUser: UserPermission = new UserPermission(UserRole.RegisteredUser, [Routes.admin], [Routes.messages, Routes.friends, Routes.account]);
     public static readonly Admin: UserPermission = new UserPermission(UserRole.Admin, [], [])
 }

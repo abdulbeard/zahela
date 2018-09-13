@@ -12,12 +12,15 @@ import { CurrentUser, User } from "../models/CurrentUser";
 import { CookieUtils } from "../utils/CookieUtils";
 import { UserPermission, UserRole } from "../constants/UserPermissions";
 import { SlackAuthService, SlackOAuthAccessResponse } from "./SlackAuthService";
+import { HttpClient, HttpResponse } from "@angular/common/http";
+import { environment } from '../../environments/environment';
+import { TokenUtils } from "../utils/TokenUtils";
 
 @Injectable()
 export class AuthService implements CanActivate, CanLoad {
     loggedIn: boolean = false;
     private static currentUser: CurrentUser;
-    constructor(private router: Router, private slackAuthService: SlackAuthService) {
+    constructor(private router: Router, private slackAuthService: SlackAuthService, private httpClient: HttpClient) {
         var userCookie = CookieUtils.getCookie("user");
         console.log(userCookie);
         if (userCookie.indexOf("SuperUser") >= 0) {
@@ -54,7 +57,8 @@ export class AuthService implements CanActivate, CanLoad {
     public isAllowedAccess(url: string): boolean {
         var user = this.getCurrentUser();
         if (this.isInUrlList(url, user.permissions.forbiddenRoutes, true) ||
-            (this.isInUrlList(url, user.permissions.postLoginRoutes, true)) && !user.loggedIn) {
+            // (this.isInUrlList(url, user.permissions.postLoginRoutes, true)) && !user.loggedIn) {
+            (this.isInUrlList(url, user.permissions.postLoginRoutes, true)) && !this.loggedIn) {                
             return false;
         }
         return true;
@@ -86,12 +90,27 @@ export class AuthService implements CanActivate, CanLoad {
         return this.loggedIn;
     }
 
-    public login(username: string, password: string): boolean {
-        console.log(`${username}:${password}`);
-        if (username === "AbdulTheBauss" && password === "YodaSaysIs") {
-            return this.loginEvent(true);
-        }
-        return this.loginEvent(false);
+    public login(username: string, password: string): Observable<boolean> {
+        // console.log(`${username}:${password}`);
+        // if (username === "AbdulTheBauss" && password === "YodaSaysIs") {
+        //     return this.loginEvent(true);
+        // }
+        // return this.loginEvent(false);
+        this.httpClient.post<Object>(`${environment.backendUrl}/user/login`, {
+            Username: username,
+            Password: password
+        }, { observe: 'response' }).subscribe(x => {
+            console.log(x);
+            TokenUtils.setToken(x.headers.get('access-token'));
+            this.loginEvent(true);
+            this.loggedIn = true;
+        }, error => {
+            console.log('in failure');
+            console.log(error);
+            this.loggedIn = true;
+            this.loginEvent(false);
+        });
+        return Observable.of(true);
     }
 
     public loginEvent(successful: boolean) {

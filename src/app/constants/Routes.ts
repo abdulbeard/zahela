@@ -22,6 +22,7 @@ export class Routes {
     public static readonly forum: string = 'forum'
     public static readonly forumDetail: string = 'forum/:topic'
     public static readonly forumDetailComment: string = 'forum/:topic/:comment'
+    public static readonly comingSoon: string = 'coming-soon'
 
     //default routes
     public static readonly empty: string = '';

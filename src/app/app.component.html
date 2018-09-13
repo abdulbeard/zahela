@@ -3,7 +3,7 @@
         <ng-template #modalContent></ng-template>
     </div>
 </div>
-<div class="ui large secondary pointing menu mobile" *ngIf="this.isMobileView">
+<div class="ui large secondary pointing menu mobile" *ngIf="this.isMobileView  && this.showHeaderNavigationBar()">
     <a class="item mainMenuItem" routerLinkActive="active" *ngIf="showHomeLink" (click)="showSidebar()">
         <i class="content icon"></i>
     </a>
@@ -70,7 +70,7 @@
     </div>
 </div>
 
-<div class="ui large secondary pointing menu" *ngIf="!this.isMobileView">
+<div class="ui large secondary pointing menu" *ngIf="!this.isMobileView && this.showHeaderNavigationBar()">
     <a class="item mainMenuItem" [routerLink]="this.getHomeRoute()" routerLinkActive="active" *ngIf="showHomeLink" (click)="hideSidebar()">
         <i class="home icon"></i>
     </a>
@@ -91,6 +91,12 @@
     </a>
     <a class="item mainMenuItem" [routerLink]="this.getRecipeRoute()" routerLinkActive="active" *ngIf="showRecipeLink" (click)="hideSidebar()">
         <i class="utensils icon"></i>Recipes
+    </a>
+    <a class="item mainMenuItem" routerLink="/coming-soon" routerLinkActive="active" (click)="hideSidebar()">
+        <i class="gift icon"></i>Registry
+    </a>
+    <a class="item mainMenuItem" routerLink="/coming-soon" routerLinkActive="active" (click)="hideSidebar()">
+        <i class="envelope icon"></i>RSVP
     </a>
 
     <!-- <div *ngIf="this.authService.isLoggedIn()" class="right menu">
@@ -184,6 +190,17 @@
         </svg>
     </div>
     <div class="ui inverted horizontal link list links">
+        <a class="item" href="/coming-soon">
+            RSVP
+        </a>
+        <a class="item" href="/faq">
+            FAQs
+        </a>
+        <a class="item" href="/coming-soon">
+            Registry
+        </a>
+    </div>
+    <!-- <div class="ui inverted horizontal link list links">
         <a class="item" href="/forum">
             Forum
         </a>
@@ -211,5 +228,5 @@
         <a class="item" href="/account/rsvp">
             RSVP
         </a>
-    </div>
+    </div> -->
 </div>

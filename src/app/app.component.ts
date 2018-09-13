@@ -1,6 +1,6 @@
 import { Component, ViewChild, ViewContainerRef, ComponentFactoryResolver } from '@angular/core';
 import { AfterViewChecked } from '@angular/core';
-import { RouterModule, ActivatedRoute, NavigationExtras, Router } from '@angular/router'
+import { RouterModule, ActivatedRoute, NavigationExtras, Router, RouterState } from '@angular/router'
 import { AuthService } from './services/AuthService';
 import { Routes } from './constants/Routes';
 import { MobileUtils } from './utils/MobileUtils';
@@ -31,7 +31,7 @@ export class AppComponent implements AfterViewChecked {
     private notificationsService: NotificationsService,
     private titleService: Title,
     private versionService: VersionService,
-    private componentFactoryResolver: ComponentFactoryResolver) {
+    private componentFactoryResolver: ComponentFactoryResolver,) {
     this.authService = authService;
     this.authService.logEvent.subscribe(logEvent => {
       this.refreshNavigationLinks();
@@ -148,4 +148,11 @@ export class AppComponent implements AfterViewChecked {
     return true;
   }
 
+  showHeaderNavigationBar() {
+    var routesToHideFor = [`/${Routes.comingSoon}`, `/${Routes.home}`]
+    if (routesToHideFor.includes(this.router.url)){
+      return false;
+    }
+    return true;
+  }
 }

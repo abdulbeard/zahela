@@ -42,6 +42,7 @@ import { FriendsService } from './services/FriendsService';
 import { GuestCardComponent } from './components/guest-card/guest-card.component';
 import { GuestDetailComponent } from './components/guest-detail/guest-detail.component';
 import { UserService } from './services/UserService';
+import { ComingSoonComponent } from './components/coming-soon/coming-soon.component';
 
 const appRoutes: Routes = [
   { path: AppRoutes.home, component: HomeComponent },
@@ -68,6 +69,7 @@ const appRoutes: Routes = [
   { path: AppRoutes.forum, component: ForumComponent, canActivate: [AuthService]},
   { path: AppRoutes.forumDetail, component: ForumComponent, canActivate: [AuthService]},
   { path: AppRoutes.forumDetailComment, component: ForumComponent, canActivate: [AuthService]},
+  { path: AppRoutes.comingSoon, component: ComingSoonComponent, canActivate: [AuthService]},
   { path: AppRoutes.empty, redirectTo: AppRoutes.home, pathMatch: "full" }, //base url, no path
   { path: AppRoutes.wildCard, redirectTo: AppRoutes.home }, //wrong url/404
 ];
@@ -77,7 +79,7 @@ const appRoutes: Routes = [
     AppComponent, HtmlSanitizer, UrlSanitizer, SlackFeedComponent, MessagesComponent, HomeComponent, FriendsComponent, 
     AdminComponent, PlaylistComponent, LoginComponent, AccountComponent, FaqComponent, RecipeComponent, RecipeDetailComponent,
     ForumComponent, ImageCropperComponent, ProfileComponent, UpdatesComponent, RsvpComponent, DietaryRestrictionsComponent,
-    PoloComponent, ModalComponent, GuestCardComponent, GuestDetailComponent
+    PoloComponent, ModalComponent, GuestCardComponent, GuestDetailComponent, ComingSoonComponent
   ],
   imports: [
     BrowserModule, HttpModule, FormsModule, RouterModule.forRoot(

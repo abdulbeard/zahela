@@ -57,7 +57,8 @@ export class AuthService implements CanActivate, CanLoad {
     public isAllowedAccess(url: string): boolean {
         var user = this.getCurrentUser();
         if (this.isInUrlList(url, user.permissions.forbiddenRoutes, true) ||
-            (this.isInUrlList(url, user.permissions.postLoginRoutes, true)) && !user.loggedIn) {
+            // (this.isInUrlList(url, user.permissions.postLoginRoutes, true)) && !user.loggedIn) {
+            (this.isInUrlList(url, user.permissions.postLoginRoutes, true)) && !this.loggedIn) {                
             return false;
         }
         return true;
@@ -102,9 +103,12 @@ export class AuthService implements CanActivate, CanLoad {
             console.log(x);
             TokenUtils.setToken(x.headers.get('access-token'));
             this.loginEvent(true);
+
+            this.loggedIn = true;
         }, error => {
             console.log('in failure');
             console.log(error);
+            this.loggedIn = true;
             this.loginEvent(false);
         });
         return Observable.of(true);

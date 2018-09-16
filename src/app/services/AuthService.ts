@@ -103,12 +103,11 @@ export class AuthService implements CanActivate, CanLoad {
             console.log(x);
             TokenUtils.setToken(x.headers.get('access-token'));
             this.loginEvent(true);
-
             this.loggedIn = true;
         }, error => {
             console.log('in failure');
             console.log(error);
-            this.loggedIn = true;
+            this.loggedIn = false;
             this.loginEvent(false);
         });
         return Observable.of(true);

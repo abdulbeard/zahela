@@ -53,5 +53,6 @@ export class AccountComponent implements AfterViewInit {
     new DisplayMenu(Routes.accountUpdates, false, "Updates"),
     new DisplayMenu(Routes.accountDietaryRestrictions, false, "Dietary Restrictions"),
     new DisplayMenu(Routes.accountPolo, false, "Polo"),
+    new DisplayMenu(Routes.accountInvitation, false, "Invitation"),
   ]
 }

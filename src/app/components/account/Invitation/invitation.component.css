@@ -1,0 +1,59 @@
+.centered.text {
+    text-align: center;
+}
+
+.background {
+    /* background-image: url('https://www.dropbox.com/s/8zpelba02l9ah7v/arabparetfch2.jpg?dl=1'); */
+    background-image: url('../../../../assets/marcela_invitation_image_edit.jpg');
+    /* width: 70vw;
+    height: 93vw; */
+    width: 50vw;
+    height: 126vh;
+    background-size: 100% 100%;
+    /* position: relative; */
+}
+
+.names.text {
+    margin-top: 11vh;
+    line-height: 12vh;
+    font-size: 8vh;
+    /* font-size: 8%; */
+    font-family: 'Monsieur La Doulaise'; 
+}
+
+.invitation.text {
+    /* margin-top: 6vh; */
+    font-family: 'Times New Roman', Times, serif; 
+    font-size: 3vh;
+}
+
+.at.text {
+    font-family:'Times New Roman', Times, serif; 
+    font-size:3vh; 
+    margin-top:2vw;
+}
+
+.date.text, .location.text {
+    font-family:'Times New Roman', Times, serif; 
+    font-size:6vh; 
+    margin-top:2vw;
+}
+
+.location.subtext {
+    font-family:'Times New Roman', Times, serif; 
+    font-size:3vh; 
+    margin-top:1vw;
+}
+
+.phone.numbers.text {
+    font-family: 'Times New Roman', Times, serif; 
+    font-size: 6vh; 
+    margin-top: 8vh;
+    line-height: 6vh;
+}
+
+.phone.numbers.text span {
+    float: left; 
+    margin-left: 2vw; 
+    font-family: 'Tulpen One', cursive;
+}

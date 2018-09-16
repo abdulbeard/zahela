@@ -86,18 +86,18 @@
     <a class="item mainMenuItem" [routerLink]="this.getPlaylistRoute()" routerLinkActive="active" *ngIf="showPlaylistLink" (click)="hideSidebar()">
         <i class="music icon"></i>Playlist
     </a>
+    <a class="item mainMenuItem" routerLink="/coming-soon" routerLinkActive="active" (click)="hideSidebar()">
+        <i class="envelope icon"></i>RSVP
+    </a>
     <a class="item mainMenuItem" [routerLink]="this.getFaqRoute()" routerLinkActive="active" *ngIf="showFaqLink" (click)="hideSidebar()">
         <i class="question icon"></i>FAQs
-    </a>
-    <a class="item mainMenuItem" [routerLink]="this.getRecipeRoute()" routerLinkActive="active" *ngIf="showRecipeLink" (click)="hideSidebar()">
-        <i class="utensils icon"></i>Recipes
     </a>
     <a class="item mainMenuItem" routerLink="/coming-soon" routerLinkActive="active" (click)="hideSidebar()">
         <i class="gift icon"></i>Registry
     </a>
-    <a class="item mainMenuItem" routerLink="/coming-soon" routerLinkActive="active" (click)="hideSidebar()">
-        <i class="envelope icon"></i>RSVP
-    </a>
+    <a class="item mainMenuItem" [routerLink]="this.getRecipeRoute()" routerLinkActive="active" *ngIf="showRecipeLink" (click)="hideSidebar()">
+        <i class="utensils icon"></i>Recipes
+    </a>    
 
     <!-- <div *ngIf="this.authService.isLoggedIn()" class="right menu">
         <a class="ui item mainMenuItem">

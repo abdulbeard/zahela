@@ -43,6 +43,7 @@ import { GuestCardComponent } from './components/guest-card/guest-card.component
 import { GuestDetailComponent } from './components/guest-detail/guest-detail.component';
 import { UserService } from './services/UserService';
 import { ComingSoonComponent } from './components/coming-soon/coming-soon.component';
+import { InvitationComponent } from './components/account/Invitation/invitation.component';
 
 const appRoutes: Routes = [
   { path: AppRoutes.home, component: HomeComponent },
@@ -53,6 +54,7 @@ const appRoutes: Routes = [
     { path: AppRoutes.accountRsvp, component: RsvpComponent, canActivate: [AuthService] },
     { path: AppRoutes.accountDietaryRestrictions, component: DietaryRestrictionsComponent, canActivate: [AuthService] },
     { path: AppRoutes.accountPolo, component: PoloComponent, canActivate: [AuthService] },
+    { path: AppRoutes.accountInvitation, component: InvitationComponent, canActivate: [AuthService] },
   ], canActivate: [AuthService] },
   { path: AppRoutes.messagesExtended, component: MessagesComponent },
   { path: AppRoutes.messages, component: MessagesComponent },
@@ -78,8 +80,11 @@ const appRoutes: Routes = [
   declarations: [
     AppComponent, HtmlSanitizer, UrlSanitizer, SlackFeedComponent, MessagesComponent, HomeComponent, FriendsComponent, 
     AdminComponent, PlaylistComponent, LoginComponent, AccountComponent, FaqComponent, RecipeComponent, RecipeDetailComponent,
-    ForumComponent, ImageCropperComponent, ProfileComponent, UpdatesComponent, RsvpComponent, DietaryRestrictionsComponent,
-    PoloComponent, ModalComponent, GuestCardComponent, GuestDetailComponent, ComingSoonComponent
+    ForumComponent, 
+    // ImageCropperComponent, 
+    ProfileComponent, UpdatesComponent, RsvpComponent, DietaryRestrictionsComponent,
+    PoloComponent, ModalComponent, GuestCardComponent, GuestDetailComponent, ComingSoonComponent,
+    InvitationComponent
   ],
   imports: [
     BrowserModule, HttpModule, FormsModule, RouterModule.forRoot(

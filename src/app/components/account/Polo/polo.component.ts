@@ -56,11 +56,11 @@ export class PoloComponent implements AfterViewInit {
             Name: file.name,
             Size: file.size,
             Type: file.type,
-            Data: reader.result.split(',')[1]
+            //Data: reader.result.split(',')[1]
           }
         };
         console.log(imagePayload);
-        this.imageData = reader.result;
+        //this.imageData = reader.result;
         this.avatarService.uploadImage(imagePayload).subscribe(x => console.log(x), error => console.log(error));
       };
       var image: any = new Image();

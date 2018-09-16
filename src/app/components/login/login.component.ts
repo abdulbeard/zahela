@@ -39,9 +39,9 @@ export class LoginComponent implements AfterViewInit, AfterViewChecked {
       this.returnUrl = this.slackState;
     }
     console.log(this.returnUrl);
-    console.log(this.comingFromSlack);
-    console.log(this.slackCode);
-    console.log(this.slackState);
+    // console.log(this.comingFromSlack);
+    // console.log(this.slackCode);
+    // console.log(this.slackState);
     if (this.comingFromSlack){
       this.login();
     }
@@ -82,7 +82,7 @@ export class LoginComponent implements AfterViewInit, AfterViewChecked {
     //   this.loginError = "You done goofed";
     // }
 
-    this.authService.login(this.username, this.password).subscribe(x => {});
+    this.authService.login(this.username, this.password);
     this.authService.logEvent.subscribe(x => {
       console.log(x);
       if(x) {

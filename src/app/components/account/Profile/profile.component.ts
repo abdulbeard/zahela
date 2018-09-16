@@ -5,6 +5,7 @@ import { SlackMessagesService } from '../../../services/SlackMessagesService';
 import { UserService } from '../../../services/UserService';
 import { SlackReactionsService } from '../../../services/SlackReactionsService';
 import { User } from '../../../models/CurrentUser';
+import { UserSessionService } from '../../../services/UserSessionService';
 
 @Component({
   selector: 'app-account-profile',
@@ -29,7 +30,7 @@ export class ProfileComponent implements AfterViewInit {
   }
 
   private inEditMode: boolean = false;
-  private user: User = User.default();
+  private user: User = UserSessionService.getCurrentUser();
   // new DisplayGuest("Abdul", ["self", "awesome"], "I like big butts and I cannot lie",
   // "www.facebook.com", "www.twitter.com", "www.instagram.com", "", "whatchulooking@for.com", 
   // ["spelunking", "calligraphy", "heavy metal", "spelunking", "calligraphy", "heavy metal", "spelunking", "calligraphy", "heavy metal"], 

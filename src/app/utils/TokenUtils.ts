@@ -12,6 +12,11 @@ export class TokenUtils {
     private static token: string;
     private static tokenSubject: Subject<string> = new Subject<string>();
     public static tokenObservable: Observable<string> = TokenUtils.tokenSubject.asObservable();
+
+    public static deleteAccessToken() {
+        CookieUtils.deleteCookie("access-token");
+    }
+
     public static setToken(token: string) {
         this.token = token;
         this.tokenSubject.next(token);
@@ -25,11 +30,10 @@ export class TokenUtils {
         var user = <User> JSON.parse(decodedToken.user);
         console.log(user);
         UserSessionService.setCurrentUser(user);
-        AuthService.setCurrentUserGuestInfo(user);
     }
 
     public static getToken(): string {
-        if(this.token){
+        if (this.token){
             return this.token;
         }
         var cookieToken = CookieUtils.getCookie("access-token");

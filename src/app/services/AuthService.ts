@@ -15,26 +15,25 @@ import { SlackAuthService, SlackOAuthAccessResponse } from "./SlackAuthService";
 import { HttpClient, HttpResponse } from "@angular/common/http";
 import { environment } from '../../environments/environment';
 import { TokenUtils } from "../utils/TokenUtils";
+import { UserSessionService } from "./UserSessionService";
 
 @Injectable()
 export class AuthService implements CanActivate, CanLoad {
-    loggedIn: boolean = false;
     private static currentUser: CurrentUser;
     constructor(private router: Router, private slackAuthService: SlackAuthService, private httpClient: HttpClient) {
-        var userCookie = CookieUtils.getCookie("user");
-        console.log(userCookie);
-        if (userCookie.indexOf("SuperUser") >= 0) {
-            AuthService.currentUser = new CurrentUser(new UserPermission(UserRole.Admin, [], []), User.default(), true);
-            this.logEventSubject.next(true);
-            this.loggedIn = true;
-        }
+        // var userCookie = CookieUtils.getCookie("user");
+        // console.log(userCookie);
+        // if (userCookie.indexOf("SuperUser") >= 0) {
+        //     AuthService.currentUser = new CurrentUser(new UserPermission(UserRole.Admin, [], []), User.default(), true);
+        //     this.logEventSubject.next(true);
+        // }
     }
 
-    public static setCurrentUserGuestInfo(user: User) {
-        if (AuthService.currentUser) { 
-            AuthService.currentUser.guestInfo = user; 
-        }
-    }
+    // public static setCurrentUserGuestInfo(user: User) {
+    //     if (AuthService.currentUser) { 
+    //         AuthService.currentUser.guestInfo = user; 
+    //     }
+    // }
 
     canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
         if (!this.isAllowedAccess(state.url)) {
@@ -56,21 +55,26 @@ export class AuthService implements CanActivate, CanLoad {
 
     public isAllowedAccess(url: string): boolean {
         var user = this.getCurrentUser();
+        // if (this.isInUrlList(url, user.permissions.forbiddenRoutes, true) ||
+        //     // (this.isInUrlList(url, user.permissions.postLoginRoutes, true)) && !user.loggedIn) {
+        //     (this.isInUrlList(url, user.permissions.postLoginRoutes, true)) && !this.loggedIn) {                
+        //     return false;
+        // }
+        var userIsLoggedIn = UserSessionService.userIsLoggedIn();
         if (this.isInUrlList(url, user.permissions.forbiddenRoutes, true) ||
-            // (this.isInUrlList(url, user.permissions.postLoginRoutes, true)) && !user.loggedIn) {
-            (this.isInUrlList(url, user.permissions.postLoginRoutes, true)) && !this.loggedIn) {                
+            (this.isInUrlList(url, user.permissions.postLoginRoutes, true) && !userIsLoggedIn)) {                
             return false;
         }
         return true;
     }
 
     private getCurrentUser(): CurrentUser {
-        return AuthService.currentUser ? AuthService.currentUser : CurrentUser.guest();
+        // return AuthService.currentUser ? AuthService.currentUser : CurrentUser.guest();
+        return UserSessionService.getCurrentUserAndPermissions();
     }
 
     public getCurrentDisplayUser(): User {
-        var currentDisplayUser = this.getCurrentUser();
-        return currentDisplayUser ? currentDisplayUser.guestInfo : User.default();
+        return UserSessionService.getCurrentUser();
     }
 
     private isInUrlList(url: string, urlList: string[], addForwardSlash?: boolean) {
@@ -87,10 +91,10 @@ export class AuthService implements CanActivate, CanLoad {
     public logEvent: Observable<boolean> = this.logEventSubject.asObservable();
 
     public isLoggedIn(): boolean {
-        return this.loggedIn;
+        return UserSessionService.userIsLoggedIn();
     }
 
-    public login(username: string, password: string): Observable<boolean> {
+    public login(username: string, password: string){
         // console.log(`${username}:${password}`);
         // if (username === "AbdulTheBauss" && password === "YodaSaysIs") {
         //     return this.loginEvent(true);
@@ -103,14 +107,9 @@ export class AuthService implements CanActivate, CanLoad {
             console.log(x);
             TokenUtils.setToken(x.headers.get('access-token'));
             this.loginEvent(true);
-            this.loggedIn = true;
         }, error => {
-            console.log('in failure');
             console.log(error);
-            this.loggedIn = false;
-            this.loginEvent(false);
         });
-        return Observable.of(true);
     }
 
     public loginEvent(successful: boolean) {
@@ -119,7 +118,6 @@ export class AuthService implements CanActivate, CanLoad {
             CookieUtils.setCookie("user", "SuperUser", 365, "");
             AuthService.currentUser = new CurrentUser(new UserPermission(UserRole.Admin, [], []), User.default(), true);
             this.logEventSubject.next(true);
-            this.loggedIn = true;
             return true;
         }
         else {
@@ -134,10 +132,9 @@ export class AuthService implements CanActivate, CanLoad {
     }
 
     public logout() {
-        CookieUtils.deleteCookie("user");
-        this.loggedIn = false;
         AuthService.currentUser = null;
-        this.router.navigate([Routes.home]);
+        UserSessionService.logout();
         this.logEventSubject.next(false);
+        this.router.navigate([Routes.home]);        
     }
 }

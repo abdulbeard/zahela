@@ -57,13 +57,13 @@
         </svg>
     </div> -->
 
-    <div *ngIf="this.authService.isLoggedIn()" class="right menu">
+    <div *ngIf="UserSessionService.userIsLoggedIn()" class="right menu">
         <a class="item mainMenuItem">
             <div (click)="this.authService.logout()" style="padding-left:.5em;">Logout</div>
             <i class="arrow circle right icon"></i>
         </a>
     </div>
-    <div *ngIf="!this.authService.isLoggedIn()" class="right menu">
+    <div *ngIf="!UserSessionService.userIsLoggedIn()" class="right menu">
         <a class="item mainMenuItem" (click)="routeForLogin()" (click)="hideSidebar()">
             <i class="key icon"></i>
         </a>

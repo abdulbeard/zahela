@@ -1,4 +1,4 @@
-import { Component, ViewChild, ViewContainerRef, ComponentFactoryResolver } from '@angular/core';
+import { Component, ViewChild, ViewContainerRef, ComponentFactoryResolver, AfterContentChecked } from '@angular/core';
 import { AfterViewChecked } from '@angular/core';
 import { RouterModule, ActivatedRoute, NavigationExtras, Router, RouterState } from '@angular/router'
 import { AuthService } from './services/AuthService';
@@ -18,13 +18,16 @@ import { User } from './models/CurrentUser';
   styleUrls: ['./app.component.css'],
   providers: [Routes]
 })
-export class AppComponent implements AfterViewChecked {
+export class AppComponent implements AfterViewChecked, AfterContentChecked {
+  ngAfterContentChecked(): void {
+    this.refreshNavigationLinks();
+  }
 
   @ViewChild('modalContent', { read: ViewContainerRef })
   modalContent: ViewContainerRef;
   
   ngAfterViewChecked(): void {
-    this.refreshNavigationLinks();
+    // this.refreshNavigationLinks();
   }
 
   constructor(public authService: AuthService, private router: Router,

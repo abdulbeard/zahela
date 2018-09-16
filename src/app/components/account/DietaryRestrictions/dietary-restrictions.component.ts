@@ -6,6 +6,7 @@ import { UserService } from '../../../services/UserService';
 import { SlackReactionsService } from '../../../services/SlackReactionsService';
 import { User } from '../../../models/CurrentUser';
 import { AuthService } from '../../../services/AuthService';
+import { UserSessionService } from '../../../services/UserSessionService';
 
 @Component({
   selector: 'app-account-dietary-restrictions',
@@ -18,7 +19,23 @@ export class DietaryRestrictionsComponent implements AfterViewInit {
   ngAfterViewInit(): void {
   }
   constructor(authService: AuthService) {
-    var user = authService.getCurrentDisplayUser();
+    var user = UserSessionService.getCurrentUser();
+    if(!user){
+      UserSessionService.userObservable.subscribe(user => {
+        this.setup(user);
+      }, error => {
+        console.log(error);
+      });
+    }
+    else {
+      this.setup(user);
+    }
+    console.log(user);
+    console.log('huh?');
+
+  }
+
+  setup(user: User) {
     if (user && user.LinkedGuests) {
       this.linkedGuests = user.LinkedGuests.map(x => new AccordionUser(x, false));
     }

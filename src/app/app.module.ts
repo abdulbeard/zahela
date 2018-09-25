@@ -44,6 +44,7 @@ import { GuestDetailComponent } from './components/guest-detail/guest-detail.com
 import { UserService } from './services/UserService';
 import { ComingSoonComponent } from './components/coming-soon/coming-soon.component';
 import { InvitationComponent } from './components/account/Invitation/invitation.component';
+import { RegistryComponent } from './components/registry/registry.component';
 
 const appRoutes: Routes = [
   { path: AppRoutes.home, component: HomeComponent },
@@ -72,6 +73,7 @@ const appRoutes: Routes = [
   { path: AppRoutes.forumDetail, component: ForumComponent, canActivate: [AuthService]},
   { path: AppRoutes.forumDetailComment, component: ForumComponent, canActivate: [AuthService]},
   { path: AppRoutes.comingSoon, component: ComingSoonComponent, canActivate: [AuthService]},
+  { path: AppRoutes.registry, component: RegistryComponent, canActivate: [AuthService]},
   { path: AppRoutes.empty, redirectTo: AppRoutes.home, pathMatch: "full" }, //base url, no path
   { path: AppRoutes.wildCard, redirectTo: AppRoutes.home }, //wrong url/404
 ];
@@ -84,7 +86,7 @@ const appRoutes: Routes = [
     // ImageCropperComponent, 
     ProfileComponent, UpdatesComponent, RsvpComponent, DietaryRestrictionsComponent,
     PoloComponent, ModalComponent, GuestCardComponent, GuestDetailComponent, ComingSoonComponent,
-    InvitationComponent
+    InvitationComponent, RegistryComponent
   ],
   imports: [
     BrowserModule, HttpModule, FormsModule, RouterModule.forRoot(

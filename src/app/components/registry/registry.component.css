@@ -1,0 +1,40 @@
+@import url('../../../assets/semantic/dist/components/reveal.min.css');
+
+.ui.centered.grid {
+    padding-top: 5vh;
+    font-family: 'Raleway', sans-serif;
+    font-size: 20px;
+    line-height: 25px;
+}
+
+.ui.centered.grid.announcement {
+    margin-left: 5vw;
+    margin-right: 5vw;
+}
+
+.ui.centered.grid.amazon {
+    /* margin: 2vh; */
+}
+
+.ui.centered.grid a:hover {
+    background-color: rgba(0,0,0,0.3);
+    border: 1px black solid;
+}
+
+/* .zola-registry-embed img{
+    margin: 2vh;
+    padding: 1vh;
+    border: 1px black solid;
+}
+
+.zola-registry-embed img:hover{
+    background-color: rgba(0,0,0,0.3);
+}
+
+.zola-registry-embed img:hover a{
+    display: block;
+}
+
+.ui.fade.reveal {
+    border: 1px gray solid;
+} */

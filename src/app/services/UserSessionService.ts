@@ -25,6 +25,12 @@ export class UserSessionService {
         return this.currentUser;
     }
 
+    static detectCurrentUser() {
+        if(!this.currentUser) {
+            TokenUtils.decodeToken(TokenUtils.getToken());
+        }
+    }
+
     public static userIsLoggedIn() : boolean {
         return !!this.currentUser && !(this.currentUser.Type === UserType.GuestUser);
     }

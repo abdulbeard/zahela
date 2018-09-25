@@ -33,6 +33,17 @@ export class UserPermissions {
         Routes.account, 
         Routes.forum, 
         Routes.forumDetail], []);
-    public static readonly RegisteredUser: UserPermission = new UserPermission(UserRole.RegisteredUser, [Routes.admin], [Routes.messages, Routes.friends, Routes.account]);
-    public static readonly Admin: UserPermission = new UserPermission(UserRole.Admin, [], [])
+    public static readonly RegisteredUser: UserPermission = new UserPermission(UserRole.RegisteredUser, [
+            Routes.admin,
+            Routes.friends, 
+        ], [
+            Routes.messages, 
+            // Routes.friends, 
+            Routes.account
+        ]);
+    public static readonly Admin: UserPermission = new UserPermission(UserRole.Admin, [
+            Routes.friends, 
+        ], [
+            
+        ])
 }

@@ -11,6 +11,7 @@ import { TokenUtils } from './utils/TokenUtils';
 import { ModalService } from './services/ModalService';
 import { ModalComponent } from './components/modals/recipe/modal.component';
 import { User } from './models/CurrentUser';
+import { UserSessionService } from './services/UserSessionService';
 
 @Component({
   selector: 'app-root',
@@ -20,6 +21,7 @@ import { User } from './models/CurrentUser';
 })
 export class AppComponent implements AfterViewChecked, AfterContentChecked {
   ngAfterContentChecked(): void {
+    UserSessionService.detectCurrentUser();
     this.refreshNavigationLinks();
   }
 
@@ -27,7 +29,8 @@ export class AppComponent implements AfterViewChecked, AfterContentChecked {
   modalContent: ViewContainerRef;
   
   ngAfterViewChecked(): void {
-    // this.refreshNavigationLinks();
+    UserSessionService.detectCurrentUser();
+    this.refreshNavigationLinks();
   }
 
   constructor(public authService: AuthService, private router: Router,
@@ -37,6 +40,7 @@ export class AppComponent implements AfterViewChecked, AfterContentChecked {
     private componentFactoryResolver: ComponentFactoryResolver,) {
     this.authService = authService;
     this.authService.logEvent.subscribe(logEvent => {
+      UserSessionService.detectCurrentUser();
       this.refreshNavigationLinks();
     });
     NotificationsService.NotificationCount.subscribe(x => {

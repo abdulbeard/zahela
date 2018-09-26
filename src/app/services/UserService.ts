@@ -3,7 +3,7 @@ import { RSVPStatus, User } from "../models/CurrentUser";
 import { Http, RequestOptions, Headers, Response } from "@angular/http";
 import { environment } from "../../environments/environment";
 import { Observable } from "rxjs/Observable";
-import { HttpClient } from "@angular/common/http";
+import { HttpClient, HttpResponse } from "@angular/common/http";
 
 
 @Injectable()
@@ -30,8 +30,14 @@ export class UserService {
     //     return null;
     // }
 
-    getUserByUsername(username: string) : Observable<User> {
-        return this.httpClient.get<User>(`${environment.backendUrl}/user/${username}`);
+    registerUser(userId: string, password: string) : Observable<any> {
+        console.log(userId, password);
+        return this.httpClient.post<any>(`${environment.backendUrl}/user/register/${userId}`, {Password: password});
+    }
+
+    getUserByUsername(username: string) : Observable<HttpResponse<User>> {
+        //return this.httpClient.get<User>(`${environment.backendUrl}/user/${username}`);
+        return this.httpClient.get<User>(`${environment.backendUrl}/user/${username}`, {observe: 'response'});
     }
 
     updateRSVPStatus(user: User, rsvpStatus: RSVPStatus) : Observable<boolean>{

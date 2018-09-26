@@ -10,7 +10,9 @@ import { DisplayChannel } from '../../models/DisplayChannel';
 import { AuthService } from '../../services/AuthService';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UserSessionService } from '../../services/UserSessionService';
-import { UserType } from '../../models/CurrentUser';
+import { UserType, User } from '../../models/CurrentUser';
+import { TokenUtils } from '../../utils/TokenUtils';
+import { Routes } from '../../constants/Routes';
 
 @Component({
   selector: 'app-login',
@@ -69,6 +71,24 @@ export class LoginComponent implements AfterViewInit, AfterViewChecked {
   requestConnectionEmail: string = "";
   requestConnectionHistory: string = "";
 
+  doingRegisterFlow: boolean = false;
+  registerFlowUserFound: boolean = false;
+  registerFlowUserNotFound: boolean = false;
+  registerEmailAddress: string = '';
+  registerPassword: string = '';
+  tryingToFindUser: boolean = false;
+
+  user: User = null;
+  userToken: string = '';
+
+  get showStartRegisterButton(): boolean {
+    return !this.doingRegisterFlow;
+  }
+
+  get showFindMeButton(): boolean {
+    return this.doingRegisterFlow;
+  }
+
   login() {
     this.dismissLoginError();
     // this.authService.loginWithSlack(this.slackCode).subscribe(response => {
@@ -110,6 +130,42 @@ export class LoginComponent implements AfterViewInit, AfterViewChecked {
     // else {
     //   this.loginError = "You done wrong";
     // }
+  }
+
+  registerUser() {
+    if(this.userToken){
+      TokenUtils.setToken(this.userToken);
+    }
+    console.log(this.user);
+    console.log(this.user.Id);
+    this.userService.registerUser(this.user.Id, this.registerPassword).subscribe(x => {
+      if(this.returnUrl){
+        this.router.navigate([this.returnUrl]);
+      }
+      else {
+        this.router.navigate([Routes.account, Routes.accountRsvp]);
+      }
+    });
+  }
+
+  startRegisterFlow() {
+    this.doingRegisterFlow = true;
+  }
+
+  findUserByEmail() {
+    this.tryingToFindUser = true;
+    this.userService.getUserByUsername(this.registerEmailAddress).subscribe(x => {
+      this.userToken = x.headers.get('access-token');
+      this.user = x.body;
+      this.tryingToFindUser = false;
+      this.registerFlowUserFound = true;
+      this.registerFlowUserNotFound = false;
+    }, error => {
+      this.tryingToFindUser = false;
+      this.registerFlowUserFound = false;
+      this.registerFlowUserNotFound = true;
+    });
+    setTimeout(() => {}, 1000);
   }
 
   requestConnection() {

@@ -12,7 +12,7 @@ export class NotificationsService {
 
     public getNotificationCountForUser(): Observable<HttpResponse<number>> {
         var user = UserSessionService.getCurrentUser();
-        var userId = user ? user.Id : "";
+        var userId = user ? user.Id : "undefined";
         return this.httpClient.get<number>(`${environment.backendUrl}/user/notificationcount/${userId}`, {observe: 'response'});
     }
 

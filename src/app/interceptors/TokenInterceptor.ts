@@ -17,8 +17,8 @@ export class TokenInterceptor implements HttpInterceptor {
         var user = UserSessionService.getCurrentUser();
         request = request.clone({
             headers: new HttpHeaders({
-                'Authorization': `Bearer ${token}`,
-                'x-user-id': `${user.Id}`
+                'Authorization': 'Bearer ' + `${token}`,
+                'x-user-id': user ? `${user.Id}` : ''
             })
         });
         return next.handle(request);

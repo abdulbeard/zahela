@@ -26,11 +26,12 @@ export class TokenUtils {
     }
 
     public static decodeToken(token: string) {
+        if(token){
         var helper = new JwtHelper();
         var decodedToken = helper.decodeToken(token);
         var user = <User> JSON.parse(decodedToken.user);
         console.log(user);
-        UserSessionService.setCurrentUser(user);
+        UserSessionService.setCurrentUser(user);}
     }
 
     public static getToken(): string {
@@ -42,5 +43,6 @@ export class TokenUtils {
             this.token = cookieToken;
             return cookieToken;
         }
+        return '';
     }
 }

@@ -24,7 +24,8 @@
         Log In
       </div>
     </h2>
-    <div class="ui stacked segment">
+    <!-- <div class="ui stacked segment"> -->
+    <div class="ui segment">
       <div class="field">
         <div class="ui left icon input">
           <i class="user icon"></i>
@@ -38,9 +39,10 @@
         </div>
       </div>
       <div class="ui fluid large teal submit button" (click)="login()">
-        <i class="key icon"></i>Login</div>
+        <i class="key icon"></i>Login
+      </div>
     </div>
-    <div class="ui error message"></div>
+    <!-- <div class="ui error message"></div> -->
   </form>
 </div>
 <div class="ui fluid centered grid" *ngIf="this.loginError" id="loginError">
@@ -56,6 +58,27 @@
 <br/>
 <br/>
 <div class="ui centered grid">
+    <div class="ui horizontal divider">
+      <h3 style="color:dodgerblue">Or</h3>
+    </div>
+    <div class="ui segment">
+      <div class="field">
+        <div class="ui left icon fluid input">
+          <i class="user icon"></i>
+          <input type="text" name="email" placeholder="Username (usually email address)" [(ngModel)]="username" (keyup)="onKeyUp($event)">
+        </div>
+      </div>
+      <div class="field">
+        <div class="ui left icon fluid input">
+          <i class="lock icon"></i>
+          <input type="password" name="password" placeholder="Password" [(ngModel)]="password" (keyup.enter)="login()">
+        </div>
+      </div>
+      <div class="ui fluid large teal submit button" (click)="login()">
+        <i class="user plus icon"></i>Register
+      </div>
+    </div>
+
   <form class="ui form">
     <div class="ui horizontal divider">
       <h3 style="color:dodgerblue">Or</h3>

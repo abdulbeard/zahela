@@ -30,6 +30,10 @@ export class UserService {
     //     return null;
     // }
 
+    getUserByUsername(username: string) : Observable<User> {
+        return this.httpClient.get<User>(`${environment.backendUrl}/user/${username}`);
+    }
+
     updateRSVPStatus(user: User, rsvpStatus: RSVPStatus) : Observable<boolean>{
         return this.httpClient.put<boolean>(`${environment.backendUrl}/user/updateRsvpStatus/${user.Id}/${rsvpStatus}`, null);
     }

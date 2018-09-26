@@ -32,7 +32,7 @@ export class LoginComponent implements AfterViewInit, AfterViewChecked {
 
   ngAfterViewInit(): void {
   }
-  constructor(private router: Router, route: ActivatedRoute, private authService: AuthService) {
+  constructor(private router: Router, route: ActivatedRoute, private authService: AuthService, private userService: UserService) {
     this.returnUrl = route.snapshot.queryParams['returnUrl'] || '/';
     this.comingFromSlack = route.snapshot.queryParams['comingFromSlack'];
     this.slackCode = route.snapshot.queryParams['code'];
@@ -131,4 +131,25 @@ export class LoginComponent implements AfterViewInit, AfterViewChecked {
     let clientId = "352254812548.353380346342";
     return `${slackBaseUrl}&state=${slackState}&client_id=${clientId}`;
   }
+
+  onKeyUp(event: any) {
+    console.log(event);
+    var that = this;
+    this.delay(function () {
+      // var value = (<HTMLInputElement>document.getElementById("faq_question")).value;
+      var value = that.username;
+      that.userService.getUserByUsername(value).subscribe(x => {
+        console.log(x);
+      });
+    }, 300);
+  }
+
+  delay = (function () {
+    var timer = 0;
+    return function (callback, ms) {
+      clearTimeout(timer);
+      timer = setTimeout(callback, ms);
+    };
+  })();
+
 }

@@ -15,6 +15,7 @@ export class TokenUtils {
 
     public static deleteAccessToken() {
         CookieUtils.deleteCookie("access-token");
+        this.token = null;
     }
 
     public static setToken(token: string) {

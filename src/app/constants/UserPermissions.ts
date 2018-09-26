@@ -36,10 +36,14 @@ export class UserPermissions {
     public static readonly RegisteredUser: UserPermission = new UserPermission(UserRole.RegisteredUser, [
             Routes.admin,
             Routes.friends, 
+            `${Routes.account}/${Routes.accountProfile}`,
+            `${Routes.account}/${Routes.accountUpdates}`,
+            `${Routes.account}/${Routes.accountInvitation}`,
+            `${Routes.account}/${Routes.accountPolo}`
         ], [
             Routes.messages, 
             // Routes.friends, 
-            Routes.account
+            // Routes.account            
         ]);
     public static readonly Admin: UserPermission = new UserPermission(UserRole.Admin, [
             Routes.friends, 

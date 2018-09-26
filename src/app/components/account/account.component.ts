@@ -7,6 +7,7 @@ import { AvatarService } from '../../services/AvatarService';
 import { ImageCropperComponent, CropperSettings } from 'ng2-image-cropper'
 import { NotificationsService } from '../../services/NotificationsService';
 import { FaviconUtils } from '../../utils/FaviconUtils';
+import { AuthService } from '../../services/AuthService';
 
 @Component({
   selector: 'app-account',
@@ -23,7 +24,7 @@ export class AccountComponent implements AfterViewInit {
 
   constructor(private location: Location, private route: ActivatedRoute,
     private avatarService: AvatarService,
-    private notificationsService: NotificationsService) {
+    private notificationsService: NotificationsService, private authService: AuthService) {
     this.notificationCount = NotificationsService.getCurrentNotificationCount();
     this.updateNotificationCount();
     NotificationsService.NotificationCount.subscribe(x => {
@@ -36,23 +37,38 @@ export class AccountComponent implements AfterViewInit {
         FaviconUtils.toNormal();
       }
     });
+    this.setupAccountMenu();
   }
 
   private notificationCount: number;
 
   private updateNotificationCount(): void {
     var updatesAccountMenu = this.accountMenu[2];
-    if (this.notificationCount > 0) {
+    if (this.notificationCount > 0 && updatesAccountMenu) {
       updatesAccountMenu.displayText = `(${this.notificationCount}) ${updatesAccountMenu.displayText}`;
     }
   }
 
-  accountMenu: DisplayMenu[] = [
-    new DisplayMenu(Routes.accountProfile, false, "Profile"),
-    new DisplayMenu(Routes.accountRsvp, false, "RSVP"),
-    new DisplayMenu(Routes.accountUpdates, false, "Updates"),
-    new DisplayMenu(Routes.accountDietaryRestrictions, false, "Dietary Restrictions"),
-    new DisplayMenu(Routes.accountPolo, false, "Polo"),
-    new DisplayMenu(Routes.accountInvitation, false, "Invitation"),
-  ]
+  accountMenu: DisplayMenu[] = []
+
+  setupAccountMenu() {
+    if(this.authService.isAllowedAccess(`/${Routes.account}/${Routes.accountProfile}`)){
+      this.accountMenu.push(new DisplayMenu(Routes.accountProfile, false, "Profile"));
+    };
+    if(this.authService.isAllowedAccess(`/${Routes.account}/${Routes.accountRsvp}`)){
+      this.accountMenu.push(new DisplayMenu(Routes.accountRsvp, false, "RSVP"));
+    };
+    if(this.authService.isAllowedAccess(`/${Routes.account}/${Routes.accountUpdates}`)){
+      this.accountMenu.push(new DisplayMenu(Routes.accountUpdates, false, "Updates"));
+    };
+    if(this.authService.isAllowedAccess(`/${Routes.account}/${Routes.accountDietaryRestrictions}`)){
+      this.accountMenu.push(new DisplayMenu(Routes.accountDietaryRestrictions, false, "Dietary Restrictions"));
+    };
+    if(this.authService.isAllowedAccess(`/${Routes.account}/${Routes.accountPolo}`)){
+      this.accountMenu.push(new DisplayMenu(Routes.accountPolo, false, "Polo"));
+    };
+    if(this.authService.isAllowedAccess(`/${Routes.account}/${Routes.accountInvitation}`)){
+      this.accountMenu.push(new DisplayMenu(Routes.accountInvitation, false, "Invitation"));
+    };
+  }
 }

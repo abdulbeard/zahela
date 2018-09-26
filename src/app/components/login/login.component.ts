@@ -9,6 +9,8 @@ import { SlackReactionsService } from '../../services/SlackReactionsService';
 import { DisplayChannel } from '../../models/DisplayChannel';
 import { AuthService } from '../../services/AuthService';
 import { ActivatedRoute, Router } from '@angular/router';
+import { UserSessionService } from '../../services/UserSessionService';
+import { UserType } from '../../models/CurrentUser';
 
 @Component({
   selector: 'app-login',
@@ -39,6 +41,11 @@ export class LoginComponent implements AfterViewInit, AfterViewChecked {
       this.returnUrl = this.slackState;
     }
     console.log(this.returnUrl);
+    UserSessionService.userObservable.subscribe(x => {
+      if(x && x.Type === UserType.RegisteredUser){
+        router.navigate([this.returnUrl]);
+      }
+    });
     // console.log(this.comingFromSlack);
     // console.log(this.slackCode);
     // console.log(this.slackState);

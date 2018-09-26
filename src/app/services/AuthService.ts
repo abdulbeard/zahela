@@ -39,11 +39,20 @@ export class AuthService implements CanActivate, CanLoad {
         if (!this.isAllowedAccess(state.url)) {
             console.log("unauthorized");
             let navigationExtras: NavigationExtras = {
-                queryParams: { 'cheater': "true", 'returnUrl': state.url },
+                queryParams: { 'unauthorized': "true", 'returnUrl': state.url },
                 queryParamsHandling: 'merge',
             };
             // Navigate to the login page with extras
-            this.router.navigate([Routes.login], navigationExtras);
+            setTimeout(() => {
+                if(!UserSessionService.userIsLoggedIn()) {
+                    console.log('running now');
+                    this.router.navigate([Routes.login], navigationExtras);
+                }
+                else {
+                    this.router.navigate([state.url]);
+                }
+            }, 100);
+            // this.router.navigate([Routes.login], navigationExtras);
             return false;
         }
         return true;
@@ -62,7 +71,7 @@ export class AuthService implements CanActivate, CanLoad {
         // }
         var userIsLoggedIn = UserSessionService.userIsLoggedIn();
         if (this.isInUrlList(url, user.permissions.forbiddenRoutes, true) ||
-            (this.isInUrlList(url, user.permissions.postLoginRoutes, true) && !userIsLoggedIn)) {                
+            (this.isInUrlList(url, user.permissions.postLoginRoutes, true) && !userIsLoggedIn)) {
             return false;
         }
         return true;

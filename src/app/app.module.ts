@@ -49,7 +49,7 @@ import { RegistryComponent } from './components/registry/registry.component';
 const appRoutes: Routes = [
   { path: AppRoutes.home, component: HomeComponent },
   { path: AppRoutes.account, component: AccountComponent, children: [
-    { path: '', redirectTo: AppRoutes.accountProfile, pathMatch: 'full' },
+    { path: '', redirectTo: AppRoutes.accountRsvp, pathMatch: 'full' },
     { path: AppRoutes.accountProfile, component: ProfileComponent, canActivate: [AuthService] },
     { path: AppRoutes.accountUpdates, component: UpdatesComponent, canActivate: [AuthService] },
     { path: AppRoutes.accountRsvp, component: RsvpComponent, canActivate: [AuthService] },

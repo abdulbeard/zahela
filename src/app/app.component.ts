@@ -37,7 +37,8 @@ export class AppComponent implements AfterViewChecked, AfterContentChecked {
     private notificationsService: NotificationsService,
     private titleService: Title,
     private versionService: VersionService,
-    private componentFactoryResolver: ComponentFactoryResolver,) {
+    private componentFactoryResolver: ComponentFactoryResolver,) {    
+    UserSessionService.detectCurrentUser();
     this.authService = authService;
     this.authService.logEvent.subscribe(logEvent => {
       UserSessionService.detectCurrentUser();

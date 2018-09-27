@@ -78,7 +78,7 @@ export class LoginComponent implements AfterViewInit, AfterViewChecked {
   registerPassword: string = '';
   tryingToFindUser: boolean = false;
 
-  user: User = null;
+  private user: User = null;
   userToken: string = '';
 
   get showStartRegisterButton(): boolean {
@@ -109,7 +109,6 @@ export class LoginComponent implements AfterViewInit, AfterViewChecked {
     //   this.loginError = "You done goofed";
     // }
 
-    this.authService.login(this.username, this.password);
     this.authService.logEvent.subscribe(x => {
       console.log(x);
       if(x) {
@@ -117,11 +116,11 @@ export class LoginComponent implements AfterViewInit, AfterViewChecked {
         this.router.navigateByUrl(this.returnUrl);
       }
       else {
-        this.loginError = "You done wrong";
+        this.loginError = "Your username or password is incorrect.";
         //this.router.navigateByUrl(this.returnUrl);
       }
-      console.log('success');
     });
+    this.authService.login(this.username, this.password);
 
     // if (this.authService.login(this.username, this.password)) {
     //   console.log(this.returnUrl);
@@ -136,9 +135,9 @@ export class LoginComponent implements AfterViewInit, AfterViewChecked {
     if(this.userToken){
       TokenUtils.setToken(this.userToken);
     }
-    console.log(this.user);
-    console.log(this.user.Id);
-    this.userService.registerUser(this.user.Id, this.registerPassword).subscribe(x => {
+    
+    var userId = JSON.parse(JSON.stringify(this.user)).id;    
+    this.userService.registerUser(userId, this.registerPassword).subscribe(x => {
       if(this.returnUrl){
         this.router.navigate([this.returnUrl]);
       }
@@ -160,6 +159,7 @@ export class LoginComponent implements AfterViewInit, AfterViewChecked {
       this.tryingToFindUser = false;
       this.registerFlowUserFound = true;
       this.registerFlowUserNotFound = false;
+      console.log(this.user);
     }, error => {
       this.tryingToFindUser = false;
       this.registerFlowUserFound = false;

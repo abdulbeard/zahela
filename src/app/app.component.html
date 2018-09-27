@@ -86,9 +86,9 @@
     <a class="item mainMenuItem" [routerLink]="this.getPlaylistRoute()" routerLinkActive="active" *ngIf="showPlaylistLink" (click)="hideSidebar()">
         <i class="music icon"></i>Playlist
     </a>
-    <a class="item mainMenuItem" routerLink="/coming-soon" routerLinkActive="active" (click)="hideSidebar()">
+    <!-- <a class="item mainMenuItem" routerLink="/account/rsvp" routerLinkActive="active" (click)="hideSidebar()">
         <i class="envelope icon"></i>RSVP
-    </a>
+    </a> -->
     <a class="item mainMenuItem" [routerLink]="this.getFaqRoute()" routerLinkActive="active" *ngIf="showFaqLink" (click)="hideSidebar()">
         <i class="question icon"></i>FAQs
     </a>
@@ -190,7 +190,7 @@
         </svg>
     </div>
     <div class="ui inverted horizontal link list links">
-        <a class="item" href="/coming-soon">
+        <a class="item" href="/account/rsvp">
             RSVP
         </a>
         <a class="item" href="/faq">

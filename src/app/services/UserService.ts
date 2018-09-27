@@ -30,6 +30,10 @@ export class UserService {
     //     return null;
     // }
 
+    updateUser(user: User) : Observable<User> {
+        return this.httpClient.put<User>(`${environment.backendUrl}/user`, user);
+    }
+
     registerUser(userId: string, password: string) : Observable<any> {
         console.log(userId, password);
         return this.httpClient.post<any>(`${environment.backendUrl}/user/register/${userId}`, {Password: password});

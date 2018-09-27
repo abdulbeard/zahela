@@ -33,3 +33,7 @@
     clear: both;
     margin: 0 0 1em;
 }
+
+.ui.centered.grid .ui.form {
+    margin-top: 2vh;
+}

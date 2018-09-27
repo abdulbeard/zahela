@@ -11,14 +11,14 @@ export class UserSessionService {
     constructor() {
     }
 
-    private static tokenSubject: Subject<User> = new Subject<User>();
-    public static userObservable: Observable<User> = UserSessionService.tokenSubject.asObservable();
+    private static userSubject: Subject<User> = new Subject<User>();
+    public static userObservable: Observable<User> = UserSessionService.userSubject.asObservable();
 
     private static currentUser: User;
     
     static setCurrentUser(user: User) {
         this.currentUser = user;
-        this.tokenSubject.next(user);
+        this.userSubject.next(user);
     }
 
     static getCurrentUser() : User {

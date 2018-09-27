@@ -17,44 +17,53 @@
 </div> -->
 
 <div class="ui centered grid">
-  <div class="ui segment">
-    <div class="ui action input">
-      <input type="text" name="email" placeholder="Your Email Address" [(ngModel)]="registerEmailAddress" *ngIf="doingRegisterFlow"
-        (keyup.enter)="findUserByEmail()">
-      <button class="ui teal right labeled icon button" *ngIf="showStartRegisterButton" (click)="startRegisterFlow()">
-        First Time Here?
-      </button>
-      <button class="ui teal right labeled icon button" [class.loading]="tryingToFindUser" *ngIf="showFindMeButton" (click)="findUserByEmail()">
-        Find me
-      </button>
-    </div>
-    <div class="field">
-      <div class="ui green segment" *ngIf="registerFlowUserFound">
-        <p>
-          <i class="check icon"></i>
-          Welcome to our website <b>{{user.lastName}}, {{user.firstName}}!</b> Go ahead and enter a password and register
-          so you can have access to more of this website
-        </p>
+    <form class="ui form">    
+      <h2>
+        <div class="content">
+          Register
+        </div>
+      </h2>
+      <div class="ui segment">
+        <div class="ui action input">
+          <input type="text" name="email" placeholder="Your Email Address" [(ngModel)]="registerEmailAddress" *ngIf="doingRegisterFlow"
+            (keyup.enter)="findUserByEmail()">
+          <button class="ui teal right labeled icon button" *ngIf="showStartRegisterButton" (click)="startRegisterFlow()">
+            First Time Here?
+          </button>
+          <button class="ui teal right labeled icon button" [class.loading]="tryingToFindUser" *ngIf="showFindMeButton"
+            (click)="findUserByEmail()">
+            Find me
+          </button>
+        </div>
+        <div class="field">
+          <div class="ui green segment" *ngIf="registerFlowUserFound">
+            <p>
+              <i class="check icon"></i>
+              Welcome to our website <b>{{user.lastName}}, {{user.firstName}}!</b> <br />Go ahead and enter a password and
+              register
+              so you can have access to more of this website
+            </p>
+          </div>
+          <div class="ui red segment" *ngIf="registerFlowUserNotFound">
+            <p>
+              <i class="cross icon"></i>
+              Sorry! It seems like we can't find you. Please try a different email/username.
+            </p>
+          </div>
+        </div>
+        <div class="field" *ngIf="registerFlowUserFound">
+          <div class="ui left icon fluid input">
+            <i class="user icon"></i>
+            <input type="password" name="password" placeholder="password" [(ngModel)]="registerPassword" (keyup.enter)="onKeyUp($event)">
+          </div>
+        </div>
+        <div class="field" *ngIf="registerFlowUserFound">
+          <div class="ui fluid large teal submit button" (click)="registerUser()">
+            <i class="user plus icon"></i>Register
+          </div>
+        </div>
       </div>
-      <div class="ui red segment" *ngIf="registerFlowUserNotFound">
-        <p>
-          <i class="cross icon"></i>
-          Sorry! It seems like we can't find you. Please try a different email/username.
-        </p>
-      </div>
-    </div>
-    <div class="field" *ngIf="registerFlowUserFound">
-      <div class="ui left icon fluid input">
-        <i class="user icon"></i>
-        <input type="password" name="password" placeholder="password" [(ngModel)]="registerPassword" (keyup.enter)="onKeyUp($event)">
-      </div>
-    </div>
-    <div class="field" *ngIf="registerFlowUserFound">
-      <div class="ui fluid large teal submit button" (click)="registerUser()">
-        <i class="user plus icon"></i>Register
-      </div>
-    </div>
-  </div>
+    </form>
   <div class="ui horizontal divider">
     <h3 style="color:dodgerblue">Or</h3>
   </div>
@@ -80,8 +89,10 @@
           <input type="password" name="password" placeholder="Password" [(ngModel)]="password" (keyup.enter)="login()">
         </div>
       </div>
-      <div class="ui fluid large teal submit button" (click)="login()">
-        <i class="key icon"></i>Login
+      <div class="field">
+        <div class="ui fluid large teal submit button" (click)="login()">
+          <i class="key icon"></i>Login
+        </div>
       </div>
     </div>
     <!-- <div class="ui error message"></div> -->

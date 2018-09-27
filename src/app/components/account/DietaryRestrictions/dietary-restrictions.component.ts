@@ -18,7 +18,7 @@ import { UserSessionService } from '../../../services/UserSessionService';
 export class DietaryRestrictionsComponent implements AfterViewInit {
   ngAfterViewInit(): void {
   }
-  constructor(authService: AuthService) {
+  constructor(authService: AuthService, private userService: UserService) {
     var user = UserSessionService.getCurrentUser();
     if(!user){
       UserSessionService.userObservable.subscribe(user => {
@@ -39,6 +39,7 @@ export class DietaryRestrictionsComponent implements AfterViewInit {
     if (user && user.LinkedGuests) {
       this.linkedGuests = user.LinkedGuests.map(x => new AccordionUser(x, false));
     }
+    this.linkedGuests.push(new AccordionUser(user, false));
   }
 
   linkedGuests: AccordionUser[] = [];
@@ -104,12 +105,17 @@ export class DietaryRestrictionsComponent implements AfterViewInit {
       guest.user.ReligiousRestrictions = guest.user.ReligiousRestrictions.filter(x => x !== tag);
     }
     else {
-      guest.user.ReligiousRestrictions.push(tag);
+      if(tag && tag !== '') {
+        guest.user.ReligiousRestrictions.push(tag);
+      }
     }
   }
 
   save(guest: AccordionUser) {
-    console.log(guest);
+    this.userService.updateUser(guest.user).subscribe(x => {
+      console.log(x);
+      UserSessionService.setCurrentUser(x);
+    });
   }
   
   private toggle(panel: AccordionUser) {

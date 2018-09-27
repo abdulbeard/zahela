@@ -3,7 +3,7 @@
         <div *ngFor="let guest of linkedGuests; let i = index;">
             <div [class]="guest.getCssClass('title')" (click)="toggle(guest)">
                 <i class="dropdown icon"></i>
-                <img class="ui avatar image" [src]="guest.user.AvatarImage | sanitizeUrl"> {{guest.user.UserName}}
+                <img class="ui avatar image" [src]="guest.user.AvatarImage | sanitizeUrl"> {{guest.user.LastName}}, {{guest.user.FirstName}}
                 <div class="ui green horizontal label titleLabel" *ngFor="let tag of guest.user.ReligiousRestrictions" [attr.data-tooltip]="'Religious'"
                     data-inverted="">{{tag}}</div>
                 <div class="ui blue horizontal label titleLabel" *ngFor="let tag of guest.user.DietaryRestrictions" [attr.data-tooltip]="'Dietary'"

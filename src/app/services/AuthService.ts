@@ -35,6 +35,8 @@ export class AuthService implements CanActivate, CanLoad {
     //     }
     // }
 
+    alreadyNavigatedToOriginalUrl: boolean = false;
+
     canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
         if (!this.isAllowedAccess(state.url)) {
             console.log("unauthorized");
@@ -49,7 +51,13 @@ export class AuthService implements CanActivate, CanLoad {
                     this.router.navigate([Routes.login], navigationExtras);
                 }
                 else {
-                    this.router.navigate([state.url]);
+                    if(this.alreadyNavigatedToOriginalUrl){
+                        this.router.navigate([Routes.account, Routes.accountRsvp]);
+                    }
+                    else {
+                        this.alreadyNavigatedToOriginalUrl = true;
+                        this.router.navigate([state.url]);
+                    }
                 }
             }, 100);
             // this.router.navigate([Routes.login], navigationExtras);
@@ -118,6 +126,7 @@ export class AuthService implements CanActivate, CanLoad {
             this.loginEvent(true);
         }, error => {
             console.log(error);
+            this.loginEvent(false);
         });
     }
 

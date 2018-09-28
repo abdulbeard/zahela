@@ -3,10 +3,12 @@
     <!-- <a *ngFor="let menu of accountMenu" [class]="menu.getCssClass()" (click)="accountMenuSelected(menu)">{{menu.displayText}}</a> -->
     <!-- <a *ngFor="let menu of accountMenu" [class]="menu.getCssClass()" [routerLink]="menu.name" routerLinkActive="active">{{menu.displayText}}</a> -->
     <a *ngFor="let menu of accountMenu" routerLinkActive #rla="routerLinkActive" 
-    [routerLink]="menu.name"
-    class="item"
-    [class.active]="rla.isActive"
-    [class.red]="rla.isActive">{{menu.displayText}}</a>
+      [routerLink]="menu.name"
+      class="item"
+      [class.active]="rla.isActive"
+      [class.red]="rla.isActive">
+      <h5>{{menu.displayText}}</h5>
+    </a>
   </div>
 </div>
 <br/>

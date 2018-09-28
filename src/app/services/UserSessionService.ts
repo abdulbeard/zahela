@@ -26,8 +26,14 @@ export class UserSessionService {
     }
 
     static detectCurrentUser() {
+        var token = TokenUtils.getToken();
         if(!this.currentUser) {
-            TokenUtils.decodeToken(TokenUtils.getToken());
+            TokenUtils.decodeToken(token);
+        }
+        var user = TokenUtils.tokenToUser(token);
+        var userSessionsUser = UserSessionService.getCurrentUser();
+        if(user && userSessionsUser && user.Id !== userSessionsUser.Id){
+            TokenUtils.decodeToken(token);
         }
     }
 

@@ -53,3 +53,19 @@
 .croppingClass {
     background-color: rgba(19, 19, 228, 0.7);
 }
+
+h1, h2, h3 {
+    font-family: 'Montserrat';
+}
+
+div {
+    font-family: 'Raleway', sans-serif;
+}
+
+h3, .textPrompt {
+    text-align: center;
+}
+
+.yes {
+    margin-left: 2vw;
+}

@@ -7,6 +7,10 @@ import { SlackReactionsService } from '../../../services/SlackReactionsService';
 import { User } from '../../../models/CurrentUser';
 import { AuthService } from '../../../services/AuthService';
 import { UserSessionService } from '../../../services/UserSessionService';
+import { ActivatedRoute } from '@angular/router';
+import { Location } from '@angular/common';
+import { Routes } from '../../../constants/Routes';
+import { TokenUtils } from '../../../utils/TokenUtils';
 
 @Component({
   selector: 'app-account-dietary-restrictions',
@@ -18,29 +22,50 @@ import { UserSessionService } from '../../../services/UserSessionService';
 export class DietaryRestrictionsComponent implements AfterViewInit {
   ngAfterViewInit(): void {
   }
-  constructor(authService: AuthService, private userService: UserService) {
+  constructor(authService: AuthService, private userService: UserService, route: ActivatedRoute, private location: Location) {
     var user = UserSessionService.getCurrentUser();
-    if(!user){
-      UserSessionService.userObservable.subscribe(user => {
-        this.setup(user);
-      }, error => {
-        console.log(error);
-      });
-    }
-    else {
+    UserSessionService.userObservable.subscribe(user => {
       this.setup(user);
-    }
-    console.log(user);
-    console.log('huh?');
+    }, error => {
+      console.log(error);
+    });
+    this.setup(user);
+    
+    route.queryParams.subscribe(x => {
+      this.userId = x['userId'];
+      this.openUserDietaryRestrictions(this.userId);
+    });
+  }
 
+  closeAllUserDietaryRestrictions() {
+    this.linkedGuests.forEach(x => {
+        x.active = false;
+      });
+  }
+
+  openUserDietaryRestrictions(userId: string) {
+    this.linkedGuests.forEach(x => {
+      x.active = x.user.Id === userId;      
+    });
+    this.linkedGuests = this.linkedGuests.sort(function(a, b){
+      if(a.active && b.active){return 0;}
+      if(!a.active && !b.active){return 0;}
+      if(a.active && !b.active){return -1;}
+      if(!a.active && b.active){return 1;}
+    });
   }
 
   setup(user: User) {
+    this.linkedGuests = [];
     if (user && user.LinkedGuests) {
       this.linkedGuests = user.LinkedGuests.map(x => new AccordionUser(x, false));
     }
     this.linkedGuests.push(new AccordionUser(user, false));
+    this.openUserDietaryRestrictions(this.userId ? this.userId : this.linkedGuests[0].user.Id);    
   }
+
+  updatingUser: boolean = false;
+  userId: string = '';
 
   linkedGuests: AccordionUser[] = [];
 
@@ -112,13 +137,32 @@ export class DietaryRestrictionsComponent implements AfterViewInit {
   }
 
   save(guest: AccordionUser) {
+    this.updatingUser = true;
     this.userService.updateUser(guest.user).subscribe(x => {
       console.log(x);
-      UserSessionService.setCurrentUser(x);
+      var user = x.body;
+      var currentUser = UserSessionService.getCurrentUser();
+      if(user.Id === currentUser.Id) {      
+        var token = x.headers.get("access-token");
+        UserSessionService.setCurrentUser(user);
+        TokenUtils.setToken(token);
+        this.linkedGuests.forEach(lg => {
+          if(lg.user.Id === user.Id){
+            lg.user = user;
+          }
+        });
+    }
+    this.updatingUser = false;
+    this.closeAllUserDietaryRestrictions();
     });
+  }
+
+  getValidArray(input: string[]): string[] {
+    return input.filter(x => !!x);
   }
   
   private toggle(panel: AccordionUser) {
+    this.location.replaceState(`/${Routes.account}/${Routes.accountDietaryRestrictions}?userId=${panel.user.Id}`);
     this.linkedGuests.map((elem, index) => {
       if (elem !== panel) {
         elem.active = false;

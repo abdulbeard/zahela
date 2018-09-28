@@ -30,8 +30,8 @@ export class UserService {
     //     return null;
     // }
 
-    updateUser(user: User) : Observable<User> {
-        return this.httpClient.put<User>(`${environment.backendUrl}/user`, user);
+    updateUser(user: User) : Observable<HttpResponse<User>> {
+        return this.httpClient.put<User>(`${environment.backendUrl}/user`, user, {observe: 'response'});
     }
 
     registerUser(userId: string, password: string) : Observable<any> {

@@ -1,36 +1,47 @@
 <div class="ui container rsvp">
-  <h1 class="ui middle aligned">THIS IS RSVP</h1>
-  <div class="ui segment">
+  <h1>Oct. 26-28, 2018.</h1>
+  <h3>Cloudland Canyon State Park, Rising Fawn, GA</h3>
+  <!-- <div class="ui segment">
     <p>Zaheer and Marcela cordially invite you to partay!</p>
+  </div> -->
+  <br/>
+  <div class="textPrompt">Let us know if you'll be able to join us in celebrating our marriage with our friends and family, and enjoy a weekend vacation at
+    a state park.
   </div>
-  <div>Let us know if you'll be able to make it and join in our happiness.</div>
+  <br/>
   <div class="ui middle aligned divided list">
     <div class="item">
       <div class="right floated content">
-        <div [class]="rsvpComingButtonClass(this.user)" title="you got it!" (click)="rsvpOptionSelected(this.user, 'Coming')">
-          <i class="thumbs up icon"></i>
-        </div>
-        <div [class]="rsvpNotComingButtonClass(this.user)" title="nope" (click)="rsvpOptionSelected(this.user, 'NotComing')">
-          <i class="thumbs down icon"></i>
+        <div class="ui small blue button" (click)="goToDietaryRestrictions(this.user)">Dietary Restrictions
+          <i class="arrow right icon"></i>
         </div>
       </div>
       <img class="ui avatar image" [src]="this.user.AvatarImage">
       <div class="content">
         {{this.user.FirstName}} {{this.user.LastName}}
       </div>
+        <div [class]="rsvpComingButtonClass(this.user)" data-tooltip="Yes! We'd love to!" data-inverted="" (click)="rsvpOptionSelected(this.user, 'Coming')">
+          <i class="thumbs up icon"></i>
+        </div>
+        <div [class]="rsvpNotComingButtonClass(this.user)" data-tooltip="Sorry! Can't make it." data-inverted="" (click)="rsvpOptionSelected(this.user, 'NotComing')">
+          <i class="thumbs down icon"></i>
+        </div>
     </div>
     <div class="item" *ngFor="let lg of this.user.LinkedGuests">
       <div class="right floated content">
-        <div [class]="rsvpComingButtonClass(lg)" title="you got it!" (click)="rsvpOptionSelected(lg, 'Coming')">
-          <i class="thumbs up icon"></i>
-        </div>
-        <div [class]="rsvpNotComingButtonClass(lg)" title="nope" (click)="rsvpOptionSelected(lg, 'NotComing')">
-          <i class="thumbs down icon"></i>
+        <div class="ui small blue button" (click)="goToDietaryRestrictions(lg)">Dietary Restrictions
+          <i class="arrow right icon"></i>
         </div>
       </div>
       <img class="ui avatar image" [src]="lg.AvatarImage">
       <div class="content">
         {{lg.FirstName}} {{lg.LastName}}
+      </div>
+      <div [class.yes]="true" [class]="rsvpComingButtonClass(lg)" data-tooltip="Yes! We'd love to!" data-inverted="" (click)="rsvpOptionSelected(lg, 'Coming')">
+        <i class="thumbs up icon"></i>
+      </div>
+      <div [class]="rsvpNotComingButtonClass(lg)" data-tooltip="Sorry! Can't make it." data-inverted="" (click)="rsvpOptionSelected(lg, 'NotComing')">
+        <i class="thumbs down icon"></i>
       </div>
     </div>
   </div>

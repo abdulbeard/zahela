@@ -112,17 +112,14 @@ export class AuthService implements CanActivate, CanLoad {
     }
 
     public login(username: string, password: string){
-        // console.log(`${username}:${password}`);
-        // if (username === "AbdulTheBauss" && password === "YodaSaysIs") {
-        //     return this.loginEvent(true);
-        // }
-        // return this.loginEvent(false);
         this.httpClient.post<Object>(`${environment.backendUrl}/user/login`, {
             Username: username,
             Password: password
         }, { observe: 'response' }).subscribe(x => {
             console.log(x);
-            TokenUtils.setToken(x.headers.get('access-token'));
+            var token = x.headers.get('access-token');
+            TokenUtils.setToken(token);
+            TokenUtils.decodeToken(token);
             this.loginEvent(true);
         }, error => {
             console.log(error);
@@ -132,8 +129,6 @@ export class AuthService implements CanActivate, CanLoad {
 
     public loginEvent(successful: boolean) {
         if (successful) {
-            console.log("setting cookiee");
-            CookieUtils.setCookie("user", "SuperUser", 365, "");
             AuthService.currentUser = new CurrentUser(new UserPermission(UserRole.Admin, [], []), User.default(), true);
             this.logEventSubject.next(true);
             return true;

@@ -14,34 +14,51 @@ export class TokenUtils {
     public static tokenObservable: Observable<string> = TokenUtils.tokenSubject.asObservable();
 
     public static deleteAccessToken() {
-        CookieUtils.deleteCookie("access-token");
+        //CookieUtils.deleteCookie("accesstoken");
+        localStorage.removeItem('accesstoken');
         this.token = null;
     }
 
     public static setToken(token: string) {
+        this.deleteAccessToken();
         this.token = token;
         this.tokenSubject.next(token);
-        CookieUtils.setCookie("access-token", token, 7);
+        
+        // CookieUtils.setCookie("accesstoken", token, 7);
+        // CookieUtils.setCookie("jhjh", token, 7);
+        localStorage.setItem("accesstoken", token);
+        
         this.decodeToken(token);
     }
 
     public static decodeToken(token: string) {
-        if(token){
-        var helper = new JwtHelper();
-        var decodedToken = helper.decodeToken(token);
-        var user = <User> JSON.parse(decodedToken.user);
-        console.log(user);
-        UserSessionService.setCurrentUser(user);}
+        if(token) {
+            var user = this.tokenToUser(token);
+            console.log(user);
+            UserSessionService.setCurrentUser(user);
+        }
+    }
+
+    public static tokenToUser(token: string) : User {
+        if(token) {
+            var helper = new JwtHelper();
+            var decodedToken = helper.decodeToken(token);
+            var user = <User> JSON.parse(decodedToken.user);
+            return user;
+        }
     }
 
     public static getToken(): string {
         if (this.token){
             return this.token;
         }
-        var cookieToken = CookieUtils.getCookie("access-token");
-        if(cookieToken){
-            this.token = cookieToken;
-            return cookieToken;
+        
+        //var storedToken = CookieUtils.getCookie("accesstoken");
+        var storedToken = localStorage.getItem('accesstoken');
+        
+        if(storedToken){
+            this.token = storedToken;
+            return storedToken;
         }
         return '';
     }

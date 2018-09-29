@@ -1,0 +1,29 @@
+<div class="ui container">
+  <div class="ui green segment" *ngIf="doneSubmitting">
+      <i class="big icon check"></i>
+      <p>Thank you!</p> 
+      If your answer to any of these questions changes, please come back and do this again. Or you can also just email us.
+  </div>
+    <form class="ui reply form" *ngIf="!doneSubmitting">
+        <div class="question">What day do you expect to arrive? (the main event is the evening of Saturday, October 27, but there are plenty of fun things to do if you can make it sooner)</div>
+        <div class="field">
+            <textarea name="whenYoullArrive" [(ngModel)]="whenYoullArrive" placeholder="" rows="2"></textarea>            
+        </div>
+
+        <div class="question">Are you flying into either Chattanooga or Atlanta? If so, do you need a ride from the airport? (We still hope to launch a forum for coordinating rides and other logistics soon, but in lieu of that we can connect you with other people arriving around the same time if you let us know)</div>
+        <div class="field">
+            <textarea name="flyingIn" [(ngModel)]="flyingIn" placeholder="" rows="2"></textarea>            
+        </div>
+
+        <div class="question">When are you planning to depart?</div>
+        <div class="field">
+            <textarea name="whenYoullDepart" [(ngModel)]="whenYoullDepart" placeholder="" rows="2"></textarea>            
+        </div>
+
+        Visit our <a href="/faq">FAQs</a> for answers to more of your burning questions. Or Email us. <br/><br/>
+
+        <a class="ui blue button" [class.loading]="submitting" (click)="save()">
+            <i class="icon edit"></i>Submit
+        </a>
+    </form>
+</div>

@@ -43,7 +43,10 @@ export class AccountComponent implements AfterViewInit {
   private notificationCount: number;
 
   private updateNotificationCount(): void {
-    var updatesAccountMenu = this.accountMenu[2];
+    var updatesMenuItems = this.accountMenu.filter(x => {
+      return x.name === Routes.accountUpdates;
+    });
+    var updatesAccountMenu = updatesMenuItems ? updatesMenuItems[0] : null;
     if (this.notificationCount > 0 && updatesAccountMenu) {
       updatesAccountMenu.displayText = `(${this.notificationCount}) ${updatesAccountMenu.displayText}`;
     }
@@ -69,6 +72,9 @@ export class AccountComponent implements AfterViewInit {
     };
     if(this.authService.isAllowedAccess(`/${Routes.account}/${Routes.accountInvitation}`)){
       this.accountMenu.push(new DisplayMenu(Routes.accountInvitation, false, "Invitation"));
+    };
+    if(this.authService.isAllowedAccess(`/${Routes.account}/${Routes.accountSchedule}`)){
+      this.accountMenu.push(new DisplayMenu(Routes.accountSchedule, false, "Schedule"));
     };
   }
 }

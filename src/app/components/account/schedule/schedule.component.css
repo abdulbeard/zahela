@@ -1,0 +1,14 @@
+* {
+    font-family: 'Raleway', sans-serif;
+}
+
+.question {
+    font-size: 18px;
+    margin-bottom: 1vh;
+}
+
+.ui.green.segment {
+    background-color: transparent;
+    text-align: center;
+    font-size: 20px;
+}

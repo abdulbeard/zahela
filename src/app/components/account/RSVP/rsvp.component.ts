@@ -44,6 +44,10 @@ export class RsvpComponent implements AfterViewInit {
     this.router.navigate([Routes.account, Routes.accountDietaryRestrictions], navigationExtras);
   }
 
+  gotToSchedule() {
+    this.router.navigate([Routes.account, Routes.accountSchedule]);
+  }
+
 
   // get rsvpComingButtonClass() : string {
   //   return this.user.RSVPStatus === RSVPStatus.Coming ? "ui blue icon button" : "ui basic inverted blue icon button";

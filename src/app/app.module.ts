@@ -45,6 +45,8 @@ import { UserService } from './services/UserService';
 import { ComingSoonComponent } from './components/coming-soon/coming-soon.component';
 import { InvitationComponent } from './components/account/Invitation/invitation.component';
 import { RegistryComponent } from './components/registry/registry.component';
+import { ScheduleComponent } from './components/account/schedule/schedule.component';
+import { FeedbackService } from './services/FeedbackService';
 
 const appRoutes: Routes = [
   { path: AppRoutes.home, component: HomeComponent },
@@ -56,6 +58,7 @@ const appRoutes: Routes = [
     { path: AppRoutes.accountDietaryRestrictions, component: DietaryRestrictionsComponent, canActivate: [AuthService] },
     { path: AppRoutes.accountPolo, component: PoloComponent, canActivate: [AuthService] },
     { path: AppRoutes.accountInvitation, component: InvitationComponent, canActivate: [AuthService] },
+    { path: AppRoutes.accountSchedule, component: ScheduleComponent, canActivate: [AuthService] },
   ], canActivate: [AuthService] },
   { path: AppRoutes.messagesExtended, component: MessagesComponent },
   { path: AppRoutes.messages, component: MessagesComponent },
@@ -86,7 +89,7 @@ const appRoutes: Routes = [
     // ImageCropperComponent, 
     ProfileComponent, UpdatesComponent, RsvpComponent, DietaryRestrictionsComponent,
     PoloComponent, ModalComponent, GuestCardComponent, GuestDetailComponent, ComingSoonComponent,
-    InvitationComponent, RegistryComponent
+    InvitationComponent, RegistryComponent, ScheduleComponent
   ],
   imports: [
     BrowserModule, HttpModule, FormsModule, RouterModule.forRoot(
@@ -127,6 +130,7 @@ const appRoutes: Routes = [
       UserService,
       ModalService,
       FriendsService,
+      FeedbackService,
       JwtHelper,
       {
         provide: HTTP_INTERCEPTORS,

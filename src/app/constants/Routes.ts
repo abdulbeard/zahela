@@ -7,7 +7,7 @@ export class Routes {
     public static readonly accountDietaryRestrictions: string = 'dietaryRestrictions'
     public static readonly accountPolo: string = 'polo'
     public static readonly accountInvitation: string = 'invitation'
-    public static readonly accountSchedule: string = 'schedule'
+    public static readonly accountSchedule: string = 'arrival'
     public static readonly accountExtended: string = 'account/:selectedTab';
     public static readonly messagesExtended: string = 'messages/:channel';
     public static readonly messages: string = 'messages';

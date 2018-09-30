@@ -69,20 +69,32 @@ export class DietaryRestrictionsComponent implements AfterViewInit {
 
   linkedGuests: AccordionUser[] = [];
 
+  // religiousRestrictions: Array<any> = [
+  //   { name: "Bahå'i" },
+  //   { name: "Buddhism" },
+  //   { name: "Hinduism" },
+  //   { name: "Judaism" },
+  //   { name: "Islam" }
+  // ]
+
+  // dietaryRestrictionDefinitions: Array<any> = [
+  //   { name: "Vegan", desc: "Plant based diet. No meat, fish, eggs or dairy." },
+  //   { name: "Ovo-Vegetarian", desc: "Plant based diet, with eggs. No dairy, meat or fish." },
+  //   { name: "Lacto-Vegetarian", desc: "Plant based diet, with dairy. No meat, fish or eggs." },
+  //   { name: "Lacto-Ovo Vegetarian", desc: "Plant based diet, with dairy and eggs.. No meat or fish." },
+  //   { name: "Pescetarian", desc: "Vegetarian diet, with fish. No meat." }
+  // ]
+
   religiousRestrictions: Array<any> = [
-    { name: "Bahå'i" },
-    { name: "Buddhism" },
-    { name: "Hinduism" },
-    { name: "Judaism" },
-    { name: "Islam" }
+    { name: "Kosher" },
+    { name: "Halal" }
   ]
 
   dietaryRestrictionDefinitions: Array<any> = [
     { name: "Vegan", desc: "Plant based diet. No meat, fish, eggs or dairy." },
-    { name: "Ovo-Vegetarian", desc: "Plant based diet, with eggs. No dairy, meat or fish." },
-    { name: "Lacto-Vegetarian", desc: "Plant based diet, with dairy. No meat, fish or eggs." },
-    { name: "Lacto-Ovo Vegetarian", desc: "Plant based diet, with dairy and eggs.. No meat or fish." },
-    { name: "Pescetarian", desc: "Vegetarian diet, with fish. No meat." }
+    { name: "Vegetarian", desc: "Plant based diet, with eggs, cheese etc. No meat or fish." },
+    { name: "Carnivore", desc: "All meat erryday!" },
+    { name: "Pescatarian", desc: "Vegetarian diet, with fish. No meat." }
   ]
 
   commonFoodAllergies: Array<any> = [

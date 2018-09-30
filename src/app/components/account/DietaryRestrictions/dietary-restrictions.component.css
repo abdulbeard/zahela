@@ -66,3 +66,15 @@
 .ui.reply.form {
     margin-top: 3px;
 }
+
+* {
+    font-family: 'Raleway', sans-serif;
+}
+
+.title {
+    font-family: 'Montserrat' !important;
+}
+
+.content {
+    font-family: 'Raleway', sans-serif !important;
+}

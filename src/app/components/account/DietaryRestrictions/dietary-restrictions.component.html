@@ -3,7 +3,8 @@
         <div *ngFor="let guest of linkedGuests; let i = index;">
             <div [class]="guest.getCssClass('title')" (click)="toggle(guest)">
                 <i class="dropdown icon"></i>
-                <img class="ui avatar image" [src]="guest.user.AvatarImage | sanitizeUrl"> {{guest.user.LastName}}, {{guest.user.FirstName}}
+                <img class="ui avatar image" [src]="guest.user.AvatarImage | sanitizeUrl">
+                {{guest.user.LastName}}, {{guest.user.FirstName}}
                 <div class="ui green horizontal label titleLabel" *ngFor="let tag of getValidArray(guest.user.ReligiousRestrictions)" [attr.data-tooltip]="'Religious'"
                     data-inverted="">{{tag}}</div>
                 <div class="ui blue horizontal label titleLabel" *ngFor="let tag of getValidArray(guest.user.DietaryRestrictions)" [attr.data-tooltip]="'Dietary'"
@@ -40,7 +41,7 @@
                             <textarea name="freeformAllergies" [(ngModel)]="guest.user.FreeformAllergies" placeholder="Or let us know in your own words" rows="1"></textarea>
                         </div>
                         <a class="ui blue label" [class.loading]="updatingUser" [class.button]="updatingUser" (click)="save(guest)">
-                            <i class="icon edit"></i>Save
+                            <i class="icon edit"></i>Continue
                         </a>
                     </form>
                 </div>

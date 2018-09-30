@@ -45,7 +45,7 @@ export class AppComponent implements AfterViewChecked, AfterContentChecked {
       this.refreshNavigationLinks();
     });
     NotificationsService.NotificationCount.subscribe(x => {
-      this.titleService.setTitle(`(${x}) ${this.titleService.getTitle()}`);
+      //this.titleService.setTitle(`(${x}) ${this.titleService.getTitle()}`);
     });
     this.setMobileView(window);
     window.onresize = () => this.setMobileView(window);

@@ -4,7 +4,49 @@
       <p>Thank you!</p> 
       If your answer to any of these questions changes, please come back and do this again. Or you can also just email us.
   </div>
-    <form class="ui reply form" *ngIf="!doneSubmitting">
+  <form class="ui reply form" *ngIf="!doneSubmitting">
+    <div class="question">When will you be planning to join us? The main event Saturday evening, October 27, but there will be plenty of other fun things to do.</div>
+    <br/><br/>Check all that apply
+    <br/><br/>
+    <div class="">
+        <div>
+            <div class="ui toggle checkbox">
+                <input type="checkbox" name="fridayEve" [(ngModel)]="fridayEvening">
+                <label>Friday Evening</label>
+            </div>
+        </div><br/>
+        <div>
+            <div class="ui toggle checkbox">
+                <input type="checkbox" name="saturdayDaytime" [(ngModel)]="saturdayDaytime">
+                <label>Saturday Daytime</label>
+            </div>
+        </div><br/>
+        <div>
+            <div class="ui toggle checkbox">
+                <input type="checkbox" name="saturdayEvening" [(ngModel)]="saturdayEvening">
+                <label>Saturday Evening</label>
+            </div>
+        </div><br/>
+        <div>
+            <div class="ui toggle checkbox">
+                <input type="checkbox" name="sundayDaytime" [(ngModel)]="sundayDaytime">
+                <label>Sunday Daytime</label>
+            </div>
+        </div><br/>
+    </div>
+    <div class="field">
+        <textarea name="freeForm" [(ngModel)]="freeForm" placeholder="Or tell us in your own words" rows="2"></textarea>            
+    </div>
+
+
+    Visit our <a href="/faq">FAQs</a> for answers to more of your burning questions. Or Email us. <br/><br/>
+
+    <a class="ui blue button" [class.loading]="submitting" (click)="save()">
+        <i class="icon edit"></i>Submit
+    </a>
+
+  </form>
+    <!-- <form class="ui reply form" *ngIf="!doneSubmitting">
         <div class="question">What day do you expect to arrive? (the main event is the evening of Saturday, October 27, but there are plenty of fun things to do if you can make it sooner)</div>
         <div class="field">
             <textarea name="whenYoullArrive" [(ngModel)]="whenYoullArrive" placeholder="" rows="2"></textarea>            
@@ -25,5 +67,5 @@
         <a class="ui blue button" [class.loading]="submitting" (click)="save()">
             <i class="icon edit"></i>Submit
         </a>
-    </form>
+    </form> -->
 </div>

@@ -143,7 +143,8 @@ export class ContactInfo {
 
 export enum RSVPStatus {
     Coming,
-    NotComing
+    NotComing,
+    Maybe
 }
 
 export enum UserType {

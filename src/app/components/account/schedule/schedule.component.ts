@@ -3,10 +3,7 @@ import { EmojiDefinitions, EmojiService } from '../../../services/EmojiService';
 import { SlackMessageParsingService } from '../../../services/SlackMessageParsingService';
 import { SlackMessagesService, MessagesResponse } from '../../../services/SlackMessagesService';
 import { UserService } from '../../../services/UserService';
-import { DisplayComment } from '../../../models/DisplayComment';
-import * as $ from 'jquery';
 import { SlackReactionsService } from '../../../services/SlackReactionsService';
-import { DisplayChannel } from '../../../models/DisplayChannel';
 import { FeedbackService, Feedback } from '../../../services/FeedbackService';
 
 @Component({
@@ -27,19 +24,29 @@ export class ScheduleComponent implements AfterViewInit {
   submitting: boolean = false;
   doneSubmitting: boolean = false;
 
+  fridayEvening: boolean = false;
+  saturdayDaytime: boolean = false;
+  saturdayEvening: boolean = false;
+  sundayDaytime: boolean = false;
+  freeForm: string = '';
+
   save() {
     this.submitting = true;
-    setTimeout(() => {
+    // setTimeout(() => {
+
+    // }, 2000);
+    // console.log(this.whenYoullArrive);
+    // console.log(this.flyingIn);
+    // console.log(this.whenYoullDepart);
+    this.feedbackService.submitFeedback([
+      new Feedback("I'll be there Friday evening", this.fridayEvening ? 'Yes' : 'No' ),
+      new Feedback("I'll be there Saturday daytime", this.saturdayDaytime ? 'Yes' : 'No' ),
+      new Feedback("I'll be there Saturday evening", this.saturdayEvening ? 'Yes' : 'No' ),
+      new Feedback("I'll be there Sunday daytime", this.sundayDaytime ? 'Yes' : 'No' ),
+      new Feedback("Freeform arrival feedback", this.freeForm),
+    ]).subscribe(x => {
       this.submitting = false;
       this.doneSubmitting = true;
-    }, 2000);
-    console.log(this.whenYoullArrive);
-    console.log(this.flyingIn);
-    console.log(this.whenYoullDepart);
-    this.feedbackService.submitFeedback([
-      new Feedback('What day do you expect to arrive?', this.whenYoullArrive),
-      new Feedback('Flying to Chattanooga or Atlanta? Need a ride?', this.flyingIn),
-      new Feedback('When will you depart?', this.whenYoullArrive)
-    ]).subscribe();
+    });
   }
 }

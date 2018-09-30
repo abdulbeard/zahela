@@ -48,7 +48,8 @@ export class AccountComponent implements AfterViewInit {
     });
     var updatesAccountMenu = updatesMenuItems ? updatesMenuItems[0] : null;
     if (this.notificationCount > 0 && updatesAccountMenu) {
-      updatesAccountMenu.displayText = `(${this.notificationCount}) ${updatesAccountMenu.displayText}`;
+      // updatesAccountMenu.displayText = `(${this.notificationCount}) ${updatesAccountMenu.displayText}`;
+      updatesAccountMenu.displayText = `${updatesAccountMenu.displayText}`;
     }
   }
 
@@ -74,7 +75,7 @@ export class AccountComponent implements AfterViewInit {
       this.accountMenu.push(new DisplayMenu(Routes.accountInvitation, false, "Invitation"));
     };
     if(this.authService.isAllowedAccess(`/${Routes.account}/${Routes.accountSchedule}`)){
-      this.accountMenu.push(new DisplayMenu(Routes.accountSchedule, false, "Schedule"));
+      this.accountMenu.push(new DisplayMenu(Routes.accountSchedule, false, "Arrival"));
     };
   }
 }

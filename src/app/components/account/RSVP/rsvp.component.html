@@ -19,11 +19,14 @@
       <div class="content">
         {{this.user.FirstName}} {{this.user.LastName}}
       </div>
-        <div [class]="rsvpComingButtonClass(this.user)" data-tooltip="Yes! We'd love to!" data-inverted="" (click)="rsvpOptionSelected(this.user, 'Coming')">
+        <div [class]="rsvpComingButtonClass(this.user)" data-tooltip="Yes! Would love to!" data-inverted="" (click)="rsvpOptionSelected(this.user, 'Coming')">
           <i class="thumbs up icon"></i>
         </div>
         <div [class]="rsvpNotComingButtonClass(this.user)" data-tooltip="Sorry! Can't make it." data-inverted="" (click)="rsvpOptionSelected(this.user, 'NotComing')">
           <i class="thumbs down icon"></i>
+        </div>
+        <div [class]="rsvpMaybeButtonClass(this.user)" data-tooltip="Maybe. Not sure yet." data-inverted="" (click)="rsvpOptionSelected(this.user, 'Maybe')">
+          <i class="question icon"></i>
         </div>
     </div>
     <div class="item" *ngFor="let lg of this.user.LinkedGuests">
@@ -42,11 +45,14 @@
       <div [class]="rsvpNotComingButtonClass(lg)" data-tooltip="Sorry! Can't make it." data-inverted="" (click)="rsvpOptionSelected(lg, 'NotComing')">
         <i class="thumbs down icon"></i>
       </div>
+      <div [class]="rsvpMaybeButtonClass(lg)" data-tooltip="Maybe. Not sure yet." data-inverted="" (click)="rsvpOptionSelected(lg, 'Maybe')">
+        <i class="question icon"></i>
+      </div>
     </div>
   </div>
   <br/>
   <div class="ui blue button" (click)="gotToSchedule()">
     <i class="calendar alternate icon"></i>
-    Schedule
+    Arrival
   </div>
 </div>

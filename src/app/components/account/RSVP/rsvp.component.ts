@@ -19,7 +19,6 @@ export class RsvpComponent implements AfterViewInit {
 
   constructor(private authService: AuthService, private userService: UserService, private router: Router) {
     this.user = authService.getCurrentDisplayUser();
-    this.user.RSVPStatus = RSVPStatus.NotComing;
   }
 
   rsvpComingButtonClass(user: User) : string {
@@ -30,8 +29,13 @@ export class RsvpComponent implements AfterViewInit {
     return user.RSVPStatus === RSVPStatus.NotComing ? "ui red icon button" : "ui basic inverted red icon button";
   }
 
+  rsvpMaybeButtonClass(user: User) : string {
+    return user.RSVPStatus === RSVPStatus.Maybe ? "ui green icon button" : "ui basic inverted green icon button"
+  }
+
   rsvpOptionSelected(user: User, rsvpStatus: string) {
     user.RSVPStatus = RSVPStatus[rsvpStatus];
+    console.log(user.RSVPStatus);
     this.userService.updateRSVPStatus(user, user.RSVPStatus).subscribe(x => {
       console.log(x);
     });

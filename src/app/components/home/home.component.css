@@ -23,10 +23,19 @@ div .pass {
     text-align: center
 }
 
+.names.header.mobile {
+    color: black;
+}
+
 .button.enter {
     width: 10vw;
     margin-left: 45vw;
     margin-bottom: 2vh;
+}
+
+.button.enter.mobile {
+    width: 50vw;
+    margin-left: 25vw
 }
 
 .landing.page.content {
@@ -39,6 +48,17 @@ div .pass {
     text-overflow: inherit;
     text-align: center;
     /* padding-bottom: 20px; */
+}
+
+.landing.page.heading.mobile, .landing.page.content.mobile {
+    color: black;
+}
+
+.landing.page.heading.mobile {
+
+}
+.landing.page.content.mobile{
+    max-width: 85vw;
 }
 
 .background {
@@ -67,6 +87,10 @@ div .pass {
     height: 150px; */
 }
 
+.background .text.mobile {
+    background-color: unset;
+}
+
 .background img.overlay {
     z-index: 1;
     position: relative;
@@ -76,6 +100,10 @@ div .pass {
     height: 150px; */
     border: 1px solid black;
     margin: 0px 50px 0px 50px;
+}
+
+.background img.overlay.mobile {
+    display: none;
 }
 
 /* .image.two img{

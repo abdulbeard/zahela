@@ -142,6 +142,9 @@
     <a class="item mainMenuItem" [routerLink]="this.getFriendsRoute()" routerLinkActive="active" *ngIf="showFriendsLink" (click)="hideSidebar()">
         <i class="users icon"></i>Friends
     </a>
+    <a class="item mainMenuItem" routerLink="/registry" routerLinkActive="active" (click)="hideSidebar()">
+        <i class="gift icon"></i>Registry
+    </a>    
     <a class="item mainMenuItem" [routerLink]="this.getPlaylistRoute()" routerLinkActive="active" *ngIf="showPlaylistLink" (click)="hideSidebar()">
         <i class="music icon"></i>Playlist
     </a>

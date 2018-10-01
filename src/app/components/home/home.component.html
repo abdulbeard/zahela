@@ -1,11 +1,19 @@
 <div class="background">
   <img class="ui fluid image" src="https://zahela.azureedge.net/zahela-assets/Blue_Ridge_Tree.jpg">
-  <div class="text">
+  <div class="text mobile" *ngIf="isMobileView">
+    <p class="names header mobile">Marcela & Zaheer</p>
+    <h1 class="landing page heading mobile">October 26th-28th, 2018</h1>
+    <p class="landing page content mobile">Join us in celebrating our marriage with far-flung friends and family
+    </p>
+    <a class="ui basic blue button enter mobile" href="account/rsvp">Enter</a>
+  </div>
+  <div class="text" *ngIf="!isMobileView">
     <p class="names header">Marcela & Zaheer</p>
     <h1 class="landing page heading">October 26th-28th, 2018</h1>
     <p class="landing page content">Join us in celebrating our marriage with far-flung friends and family
     </p>
     <a class="ui basic blue button enter" href="account/rsvp">Enter</a>
   </div>
-  <img class="ui medium image overlay" src="https://zahela.azureedge.net/zahela-assets/Us_Bed_of_Rocks.jpg">
+  <img class="ui medium image overlay" *ngIf="!isMobileView" src="https://zahela.azureedge.net/zahela-assets/Us_Bed_of_Rocks.jpg">
+  <img class="ui medium image overlay mobile" *ngIf="isMobileView" src="https://zahela.azureedge.net/zahela-assets/Us_Bed_of_Rocks.jpg">
 </div>

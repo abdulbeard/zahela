@@ -7,6 +7,7 @@ import { DisplayComment } from '../../models/DisplayComment';
 import * as $ from 'jquery';
 import { SlackReactionsService } from '../../services/SlackReactionsService';
 import { DisplayChannel } from '../../models/DisplayChannel';
+import { MobileUtils } from '../../utils/MobileUtils';
 
 @Component({
   selector: 'app-home',
@@ -18,9 +19,14 @@ import { DisplayChannel } from '../../models/DisplayChannel';
 export class HomeComponent implements AfterViewInit {
   ngAfterViewInit(): void {
   }
-  constructor(private emojiDefinitions: EmojiDefinitions, private emojiService: EmojiService,
-    private slackMessagesService: SlackMessagesService, private userService: UserService,
-    private slackMessageParsingService: SlackMessageParsingService) {
+
+  isMobileView: boolean = false;
+
+  constructor() {
+    this.isMobileView = MobileUtils.getIsMobileView();
+    MobileUtils.IsMobileView.subscribe(x => {
+      this.isMobileView = x;
+    });
   }
 
   channels: DisplayChannel[] = [

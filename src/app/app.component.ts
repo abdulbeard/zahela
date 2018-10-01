@@ -106,6 +106,10 @@ export class AppComponent implements AfterViewChecked, AfterContentChecked {
     this.router.navigate([Routes.login], navigationExtras);
   }
 
+  userIsLoggedIn(){
+    return UserSessionService.userIsLoggedIn();
+  }
+
   getDisplayGuest(): User {
     return this.authService.getCurrentDisplayUser();
   }

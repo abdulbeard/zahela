@@ -9,5 +9,5 @@ export const environment = {
   slackAppClientId: "",
   slackAppClientSecret: "",
   backendUrl: "https://zahela-backend.azurewebsites.net",
-  currentVersion: "1.0.0"
+  currentVersion: "1.0.2"
 };

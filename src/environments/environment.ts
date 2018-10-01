@@ -9,5 +9,5 @@ export const environment = {
   slackAppClientId: "",
   slackAppClientSecret: "",
   backendUrl: "http://localhost:55330",
-  currentVersion: "1.0.0"
+  currentVersion: "1.0.2"
 };

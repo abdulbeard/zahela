@@ -45,7 +45,6 @@ export class FaqComponent implements OnInit {
       console.log(Error);
     });
     this.route.queryParams.subscribe(x =>{
-      console.log(x);
       this.filterFromUrl = x.filter;
       if(this.filterFromUrl && this.masterList){
         this.doFilter(this.filterFromUrl);

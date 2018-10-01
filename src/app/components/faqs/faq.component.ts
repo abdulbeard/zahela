@@ -6,7 +6,7 @@ import { UserService } from '../../services/UserService';
 import { SlackReactionsService } from '../../services/SlackReactionsService';
 import { DisplayFaq, FaqTitle, FaqContent } from '../../models/DisplayFaq';
 import { FaqService } from '../../services/FaqService';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Location } from '@angular/common';
 import { Routes } from '../../constants/Routes';
 import { UserSessionService } from '../../services/UserSessionService';
@@ -23,11 +23,14 @@ export class FaqComponent implements OnInit {
     this.openFaqFromUrl();
   }
   constructor(private faqService: FaqService, private userService: UserService,
-    private route: ActivatedRoute, private location: Location) {
+    private route: ActivatedRoute, private location: Location, private router: Router) {
     faqService.getFaqs().subscribe(faqs => {
       this.masterList = faqs;
       this.accordion = faqs.sort(DisplayFaq.sort).reverse();
       this.openFaqFromUrl();
+      if(this.filterFromUrl){
+        this.doFilter(this.filterFromUrl);
+      }
     }, Error => {
       console.log(Error);
     })
@@ -40,13 +43,21 @@ export class FaqComponent implements OnInit {
       this.faqFromUrl = param["id"];
     }, (Error) => {
       console.log(Error);
-    })
+    });
+    this.route.queryParams.subscribe(x =>{
+      console.log(x);
+      this.filterFromUrl = x.filter;
+      if(this.filterFromUrl && this.masterList){
+        this.doFilter(this.filterFromUrl);
+      }
+    });
   }
 
   private masterList: DisplayFaq[];
   accordion: DisplayFaq[];
   filters: Array<string>;
   private faqFromUrl: string;
+  private filterFromUrl: string;
   question: string = "";
 
   openFaqFromUrl() {
@@ -81,12 +92,14 @@ export class FaqComponent implements OnInit {
   doFilter(filter: string) {
     this.question = filter;
     this.search();
+    this.editState();
   }
 
   removeFilter(event: any) {
     event.stopPropagation();
     this.question = "";
     this.search();
+    this.editState();
   }
 
   private askQuestion() {
@@ -96,8 +109,25 @@ export class FaqComponent implements OnInit {
     });
   }
 
+  editState(faqId?: string) {
+    var parseResult = this.router.parseUrl(this.location.path());
+    var filterQuery = this.question ? `?filter=${this.question}` : ``;
+    if(faqId){
+      this.location.replaceState(`/${Routes.faq}/${faqId}${filterQuery}`);
+    }
+    else {
+      var urlPath = `/${parseResult.root.children.primary.segments.join("/")}${filterQuery}`;
+      this.location.replaceState(urlPath);
+    }    
+  }
+
   private toggle(panel: DisplayFaq) {
-    this.location.replaceState(`/${Routes.faq}/${panel.id}`);
+    console.log(this.router.parseUrl('/faq/872418a8-7699-4dfe-a898-47a836325beb?filter=website'));
+    //console.log(this.location.normalize(''));
+    // this.location.replaceState(`/${Routes.faq}/${panel.id}?filter=website`);
+    this.editState(panel.id);
+    console.log(this.location.path());
+
     this.accordion.map((elem, index) => {
       if (elem !== panel) {
         elem.active = false;

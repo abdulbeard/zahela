@@ -37,3 +37,7 @@
 .ui.centered.grid .ui.form {
     margin-top: 2vh;
 }
+
+.ui.centered.grid {
+    margin-top: 0;
+}

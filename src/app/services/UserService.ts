@@ -40,6 +40,7 @@ export class UserService {
     }
 
     getUserByUsername(username: string) : Observable<HttpResponse<User>> {
+        username = username.toLowerCase();
         //return this.httpClient.get<User>(`${environment.backendUrl}/user/${username}`);
         return this.httpClient.get<User>(`${environment.backendUrl}/user/${username}`, {observe: 'response'});
     }

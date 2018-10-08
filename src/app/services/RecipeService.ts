@@ -41,6 +41,7 @@ export class RecipeService {
     
     getRecipesForUser(): Observable<Array<Recipe>> {
         //var currentUser = this.authService.currentUser;
+        console.log(JSON.stringify(this.recipe));
         return Observable.of(Array.of(this.recipe));
     }
 }

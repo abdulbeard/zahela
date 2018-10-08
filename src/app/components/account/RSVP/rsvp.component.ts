@@ -4,6 +4,8 @@ import { AuthService } from '../../../services/AuthService';
 import { UserService } from '../../../services/UserService';
 import { NavigationExtras, Router } from '@angular/router';
 import { Routes } from '../../../constants/Routes';
+import { TokenUtils } from '../../../utils/TokenUtils';
+import { UserSessionService } from '../../../services/UserSessionService';
 
 @Component({
   selector: 'app-account-rsvp',
@@ -37,7 +39,24 @@ export class RsvpComponent implements AfterViewInit {
     user.RSVPStatus = RSVPStatus[rsvpStatus];
     console.log(user.RSVPStatus);
     this.userService.updateRSVPStatus(user, user.RSVPStatus).subscribe(x => {
-      console.log(x);
+      var header = x.headers.get('access-token');
+      var headerUser = TokenUtils.tokenToUser(header);
+      if(this.user && headerUser && this.user.Id === headerUser.Id){
+        TokenUtils.setToken(header);
+        UserSessionService.setCurrentUser(headerUser);
+        this.user = headerUser;
+      }
+      else if (this.user && headerUser) {
+        this.user.LinkedGuests.forEach(x => {
+          if(x.Id === headerUser.Id) {
+            x = headerUser;
+          }
+        })
+      }
+
+      
+      TokenUtils.decodeToken(header);
+      console.log(x.body);
     });
   }
 

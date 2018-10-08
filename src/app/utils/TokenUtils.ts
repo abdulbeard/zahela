@@ -34,7 +34,7 @@ export class TokenUtils {
     public static decodeToken(token: string) {
         if(token) {
             var user = this.tokenToUser(token);
-            console.log(user);
+            //console.log(user);
             UserSessionService.setCurrentUser(user);
         }
     }

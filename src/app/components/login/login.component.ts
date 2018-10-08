@@ -78,6 +78,8 @@ export class LoginComponent implements AfterViewInit, AfterViewChecked {
   registerPassword: string = '';
   tryingToFindUser: boolean = false;
 
+  connectionRequested: boolean = true;
+
   private user: User = null;
   userToken: string = '';
 
@@ -170,7 +172,8 @@ export class LoginComponent implements AfterViewInit, AfterViewChecked {
 
   requestConnection() {
     console.log(this.requestConnectionName, this.requestConnectionHistory, this.requestConnectionEmail);
-    this.signupErrors = ["Bad name", "Bad email", "Bad History"];
+    this.connectionRequested = true;
+    //this.signupErrors = ["Bad name", "Bad email", "Bad History"];
   }
 
   dismissLoginError() {

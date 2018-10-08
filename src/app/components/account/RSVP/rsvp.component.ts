@@ -38,26 +38,28 @@ export class RsvpComponent implements AfterViewInit {
   rsvpOptionSelected(user: User, rsvpStatus: string) {
     user.RSVPStatus = RSVPStatus[rsvpStatus];
     console.log(user.RSVPStatus);
-    this.userService.updateRSVPStatus(user, user.RSVPStatus).subscribe(x => {
-      var header = x.headers.get('access-token');
-      var headerUser = TokenUtils.tokenToUser(header);
-      if(this.user && headerUser && this.user.Id === headerUser.Id){
-        TokenUtils.setToken(header);
-        UserSessionService.setCurrentUser(headerUser);
-        this.user = headerUser;
-      }
-      else if (this.user && headerUser) {
-        this.user.LinkedGuests.forEach(x => {
-          if(x.Id === headerUser.Id) {
-            x = headerUser;
-          }
-        })
-      }
+    this.userService.updateRSVPStatus(user, user.RSVPStatus).subscribe(x => console.log(x));
+
+    // x => {
+    //   var header = x.headers.get('access-token');
+    //   var headerUser = TokenUtils.tokenToUser(header);
+    //   if(this.user && headerUser && this.user.Id === headerUser.Id){
+    //     TokenUtils.setToken(header);
+    //     UserSessionService.setCurrentUser(headerUser);
+    //     this.user = headerUser;
+    //   }
+    //   else if (this.user && headerUser) {
+    //     this.user.LinkedGuests.forEach(x => {
+    //       if(x.Id === headerUser.Id) {
+    //         x = headerUser;
+    //       }
+    //     })
+    //   }
 
       
-      TokenUtils.decodeToken(header);
-      console.log(x.body);
-    });
+    //   TokenUtils.decodeToken(header);
+    //   console.log(x.body);
+    // }
   }
 
   goToDietaryRestrictions(user: User) {

@@ -41,7 +41,7 @@ export class UserPermissions {
             `${Routes.account}/${Routes.accountInvitation}`,
             `${Routes.account}/${Routes.accountPolo}`,
             // `${Routes.recipe}`,
-            `${Routes.playlist}`
+            //`${Routes.playlist}`
         ], [
             Routes.messages, 
             // Routes.friends, 

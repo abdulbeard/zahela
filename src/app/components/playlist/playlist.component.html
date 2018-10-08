@@ -1,4 +1,4 @@
-<div class="ui centered grid">
+<!-- <div class="ui centered grid">
   <h1>The compiled playlist</h1>
 </div>
 <br/>
@@ -13,29 +13,114 @@
 <br/>
 <div class="ui centered grid">
   <h2>Individual Songs</h2>
-</div>
+</div> -->
 <br/>
 <br/>
 <div class="ui centered grid">
+  <div class="ui blue button" (click)="recommendSong()" *ngIf="!tryingToRecommendSong && !(urlFlow || manualFlow)">Recommend
+    a song</div>
+  <div *ngIf="tryingToRecommendSong">
+    <div class="ui blue button" (click)="doUrlFlow()">Use A Url</div>
+    <div class="ui horizontal divider">OR</div>
+    <div class="ui gray button" (click)="doManualFlow()">Manually Enter Details</div>
+  </div>
+  <div class="ui reply form">
+    <div class="urlFlow" *ngIf="urlFlow">
+      <div class="field">
+        <div class="label">Url</div>
+        <div class="ui left icon input">
+          <input type="text" placeholder="Enter url" [(ngModel)]="songUrl">
+          <i class="music icon"></i>
+        </div>
+      </div>
+      <div class="field">
+        <div class="label">Comment</div>
+        <textarea name="comment" rows="2" placeholder="Back from our goth days!" [(ngModel)]="urlComment"></textarea>
+      </div>
+      <div class="ui blue button" (click)="submitUrlRecommendation()">Submit</div>
+      <div class="ui basic button" (click)="cancelUrlFlow()">Cancel</div>
+    </div>
+  </div>
+
+  <div class="ui form">
+    <div class="manualFlow" *ngIf="manualFlow">
+      <div class="field">
+          <div class="label">Song name</div>
+        <div class="ui left icon input">
+          <input type="text" placeholder="Song" [(ngModel)]="songName">
+          <i class="music icon"></i>
+        </div>
+      </div>
+      <div class="field">
+        <div class="ui left icon input">
+          <input type="text" placeholder="Artist" [(ngModel)]="songArtist">
+          <i class="user icon"></i>
+        </div>
+      </div>
+      <div class="field">
+        <div class="ui left icon input">
+          <input type="text" placeholder="Year" [(ngModel)]="songYear">
+          <i class="calendar icon"></i>
+        </div>
+      </div>
+      <div class="field">
+        <div class="ui left icon input">
+          <input type="text" placeholder="Album" [(ngModel)]="songAlbum">
+          <i class="file audio outline icon"></i>
+        </div>
+      </div>
+      <div class="field">
+        <div class="label">Comment</div>
+        <textarea name="comment" rows="2" placeholder="Back from our goth days!" [(ngModel)]="manualComment"></textarea>
+      </div>
+      <div class="ui blue button" (click)="submitManualRecommendation()">Submit</div>
+      <div class="ui basic button" (click)="cancelManualFlow()">Cancel</div>
+    </div>
+  </div>
+</div>
+<br/><br/>
+<div class="ui centered grid">
   <div class="ui relaxed divided list">
 
-    <div *ngFor="let video of videos; let i = index;" class="item">
+    <div *ngFor="let entry of playlistEntries; let i = index;" class="item">
       <br/>
       <h3>#{{i}}</h3>
-      <iframe width="560" height="315" scrolling="yes"[src]="video.url | sanitizeUrl" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+      <ng-container *ngIf="entry.url">
+        <iframe width="560" height="315" scrolling="yes" [src]="entry.url | sanitizeUrl" frameborder="0" allow="autoplay; encrypted-media"
+          allowfullscreen></iframe>
+      </ng-container>
+      <ng-container *ngIf="!entry.url">
+        <div class="ui blue fluid card">
+          <div class="content">
+            <div class="header">{{entry.name}}</div> by
+            <div>{{entry.artist}}</div>
+            <br/><br/>
+            <div class="meta" *ngIf="entry.year">{{entry.year}}</div>
+            <div class="meta" *ngIf="entry.extraInfo">{{entry.extraInfo}}</div>
+            <div class="meta" *ngIf="entry.album">Album: {{entry.album}}</div>
+            <br/>
+            <div class="description">
+              <a>{{entry.username}}</a>'s recommendation
+            </div>
+          </div>
+          <div class="extra content" *ngIf="entry.comment">
+            With comment: <i>"{{entry.comment}}"</i>
+          </div>
+        </div>
+      </ng-container>
       <br/>
       <br/>
       <div class="ui green segment">
+        <a class="header">{{entry.username}}</a>
         <div class="content">
-          <a class="header">Rachel</a>
-          <div class="description">Last seen watching
-            <a>
-              <b>Arrested Development</b>
-            </a> just now.</div>
+          recommended this song.
+          <br/><br/>
+          <div class="description" *ngIf="entry.comment">
+            With the following comment: <br/><i>"{{entry.comment}}"</i>
+          </div>
         </div>
       </div>
       <br/>
     </div>
-
   </div>
 </div>

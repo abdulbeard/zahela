@@ -47,6 +47,7 @@ import { InvitationComponent } from './components/account/Invitation/invitation.
 import { RegistryComponent } from './components/registry/registry.component';
 import { ScheduleComponent } from './components/account/schedule/schedule.component';
 import { FeedbackService } from './services/FeedbackService';
+import { PlaylistService } from './services/PlaylistService';
 
 const appRoutes: Routes = [
   { path: AppRoutes.home, component: HomeComponent },
@@ -131,6 +132,7 @@ const appRoutes: Routes = [
       ModalService,
       FriendsService,
       FeedbackService,
+      PlaylistService,
       JwtHelper,
       {
         provide: HTTP_INTERCEPTORS,

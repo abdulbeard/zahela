@@ -11,14 +11,14 @@ export class PlaylistService {
     constructor(private httpClient: HttpClient){}
 
     getAllEntries(): Observable<Array<PlaylistEntry>> {
-        return this.httpClient.get<Array<PlaylistEntry>>(`${environment.backendUrl}/playlist`);
+        return this.httpClient.get<Array<PlaylistEntry>>(`${environment.backendUrl}/playlist/approved`);
     }
 
     addEntry(entry: PlaylistEntry): Observable<PlaylistEntry> {
-        return this.httpClient.post<PlaylistEntry>(`${environment.backendUrl}/playlist`, JSON.stringify(entry));
+        return this.httpClient.post<PlaylistEntry>(`${environment.backendUrl}/playlist`, entry);
     }
 
     updateEntry(entry: PlaylistEntry): Observable<PlaylistEntry> {
-        return this.httpClient.put<PlaylistEntry>(`${environment.backendUrl}/playlist`, JSON.stringify(entry));
+        return this.httpClient.put<PlaylistEntry>(`${environment.backendUrl}/playlist`, entry);
     }
 }

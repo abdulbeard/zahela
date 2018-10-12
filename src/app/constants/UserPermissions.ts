@@ -43,7 +43,8 @@ export class UserPermissions {
             // `${Routes.recipe}`,
             //`${Routes.playlist}`
         ], [
-            Routes.messages, 
+            Routes.messages,
+            Routes.gallery
             // Routes.friends, 
             // Routes.account            
         ]);

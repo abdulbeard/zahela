@@ -48,6 +48,8 @@ import { RegistryComponent } from './components/registry/registry.component';
 import { ScheduleComponent } from './components/account/schedule/schedule.component';
 import { FeedbackService } from './services/FeedbackService';
 import { PlaylistService } from './services/PlaylistService';
+import { GalleryComponent } from './components/gallery/gallery.component';
+import { GalleryService } from './services/GalleryService';
 
 const appRoutes: Routes = [
   { path: AppRoutes.home, component: HomeComponent },
@@ -78,6 +80,7 @@ const appRoutes: Routes = [
   { path: AppRoutes.forumDetailComment, component: ForumComponent, canActivate: [AuthService]},
   { path: AppRoutes.comingSoon, component: ComingSoonComponent, canActivate: [AuthService]},
   { path: AppRoutes.registry, component: RegistryComponent, canActivate: [AuthService]},
+  { path: AppRoutes.gallery, component: GalleryComponent, canActivate: [AuthService]},
   { path: AppRoutes.empty, redirectTo: AppRoutes.home, pathMatch: "full" }, //base url, no path
   { path: AppRoutes.wildCard, redirectTo: AppRoutes.home }, //wrong url/404
 ];
@@ -90,7 +93,7 @@ const appRoutes: Routes = [
     // ImageCropperComponent, 
     ProfileComponent, UpdatesComponent, RsvpComponent, DietaryRestrictionsComponent,
     PoloComponent, ModalComponent, GuestCardComponent, GuestDetailComponent, ComingSoonComponent,
-    InvitationComponent, RegistryComponent, ScheduleComponent
+    InvitationComponent, RegistryComponent, ScheduleComponent, GalleryComponent
   ],
   imports: [
     BrowserModule, HttpModule, FormsModule, RouterModule.forRoot(
@@ -133,6 +136,7 @@ const appRoutes: Routes = [
       FriendsService,
       FeedbackService,
       PlaylistService,
+      GalleryService,
       JwtHelper,
       {
         provide: HTTP_INTERCEPTORS,

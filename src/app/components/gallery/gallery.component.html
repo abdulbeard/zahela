@@ -1,0 +1,12 @@
+<div class="ui container">
+  <br/><br/><br/>
+  <div class="ui centered stackable grid">
+    <div class="ui images" *ngIf="images">
+      <ng-container *ngFor="let image of images">
+        <a [attr.href]="image.url" target="__blank">
+          <img [class]="getImageClass(image)" [src]="image.url">
+        </a>
+      </ng-container>
+    </div>
+  </div>
+</div>

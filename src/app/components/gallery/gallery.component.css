@@ -1,0 +1,16 @@
+.ui.grid {
+    margin-top: 0;
+}
+
+img {
+    /* border: #4286f4 1px solid; */
+    /* background-color: rgba(0,0,0,0.2); */
+    /* padding: 2px; */
+    /* border: black 2px solid; */
+    /* border-radius: 3px; */
+    /* padding: 3px; */
+}
+
+.ui.container {
+    background-color: rgba(0,0,0,0.6);
+}

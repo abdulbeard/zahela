@@ -1,0 +1,94 @@
+<br /><br />
+<div class="ui centered grid">
+  <form class="ui form">
+    <h4 class="ui dividing header">Recipe Details</h4>
+    <div class="details">
+      <div class="field">
+        <div class="two fields">
+          <div class="field">
+            <label>Name</label>
+            <input type="text" name="name" [(ngModel)]="recipe.Name" placeholder="e.g. Shirataki stirfry">
+          </div>
+          <div class="field">
+            <label>Origin</label>
+            <input type="text" name="origin" [(ngModel)]="recipe.Origin" placeholder="e.g. Grandma's famous pancakes">
+          </div>
+        </div>
+      </div>
+      <!-- <br /> -->
+    </div>
+    <h4 class="ui dividing header">Description</h4>
+    <div class="description">
+      <div class="field">
+        <textarea name="desc_text" [(ngModel)]="recipe.Description.Text" rows="3" placeholder="e.g. Delicious grilled chicken on bed of rice">
+      </textarea>
+      </div>
+      <div class="three fields">
+        <div class="field">
+          <label>Prep Time</label>
+          <input type="text" name="desc_prepTime" [(ngModel)]="recipe.Description.PreparationTime" placeholder="e.g. 3hrs">
+        </div>
+        <div class="field">
+          <label>Portion Size</label>
+          <input type="text" name="desc_portSize" [(ngModel)]="recipe.Description.PortionSize" placeholder="e.g. 6pcs of grilled chicken">
+        </div>
+        <div class="field">
+          <label># of Servings</label>
+          <input type="text" name="desc_numServed" [(ngModel)]="recipe.Description.ServesHowMany" placeholder="e.g. 6 hungry people">
+        </div>
+      </div>
+      <div class="field">
+        <label>Tags</label>
+        <div class="tags" *ngIf="recipe.Description.Tags && recipe.Description.Tags.length > 0">
+          <div class="ui blue small label" *ngFor="let tag of recipe.Description.Tags">{{tag}}
+            <i class="delete icon"></i>
+          </div>
+          <br /><br/>
+        </div>
+        <div class="ui action input">
+          <input type="text" name="desc_tags" [(ngModel)]="tag" placeholder="e.g. mexican">
+          <button class="ui blue button" (click)="addTag()">Add Tag</button>
+        </div>
+      </div>
+      <div class="field">
+        <label>Images</label>
+        <!-- <div class="ui fade reveal">
+          <div class="visible content">
+            <img src="/assets/profile_pic_1.jpg" class="ui tiny image">
+          </div>
+          <div class="hidden content">
+            asdf
+          </div>
+        </div> -->
+        <div class="ui images" *ngIf="recipe.Description.Images">
+          <div class="ui tiny image" *ngFor="let img of recipe.Description.Images">
+              <a class="ui red right corner mini label">
+                <i class="delete icon"></i>
+              </a>
+              <img [src]="img">
+          </div>  
+          <!-- <img class="ui image" *ngFor="let img of recipe.Description.Images" [src]="img"> -->
+        </div>
+        <div class="ui action input">
+          <input type="text" name="desc_images" [(ngModel)]="image" placeholder="e.g. mexican">
+          <button class="ui blue button">Add Image</button>
+        </div>
+      </div>
+    </div>
+    <h4 class="ui dividing header">Equipment</h4>
+    <div class="equipment">
+      <div class="field">
+        <div class="ui bulleted list" *ngIf="recipe.Equipment">
+          <div class="item" *ngFor="let item of recipe.Equipment">
+            <div class="ui small blue label">{{item}} <i class="delete icon"></i> </div>
+          </div>
+        </div>
+        <div class="ui action input">
+          <input type="text" name="equipment" [(ngModel)]="equipment" placeholder="e.g. 1 Large Saucepan">
+          <button class="ui blue button">Add Equipment</button>
+        </div>
+      </div>
+    </div>
+    <div class="ui button" tabindex="0">Submit Order</div>
+  </form>
+</div>

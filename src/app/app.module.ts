@@ -50,6 +50,7 @@ import { FeedbackService } from './services/FeedbackService';
 import { PlaylistService } from './services/PlaylistService';
 import { GalleryComponent } from './components/gallery/gallery.component';
 import { GalleryService } from './services/GalleryService';
+import { RecipeCreateComponent } from './components/recipe-create/recipe-create.component';
 
 const appRoutes: Routes = [
   { path: AppRoutes.home, component: HomeComponent },
@@ -74,6 +75,7 @@ const appRoutes: Routes = [
   { path: AppRoutes.faqExtended, component: FaqComponent, canActivate: [AuthService]},
   { path: AppRoutes.faq, component: FaqComponent, canActivate: [AuthService]},
   { path: AppRoutes.recipe, component: RecipeComponent, canActivate: [AuthService]},
+  { path: AppRoutes.recipeCreate, component: RecipeCreateComponent, canActivate: [AuthService]},
   { path: AppRoutes.recipeDetail, component: RecipeDetailComponent, canActivate: [AuthService]},
   { path: AppRoutes.forum, component: ForumComponent, canActivate: [AuthService]},
   { path: AppRoutes.forumDetail, component: ForumComponent, canActivate: [AuthService]},
@@ -93,7 +95,7 @@ const appRoutes: Routes = [
     // ImageCropperComponent, 
     ProfileComponent, UpdatesComponent, RsvpComponent, DietaryRestrictionsComponent,
     PoloComponent, ModalComponent, GuestCardComponent, GuestDetailComponent, ComingSoonComponent,
-    InvitationComponent, RegistryComponent, ScheduleComponent, GalleryComponent
+    InvitationComponent, RegistryComponent, ScheduleComponent, GalleryComponent, RecipeCreateComponent
   ],
   imports: [
     BrowserModule, HttpModule, FormsModule, RouterModule.forRoot(

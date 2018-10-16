@@ -61,7 +61,7 @@ export class Ingredient {
     }
     public getAbbreviatedMeasure(): string {
         switch (this.Measure) {
-            case IngredientMeasure.Count: { return "cnt"; }
+            case IngredientMeasure.Count: { return "count"; }
             case IngredientMeasure.Milliliter: { return "ml"; }
             case IngredientMeasure.Cup: { return "cup"; }
             case IngredientMeasure.Pinch: { return "pinch"; }

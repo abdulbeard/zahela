@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { AuthService } from "./AuthService";
-import { Recipe, Ingredient, IngredientMeasure, Stage, Step, RecipeDescription } from "../models/DisplayRecipe";
+import { Recipe, Ingredient, IngredientMeasure, Stage, Step, RecipeDescription } from "../models/Recipe";
 import { Observable } from "rxjs/Observable";
 import { HttpClient } from "@angular/common/http";
 import { PlaylistEntry } from "../models/PlaylistEntry";

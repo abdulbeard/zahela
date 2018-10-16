@@ -20,6 +20,7 @@ export class Routes {
     public static readonly faq: string = 'faq';
     public static readonly faqExtended: string = 'faq/:id';
     public static readonly recipe: string = 'recipe';
+    public static readonly recipeCreate: string = 'recipe-create';
     public static readonly recipeDetail: string = 'recipe/:id/detail';
     public static readonly forum: string = 'forum'
     public static readonly forumDetail: string = 'forum/:topic'

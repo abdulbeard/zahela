@@ -1,0 +1,15 @@
+.ui.centered.grid {
+    margin-top: 0;
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+.details, .description, .equipment {
+    background-color: rgba(0,0,0,0.2);
+    border-radius: 3px;
+    padding: 5px;
+}
+
+.ui.red.right.corner.mini.label {
+    /* position: relative; */
+}

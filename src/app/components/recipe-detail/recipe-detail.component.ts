@@ -8,7 +8,7 @@ import * as $ from 'jquery';
 import { SlackReactionsService } from '../../services/SlackReactionsService';
 import { DisplayChannel } from '../../models/DisplayChannel';
 import { ActivatedRoute } from '@angular/router';
-import { Recipe } from '../../models/DisplayRecipe';
+import { Recipe } from '../../models/Recipe';
 import { RecipeService } from '../../services/RecipeService';
 
 @Component({

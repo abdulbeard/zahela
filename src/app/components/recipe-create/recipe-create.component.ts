@@ -8,25 +8,43 @@ import * as $ from 'jquery';
 import { SlackReactionsService } from '../../services/SlackReactionsService';
 import { DisplayChannel } from '../../models/DisplayChannel';
 import { RecipeService } from '../../services/RecipeService';
-import { Recipe } from '../../models/Recipe';
+import { Recipe, RecipeDescription } from '../../models/Recipe';
 
 @Component({
-  selector: 'app-recipe',
-  templateUrl: './recipe.component.html',
-  styleUrls: ['./recipe.component.css'],
+  selector: 'app-recipe-create',
+  templateUrl: './recipe-create.component.html',
+  styleUrls: ['./recipe-create.component.css'],
   providers: [EmojiDefinitions, EmojiService, SlackMessagesService, UserService,
     SlackMessageParsingService, SlackReactionsService]
 })
-export class RecipeComponent implements AfterViewInit {
+export class RecipeCreateComponent implements AfterViewInit {
+  
+  public recipe: Recipe = new Recipe(
+    null, null, new RecipeDescription([
+      "/assets/profile_pic_1.jpg",
+      "/assets/profile_pic_1.jpg",
+      "/assets/profile_pic_1.jpg",
+      "/assets/profile_pic_1.jpg",
+      "/assets/profile_pic_1.jpg",
+      "/assets/profile_pic_1.jpg",
+      "/assets/profile_pic_1.jpg",
+      "/assets/profile_pic_1.jpg",
+      "/assets/profile_pic_1.jpg"
+    ], null, null, null, [], null), [], [], [], [], null, null);
+
+  public tag: string = '';
+  public image: string = '';
+  public equipment: string = '';
+
   ngAfterViewInit(): void {
   }
   constructor(private recipeService: RecipeService) {
-    recipeService.getRecipesForUser().subscribe(
-      x => {this.recipes = x; console.log(x)}, 
-      error => console.log(error));
   }
   recipes: Array<Recipe>
-  getRecipeLink(recipe: Recipe): string {
-    return `recipe/${recipe.Id}/detail`;
+  getRecipeLink(recipe: Recipe) {
+  }
+
+  addTag(){
+    this.recipe.Description.Tags.push(this.tag);
   }
 }

@@ -24,13 +24,13 @@ export class RecipeService {
             "Real good spices", "extraSpices")),
         Array.of("Pan", "Oven", "Fridge", "Shears"),
         Array.of(
-            new Stage(
+            new Stage("test",
                 Array.of(new Step("Buy the chicken"), new Step("Clean the chicken"))),
-            new Stage(
+            new Stage("test1",
                 Array.of(new Step("Marinate the chicken for a day"))
             )),
         Array.of(
-            new Stage(
+            new Stage("test2",
                 Array.of(new Step("Cut the chicken into pieces"),
                         new Step("Skewer on metal skewers"),
                         new Step("Bake at 325 for 10 mins"))

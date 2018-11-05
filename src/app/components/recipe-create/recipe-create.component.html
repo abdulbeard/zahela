@@ -18,7 +18,7 @@
       <!-- <br /> -->
     </div>
     <h4 class="ui dividing header">Description</h4>
-    <div class="description">
+    <div class="recipeDescription">
       <div class="field">
         <textarea name="desc_text" [(ngModel)]="recipe.Description.Text" rows="3" placeholder="e.g. Delicious grilled chicken on bed of rice">
       </textarea>
@@ -34,16 +34,16 @@
         </div>
         <div class="field">
           <label># of Servings</label>
-          <input type="text" name="desc_numServed" [(ngModel)]="recipe.Description.ServesHowMany" placeholder="e.g. 6 hungry people">
+          <input type="text" name="desc_numServed" [(ngModel)]="recipe.Description.ServesHowMany" placeholder="e.g. 6">
         </div>
       </div>
       <div class="field">
         <label>Tags</label>
         <div class="tags" *ngIf="recipe.Description.Tags && recipe.Description.Tags.length > 0">
           <div class="ui blue small label" *ngFor="let tag of recipe.Description.Tags">{{tag}}
-            <i class="delete icon"></i>
+            <i class="delete icon" (click)="removeTag(tag)"></i>
           </div>
-          <br /><br/>
+          <br /><br />
         </div>
         <div class="ui action input">
           <input type="text" name="desc_tags" [(ngModel)]="tag" placeholder="e.g. mexican">
@@ -62,16 +62,16 @@
         </div> -->
         <div class="ui images" *ngIf="recipe.Description.Images">
           <div class="ui tiny image" *ngFor="let img of recipe.Description.Images">
-              <a class="ui red right corner mini label">
-                <i class="delete icon"></i>
-              </a>
-              <img [src]="img">
-          </div>  
+            <a class="ui red right corner mini label" (click)="removeImage(img)">
+              <i class="delete icon"></i>
+            </a>
+            <img [src]="img">
+          </div>
           <!-- <img class="ui image" *ngFor="let img of recipe.Description.Images" [src]="img"> -->
         </div>
         <div class="ui action input">
           <input type="text" name="desc_images" [(ngModel)]="image" placeholder="e.g. mexican">
-          <button class="ui blue button">Add Image</button>
+          <button class="ui blue button" (click)="addImage()">Add Image</button>
         </div>
       </div>
     </div>
@@ -89,6 +89,102 @@
         </div>
       </div>
     </div>
+
+    <h4 class="ui dividing header">Ingredients</h4>
+    <div class="ui cards" *ngIf="recipe.Ingredients">
+      <div class="ui mini blue card" *ngFor="let ingr of recipe.Ingredients">
+        <div class="content">
+          <div class="header">{{ingr.Name}}&nbsp;&nbsp;[{{ingr.Amount}} {{getMeasureName(ingr.Measure)}}]</div>
+          <div class="meta">{{ingr.ExtraInfo}}</div>
+          <div class="description">
+            <!-- <h3>{{ingr.Amount}} {{getMeasureName(ingr.Measure)}}</h3> -->
+            <p>{{ingr.Description}}</p>
+          </div>
+        </div>
+        <div class="extra content" *ngIf="ingr.Url">
+          <a [attr.href]="ingr.Url" target="__blank">
+            <i class="external square alternate icon"></i>
+          </a>
+          <a (click)="editIngredient(ingr)">
+            <i class="edit icon"></i>
+          </a>
+          <a (click)="removeIngredient(ingr)">
+            <i class="x icon"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+    <br />
+
+    <div class="ingredients">
+      <div class="four fields">
+        <div class="field">
+          <label>Name</label>
+          <input type="text" name="ingr_name" [(ngModel)]="ingredient.Name" placeholder="Cantaloupe">
+        </div>
+        <div class="field">
+          <label>Description</label>
+          <input type="text" name="ingr_desc" [(ngModel)]="ingredient.Description" placeholder="The big yellow kind">
+        </div>
+        <div class="field">
+          <label>Amount</label>
+          <input type="text" name="ingr_amount" [(ngModel)]="ingredient.Amount" placeholder="1 Large">
+        </div>
+        <div class="field">
+          <label>Measure</label>
+          <select>
+            <option value="Tablespoon">Tablespoon</option>
+            <option value="Teaspoon">Teaspoon</option>
+            <option value="Pinch">Pinch</option>
+            <option value="Cup">Cup</option>
+            <option value="Milliliter">Milliliter</option>
+            <option value="Count">Count</option>
+          </select>
+        </div>
+      </div>
+      <div class="three fields">
+        <div class="field">
+          <label>Url</label>
+          <input type="text" name="ingr_url" [(ngModel)]="ingredient.Url" placeholder="www.cantaloupe.com">
+        </div>
+        <div class="field">
+          <label>ExtraInfo</label>
+          <input type="text" name="ingr_xtrainfo" [(ngModel)]="ingredient.ExtraInfo" placeholder="Get a fragrant one">
+        </div>
+        <div class="field">
+          <label>&nbsp;</label>
+          <div class="ui blue button" (click)="addIngredient()">Add Ingredient</div>
+        </div>
+      </div>
+    </div>
+
+    <h4 class="ui dividing header">Ingredients</h4>
+    <div class="preparation">
+      <div *ngIf="prepStage">
+        <div class="two fields">
+          <div class="five wide field">
+            <label>Name</label>
+            <input type="text" name="prep_stg_name" [(ngModel)]="prepStage.Name" placeholder="Preparing the chicken">
+          </div>
+          <div class="ten wide field">
+            <!-- <label>Steps</label>
+          <input type="text" name="prep_stg_step" [(ngModel)]="prepStage.Steps[0]" placeholder="Preparing the chicken"> -->
+          <label>&nbsp;</label>
+            <div class="ui action input">
+              <input type="text" name="prep_stg_step" [(ngModel)]="prepStage.Steps[0]" placeholder="e.g. 1 Large Saucepan">
+              <button class="ui blue button">Add Step</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="field">
+        <label>&nbsp;</label>
+        <div class="ui blue button" (click)="addPrepStage()">Add Stage</div>
+      </div>
+    </div>
+
+    <br /><br />
     <div class="ui button" tabindex="0">Submit Order</div>
   </form>
 </div>

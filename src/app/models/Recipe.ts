@@ -89,8 +89,10 @@ export class Step {
 }
 
 export class Stage {
-    constructor(steps: Array<Step>) {
+    constructor(name: string, steps: Array<Step>) {
+        this.Name = name;
         this.Steps = steps;
     }
+    public Name: string;
     public Steps: Array<Step>;
 }

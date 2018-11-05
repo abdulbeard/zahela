@@ -4,7 +4,7 @@
     margin-right: 5px;
 }
 
-.details, .recipeDescription, .equipment, .ingredients {
+.details, .recipeDescription, .equipment, .ingredients, .preparation {
     background-color: rgba(0,0,0,0.2);
     border-radius: 3px;
     padding: 5px;

@@ -76,6 +76,12 @@
       </div>
     </div>
     <h4 class="ui dividing header">Equipment</h4>
+    <div class="tags" *ngIf="recipe.Equipment && recipe.Equipment.length > 0">
+      <div class="ui blue small label" *ngFor="let tag of recipe.Equipment">{{tag}}
+        <i class="delete icon" (click)="removeEquipment(tag)"></i>
+      </div>
+      <br /><br />
+    </div>
     <div class="equipment">
       <div class="field">
         <div class="ui bulleted list" *ngIf="recipe.Equipment">
@@ -85,7 +91,7 @@
         </div>
         <div class="ui action input">
           <input type="text" name="equipment" [(ngModel)]="equipment" placeholder="e.g. 1 Large Saucepan">
-          <button class="ui blue button">Add Equipment</button>
+          <button class="ui blue button" (click)="addEquipment">Add Equipment</button>
         </div>
       </div>
     </div>
@@ -158,10 +164,18 @@
       </div>
     </div>
 
-    <h4 class="ui dividing header">Ingredients</h4>
+    <h4 class="ui dividing header">Preparation</h4>
+    <div class="ui inverted blue segment prep" *ngIf="recipe.Preparation.length > 0">
+        <div *ngFor="let prepStage of recipe.Preparation; let i = index;">
+          <div class="ui horizontal divider">{{getDividerSymbol(i,prepStage.Name)}}</div>
+          <ul class="ui list">
+            <li *ngFor="let step of prepStage.Steps">{{step.Instructions}}</li>
+          </ul>
+        </div>
+      </div>
     <div class="preparation">
       <div *ngIf="prepStage">
-        <div class="two fields">
+        <!-- <div class="two fields"> -->
           <div class="five wide field">
             <label>Name</label>
             <input type="text" name="prep_stg_name" [(ngModel)]="prepStage.Name" placeholder="Preparing the chicken">
@@ -169,13 +183,24 @@
           <div class="ten wide field">
             <!-- <label>Steps</label>
           <input type="text" name="prep_stg_step" [(ngModel)]="prepStage.Steps[0]" placeholder="Preparing the chicken"> -->
-          <label>&nbsp;</label>
-            <div class="ui action input">
-              <input type="text" name="prep_stg_step" [(ngModel)]="prepStage.Steps[0]" placeholder="e.g. 1 Large Saucepan">
+            <label>List out the steps for this stage</label>
+            <!-- <ul class="ui list">
+              <li *ngFor="let step of prepStage.Steps">{{step.Instructions}}</li>
+            </ul> -->
+            <ul class="ui list">
+              <li>
+                <div class="ui action input">
+                  <input type="text" name="prep_stg_step" [(ngModel)]="step" placeholder="Defrost the chicken over 3 hrs.">
+                  <button class="ui blue button" (click)="addPrepStep()">Add Step</button>
+                </div>
+              </li>
+            </ul>
+            <!-- <div class="ui action input">
+              1 <input type="text" name="prep_stg_step" [(ngModel)]="step" placeholder="Defrost the chicken over 3 hrs.">
               <button class="ui blue button">Add Step</button>
-            </div>
+            </div> -->
           </div>
-        </div>
+        <!-- </div> -->
       </div>
 
       <div class="field">
@@ -184,7 +209,49 @@
       </div>
     </div>
 
+
+    <h4 class="ui dividing header">Cooking</h4>
+    <div class="ui inverted blue segment" *ngIf="recipe.ActualCooking.length > 0">
+        <div *ngFor="let prepStage of recipe.ActualCooking; let i = index;">
+          <div class="ui horizontal divider">{{getDividerSymbol(i,prepStage.Name)}}</div>
+          <ul class="ui list">
+            <li *ngFor="let step of prepStage.Steps">{{step.Instructions}}</li>
+          </ul>
+        </div>
+      </div>
+    <div class="cooking">
+      <div *ngIf="cookingStage">
+        <!-- <div class="two fields"> -->
+          <div class="field">
+            <label>Name</label>
+            <input type="text" name="cook_stg_name" [(ngModel)]="cookingStage.Name" placeholder="Cook the chicken">
+          </div>
+          <div class="field">
+            <label>List out the steps for this stage</label>
+            <ul class="ui list">
+              <li>
+                <div class="ui action input">
+                  <input type="text" name="prep_stg_step" [(ngModel)]="step" placeholder="Oven roast the chicken over 3 hrs.">
+                  <button class="ui blue button" (click)="addCookingStep()">Add Step</button>
+                </div>
+              </li>
+            </ul>
+            <!-- <div class="ui action input">
+              1 <input type="text" name="prep_stg_step" [(ngModel)]="step" placeholder="Defrost the chicken over 3 hrs.">
+              <button class="ui blue button">Add Step</button>
+            </div> -->
+          </div>
+        <!-- </div> -->
+      </div>
+
+      <div class="field">
+        <label>&nbsp;</label>
+        <div class="ui blue button" (click)="addCookingStage()">Add Stage</div>
+      </div>
+    </div>
+
     <br /><br />
-    <div class="ui button" tabindex="0">Submit Order</div>
+    <a class="ui button" tabindex="0" (click)="preview()" target="__blank" [attr.href]="getPreviewHref()"><i class="external square alternate icon"></i>Preview</a>
+    <div class="ui button" tabindex="0">Submit Recipe</div>
   </form>
 </div>

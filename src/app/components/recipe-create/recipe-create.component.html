@@ -158,10 +158,10 @@
       </div>
     </div>
 
-    <h4 class="ui dividing header">Ingredients</h4>
+    <h4 class="ui dividing header">Preparation</h4>
     <div class="preparation">
       <div *ngIf="prepStage">
-        <div class="two fields">
+        <!-- <div class="two fields"> -->
           <div class="five wide field">
             <label>Name</label>
             <input type="text" name="prep_stg_name" [(ngModel)]="prepStage.Name" placeholder="Preparing the chicken">
@@ -175,7 +175,7 @@
               <button class="ui blue button">Add Step</button>
             </div>
           </div>
-        </div>
+        <!-- </div> -->
       </div>
 
       <div class="field">

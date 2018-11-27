@@ -8,7 +8,10 @@ import * as $ from 'jquery';
 import { SlackReactionsService } from '../../services/SlackReactionsService';
 import { DisplayChannel } from '../../models/DisplayChannel';
 import { RecipeService } from '../../services/RecipeService';
-import { Recipe, RecipeDescription, Ingredient, IngredientMeasure, Stage } from '../../models/Recipe';
+import { Recipe, RecipeDescription, Ingredient, IngredientMeasure, Stage, Step } from '../../models/Recipe';
+import { Router } from '@angular/router';
+import { Routes } from '../../constants/Routes';
+import { UserSessionService } from '../../services/UserSessionService';
 
 @Component({
   selector: 'app-recipe-create',
@@ -37,10 +40,13 @@ export class RecipeCreateComponent implements AfterViewInit {
   public equipment: string = '';
   public ingredient: Ingredient = new Ingredient("", "", 0, IngredientMeasure.Count, "", "");
   public prepStage: Stage;
+  public step: string;
+  public cookingStage: Stage;
+  public cookingStep: string;
 
   ngAfterViewInit(): void {
   }
-  constructor(private recipeService: RecipeService) {
+  constructor(private recipeService: RecipeService, private router: Router) {
     this.ingredient = new Ingredient("Cuantaloupe", "www.cantaloupe.com", 1, IngredientMeasure.Count, "Big yellow kind, like tatas", "this is some extra info. Must be fragrant");
   }
   recipes: Array<Recipe>
@@ -49,6 +55,22 @@ export class RecipeCreateComponent implements AfterViewInit {
 
   getMeasureName(measure: IngredientMeasure): string {
     return IngredientMeasure[measure];
+  }
+
+  getDividerSymbol(numberOfStars: number, name: string): string {
+    var result = "*";
+    for(var i = 0; i < numberOfStars; i++){
+      result += "*";
+    }
+    return name ? `${result} ${name} ${result}` : result;
+  }
+
+  addEquipment(tag: string){
+    this.recipe.EquipmentNeeded.push(this.tag);
+    this.equipment = '';
+  }
+  removeEquipment(tag: string){
+    this.recipe.EquipmentNeeded = this.recipe.EquipmentNeeded.filter(x => {return x !== tag});
   }
 
   addTag(){
@@ -91,5 +113,37 @@ export class RecipeCreateComponent implements AfterViewInit {
     else {
       this.recipe.Preparation.push(this.prepStage);
     }
+  }
+
+  addPrepStep(){
+    this.prepStage.Steps.push(new Step(this.step));
+    this.recipe.Preparation.push(this.prepStage);
+  }
+
+  addCookingStage(){
+    if(!this.cookingStage){
+      this.cookingStage = new Stage("", []);
+    }
+    else {
+      this.recipe.ActualCooking.push(this.cookingStage);
+    }
+  }
+
+  addCookingStep(){
+    this.cookingStage.Steps.push(new Step(this.cookingStep));
+    this.recipe.ActualCooking.push(this.cookingStage);
+  }
+
+  preview(){
+    var user = UserSessionService.getCurrentUser();
+    this.recipe.Id = "testRecipe";
+    this.recipe.Origin = `${user.LastName}, ${user.FirstName}`;
+    this.recipeService.setTestRecipe(this.recipe);
+    return true;
+    //this.router.navigate([Routes.recipeDetail.replace(':id', 'testRecipe')]);
+  }
+
+  getPreviewHref(): string {
+    return Routes.recipeDetail.replace(':id', 'testRecipe');
   }
 }

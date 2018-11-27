@@ -5,10 +5,18 @@ import { Observable } from "rxjs/Observable";
 
 @Injectable()
 export class RecipeService {
+    private static testRecipe: Recipe;
     constructor(private authService: AuthService){}
 
+    public setTestRecipe(recipe: Recipe){
+        RecipeService.testRecipe = recipe;
+    }
+
     getRecipeById(id: string): Observable<Recipe> {
-        return Observable.of(this.recipe);
+        if(RecipeService.testRecipe && id === RecipeService.testRecipe.Id){
+            return Observable.of(RecipeService.testRecipe);
+        }
+        else { return Observable.of(this.recipe); }
     }
 
     private recipe: Recipe = new Recipe("the-real-recipe",

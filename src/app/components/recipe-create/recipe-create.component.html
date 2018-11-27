@@ -1,6 +1,7 @@
 <br /><br />
 <div class="ui centered grid">
-  <form class="ui form">
+  <!-- <form class="ui form"> -->
+      <div class="ui form">
     <h4 class="ui dividing header">Recipe Details</h4>
     <div class="details">
       <div class="field">
@@ -46,7 +47,7 @@
           <br /><br />
         </div>
         <div class="ui action input">
-          <input type="text" name="desc_tags" [(ngModel)]="tag" placeholder="e.g. mexican">
+          <input type="text" name="desc_tags" [(ngModel)]="tag" (keyup.enter)="addTag()" placeholder="e.g. mexican">
           <button class="ui blue button" (click)="addTag()">Add Tag</button>
         </div>
       </div>
@@ -70,22 +71,25 @@
           <!-- <img class="ui image" *ngFor="let img of recipe.Description.Images" [src]="img"> -->
         </div>
         <div class="ui action input">
-          <input type="text" name="desc_images" [(ngModel)]="image" placeholder="e.g. mexican">
-          <button class="ui blue button" (click)="addImage()">Add Image</button>
+          <input type="text" name="desc_images" [(ngModel)]="image" placeholder="http://potato.com/selfie.jpg">
+          <button class="ui blue button" (click)="addImage()">Add Image</button> &nbsp;
+          <input class="imageUploadInput" type="file" (change)="onFileChanged($event)" multiple #fileInput>
+          <button class="ui gray button" (click)="fileInput.click()">Upload Images</button>
         </div>
       </div>
     </div>
     <h4 class="ui dividing header">Equipment</h4>
     <div class="equipment">
       <div class="field">
-        <div class="ui bulleted list" *ngIf="recipe.Equipment">
-          <div class="item" *ngFor="let item of recipe.Equipment">
-            <div class="ui small blue label">{{item}} <i class="delete icon"></i> </div>
+          <div class="tags" *ngIf="recipe.EquipmentNeeded && recipe.EquipmentNeeded.length > 0">
+            <div class="ui blue small label" *ngFor="let en of recipe.EquipmentNeeded">{{en}}
+              <i class="delete icon" (click)="removeEquipment(en)"></i>
+            </div>
+            <br /><br />
           </div>
-        </div>
         <div class="ui action input">
           <input type="text" name="equipment" [(ngModel)]="equipment" placeholder="e.g. 1 Large Saucepan">
-          <button class="ui blue button">Add Equipment</button>
+          <button class="ui blue button" (click)="addEquipment()">Add Equipment</button>
         </div>
       </div>
     </div>
@@ -186,5 +190,6 @@
 
     <br /><br />
     <div class="ui button" tabindex="0">Submit Order</div>
-  </form>
+  <!-- </form> -->
+  </div>
 </div>

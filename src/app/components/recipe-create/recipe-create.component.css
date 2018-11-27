@@ -10,6 +10,10 @@
     padding: 5px;
 }
 
+.imageUploadInput {
+    display: none;
+}
+
 .ui.red.right.corner.mini.label {
     /* position: relative; */
 }

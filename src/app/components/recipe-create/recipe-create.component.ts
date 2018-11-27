@@ -12,6 +12,8 @@ import { Recipe, RecipeDescription, Ingredient, IngredientMeasure, Stage, Step }
 import { Router } from '@angular/router';
 import { Routes } from '../../constants/Routes';
 import { UserSessionService } from '../../services/UserSessionService';
+import { AvatarService } from '../../services/AvatarService';
+import { ImageService } from '../../services/ImageService';
 
 @Component({
   selector: 'app-recipe-create',
@@ -46,7 +48,7 @@ export class RecipeCreateComponent implements AfterViewInit {
 
   ngAfterViewInit(): void {
   }
-  constructor(private recipeService: RecipeService, private router: Router) {
+  constructor(private recipeService: RecipeService, private router: Router, private imageService: ImageService) {
     this.ingredient = new Ingredient("Cuantaloupe", "www.cantaloupe.com", 1, IngredientMeasure.Count, "Big yellow kind, like tatas", "this is some extra info. Must be fragrant");
   }
   recipes: Array<Recipe>
@@ -65,12 +67,12 @@ export class RecipeCreateComponent implements AfterViewInit {
     return name ? `${result} ${name} ${result}` : result;
   }
 
-  addEquipment(tag: string){
-    this.recipe.EquipmentNeeded.push(this.tag);
+  addEquipment(){
+    this.recipe.EquipmentNeeded.push(this.equipment);
     this.equipment = '';
   }
-  removeEquipment(tag: string){
-    this.recipe.EquipmentNeeded = this.recipe.EquipmentNeeded.filter(x => {return x !== tag});
+  removeEquipment(equipment: string){
+    this.recipe.EquipmentNeeded = this.recipe.EquipmentNeeded.filter(x => {return x !== equipment});
   }
 
   addTag(){
@@ -89,6 +91,9 @@ export class RecipeCreateComponent implements AfterViewInit {
 
   removeImage(img: string){
     this.recipe.Description.Images = this.recipe.Description.Images.filter(x => {return x !== img});
+    var url = new URL(img);
+    this.imageService.deleteImage(url.pathname).subscribe(x => {
+    });
   }
 
   addIngredient(){
@@ -145,5 +150,14 @@ export class RecipeCreateComponent implements AfterViewInit {
 
   getPreviewHref(): string {
     return Routes.recipeDetail.replace(':id', 'testRecipe');
+  }
+
+  onFileChanged(event) {
+    let selectedFiles = event.target.files;
+    this.imageService.uploadMultiple(selectedFiles)
+      .subscribe(event => {
+        setTimeout(() => {event.map(x => this.recipe.Description.Images.push(x));}, 10000)
+        //event.map(x => this.recipe.Description.Images.push(x));
+      });
   }
 }

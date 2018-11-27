@@ -51,6 +51,7 @@ import { PlaylistService } from './services/PlaylistService';
 import { GalleryComponent } from './components/gallery/gallery.component';
 import { GalleryService } from './services/GalleryService';
 import { RecipeCreateComponent } from './components/recipe-create/recipe-create.component';
+import { ImageService } from './services/ImageService';
 
 const appRoutes: Routes = [
   { path: AppRoutes.home, component: HomeComponent },
@@ -131,6 +132,7 @@ const appRoutes: Routes = [
       RecipeService, 
       ForumService, 
       AvatarService, 
+      ImageService,
       NotificationsService, 
       VersionService,
       UserService,

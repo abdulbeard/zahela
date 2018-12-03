@@ -32,7 +32,8 @@ export class UserPermissions {
         Routes.friends, 
         Routes.account, 
         Routes.forum, 
-        Routes.forumDetail], []);
+        Routes.forumDetail,
+        Routes.gallery], []);
     public static readonly RegisteredUser: UserPermission = new UserPermission(UserRole.RegisteredUser, [
             Routes.admin,
             Routes.friends, 

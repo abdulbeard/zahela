@@ -21,6 +21,31 @@ export class Recipe {
     public Source: string;
     public Origin: string;
     public Id: string;
+
+    static fromJson(json: string): Recipe{
+        var obj = JSON.parse(json);
+        var result =    new Recipe(obj.Id || "", obj.Name || "", 
+                new RecipeDescription(obj.Description.Images || [],
+                    obj.Description.PreparationTime || "",
+                    obj.Description.ServesHowMany || "",
+                    obj.Description.PortionSize || "",
+                    obj.Description.Tags || [],
+                    obj.Description.Text || ""),
+                    [],
+                    obj.EquipmentNeeded || Array.of(""),
+                    obj.Preparation || Array.of(new Stage("", Array.of(new Step("")))),
+                    obj.ActualCooking || Array.of(new Stage("", Array.of(new Step("")))),
+                    obj.Source || "", 
+                    obj.Origin || ""
+                );
+        if(obj.Ingredients){
+            for(var i=0; i < obj.Ingredients.length; i++){
+                var objIngr = obj.Ingredients[i];
+                result.Ingredients.push(new Ingredient(objIngr.Name, objIngr.Url, objIngr.Amount, objIngr.Measure, objIngr.Description, objIngr.ExtraInfo));
+            }
+        }
+        return result;
+    }
 }
 
 export class RecipeDescription {
@@ -56,6 +81,10 @@ export class Ingredient {
     public Measure: IngredientMeasure;
     public Description: string;
     public ExtraInfo: string;
+
+    public getUrl(): string {
+        return this.Url.startsWith('http') ? this.Url : `http://${this.Url}`;
+    }
     public getTitle(): string {
         return `${this.Amount} ${IngredientMeasure[this.Measure]}`;
     }

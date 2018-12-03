@@ -164,8 +164,15 @@
 
     <h4 class="ui dividing header">Preparation</h4>
     <div class="preparation">
+      <div *ngFor="let ps of this.recipe.Preparation; let i = index;">
+        <div class="ui horizontal divider">{{ps.Name}}</div>
+        <ul class="ui list">
+          <li *ngFor="let step of ps.Steps">{{step.Instructions}}</li>
+        </ul>
+      </div>
       <div *ngIf="prepStage">
         <!-- <div class="two fields"> -->
+
           <div class="five wide field">
             <label>Name</label>
             <input type="text" name="prep_stg_name" [(ngModel)]="prepStage.Name" placeholder="Preparing the chicken">
@@ -175,8 +182,8 @@
           <input type="text" name="prep_stg_step" [(ngModel)]="prepStage.Steps[0]" placeholder="Preparing the chicken"> -->
           <label>What are the steps for this stage of preparation?</label>
             <div class="ui action input">
-              <input type="text" name="prep_stg_step" [(ngModel)]="prepStage.Steps[0]" placeholder="">
-              <button class="ui blue button">Add Step</button>
+              <input type="text" name="prep_stg_step" [(ngModel)]="step" placeholder="">
+              <button class="ui blue button" (click)="addPrepStep()">Add Step</button>
             </div>
           </div>
         <!-- </div> -->
@@ -184,12 +191,13 @@
 
       <div class="field">
         <label>&nbsp;</label>
-        <div class="ui blue button" (click)="addPrepStage()">Add Stage</div>
+        <div class="ui blue button" (click)="addPrepStage(true)">Add Stage</div>
       </div>
     </div>
 
     <br /><br />
-    <div class="ui button" tabindex="0">Submit Order</div>
+    <div class="ui button" tabindex="0">Save</div>
+    <a class="ui button" tabindex="0" (click)="preview()" [href]="getPreviewHref()">Preview</a>
   <!-- </form> -->
   </div>
 </div>

@@ -3,17 +3,14 @@ import { EmojiDefinitions, EmojiService } from '../../services/EmojiService';
 import { SlackMessageParsingService } from '../../services/SlackMessageParsingService';
 import { SlackMessagesService, MessagesResponse } from '../../services/SlackMessagesService';
 import { UserService } from '../../services/UserService';
-import { DisplayComment } from '../../models/DisplayComment';
-import * as $ from 'jquery';
 import { SlackReactionsService } from '../../services/SlackReactionsService';
-import { DisplayChannel } from '../../models/DisplayChannel';
 import { RecipeService } from '../../services/RecipeService';
 import { Recipe, RecipeDescription, Ingredient, IngredientMeasure, Stage, Step } from '../../models/Recipe';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { Routes } from '../../constants/Routes';
 import { UserSessionService } from '../../services/UserSessionService';
-import { AvatarService } from '../../services/AvatarService';
 import { ImageService } from '../../services/ImageService';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-recipe-create',
@@ -46,12 +43,38 @@ export class RecipeCreateComponent implements AfterViewInit {
   public cookingStage: Stage;
   public cookingStep: string;
 
+  private testRecipe: string = "testRecipe";
+
   ngAfterViewInit(): void {
   }
-  constructor(private recipeService: RecipeService, private router: Router, private imageService: ImageService) {
+  constructor(private recipeService: RecipeService, 
+      private router: Router, 
+      private activatedRoute: ActivatedRoute, 
+      private imageService: ImageService,
+      private location: Location) {
     this.ingredient = new Ingredient("Cuantaloupe", "www.cantaloupe.com", 1, IngredientMeasure.Count, "Big yellow kind, like tatas", "this is some extra info. Must be fragrant");
+
+    activatedRoute.params.subscribe(x => {
+      var recipeId = x["recipeId"];
+      console.log(x);
+      console.log('got recipeId: ', recipeId);
+      if(recipeId){
+        this.recipeService.getRecipeById(recipeId).subscribe(y => {
+          console.log(y);
+          this.recipe = y;
+          this.tag = '';
+          this.image = '';
+          this.equipment = '';
+          this.ingredient = new Ingredient("", "", 0, IngredientMeasure.Count, "", "");
+          this.prepStage = new Stage("", []);
+          this.cookingStage = new Stage("", []);
+          this.step = '';
+          this.cookingStep = '';
+        });
+      }
+  })
   }
-  recipes: Array<Recipe>
+  //recipes: Array<Recipe>
   getRecipeLink(recipe: Recipe) {
   }
 
@@ -111,18 +134,26 @@ export class RecipeCreateComponent implements AfterViewInit {
     this.removeIngredient(ingr);
   }
 
-  addPrepStage(){
-    if(!this.prepStage){
+  addPrepStage(newOne: boolean){
+    if(!this.prepStage || newOne){
       this.prepStage = new Stage("", []);
     }
     else {
-      this.recipe.Preparation.push(this.prepStage);
+      var matchingPrepStage = this.recipe.Preparation.filter(x => x.Name === this.prepStage.Name);
+      if(matchingPrepStage.length > 0){
+        matchingPrepStage.forEach(x => x.Steps.push(new Step(this.step)));
+      }
+      else {
+        this.recipe.Preparation.push(this.prepStage);
+      }
     }
   }
 
   addPrepStep(){
     this.prepStage.Steps.push(new Step(this.step));
-    this.recipe.Preparation.push(this.prepStage);
+    this.addPrepStage(false);
+    this.step = "";
+    //this.recipe.Preparation.push(this.prepStage);
   }
 
   addCookingStage(){
@@ -141,15 +172,22 @@ export class RecipeCreateComponent implements AfterViewInit {
 
   preview(){
     var user = UserSessionService.getCurrentUser();
-    this.recipe.Id = "testRecipe";
+    this.recipe.Id = this.testRecipe;
     this.recipe.Origin = `${user.LastName}, ${user.FirstName}`;
     this.recipeService.setTestRecipe(this.recipe);
+
+    console.log(this.recipe);
+
+    //this.router.navigate([`${Routes.recipeCreateWithId.replace(':recipeId', this.testRecipe)}`], {replaceUrl: true});
+
+    this.location.replaceState(`${Routes.recipeCreateWithId.replace(':recipeId', this.testRecipe)}`);
+
     return true;
     //this.router.navigate([Routes.recipeDetail.replace(':id', 'testRecipe')]);
   }
 
   getPreviewHref(): string {
-    return Routes.recipeDetail.replace(':id', 'testRecipe');
+    return Routes.recipeDetail.replace(':id', this.testRecipe);
   }
 
   onFileChanged(event) {

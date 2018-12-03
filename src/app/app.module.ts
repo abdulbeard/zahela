@@ -77,6 +77,7 @@ const appRoutes: Routes = [
   { path: AppRoutes.faq, component: FaqComponent, canActivate: [AuthService]},
   { path: AppRoutes.recipe, component: RecipeComponent, canActivate: [AuthService]},
   { path: AppRoutes.recipeCreate, component: RecipeCreateComponent, canActivate: [AuthService]},
+  { path: AppRoutes.recipeCreateWithId, component: RecipeCreateComponent, canActivate: [AuthService]},
   { path: AppRoutes.recipeDetail, component: RecipeDetailComponent, canActivate: [AuthService]},
   { path: AppRoutes.forum, component: ForumComponent, canActivate: [AuthService]},
   { path: AppRoutes.forumDetail, component: ForumComponent, canActivate: [AuthService]},

@@ -2,19 +2,37 @@ import { Injectable } from "@angular/core";
 import { AuthService } from "./AuthService";
 import { Recipe, Ingredient, IngredientMeasure, Stage, Step, RecipeDescription } from "../models/Recipe";
 import { Observable } from "rxjs/Observable";
+import { UserSessionService } from "./UserSessionService";
+import { HttpClient } from "@angular/common/http";
+import { environment } from "../../environments/environment.azure";
 
 @Injectable()
 export class RecipeService {
-    private static testRecipe: Recipe;
-    constructor(private authService: AuthService){}
+    constructor(private authService: AuthService, private httpClient: HttpClient){}
 
     public setTestRecipe(recipe: Recipe){
-        RecipeService.testRecipe = recipe;
+        localStorage.removeItem("testRecipe");
+        localStorage.setItem("testRecipe", JSON.stringify(recipe));
+        //this.testRecipe = recipe;
+        //UserSessionService.setWorkingRecipe(recipe);
+    }
+
+    private getTestRecipe() : Recipe {
+        var recipe = Recipe.fromJson(localStorage.getItem("testRecipe"));
+        console.log(recipe);
+        return recipe;
+    }
+
+    createRecipe(recipe: Recipe): Observable<Recipe> {
+        return this.httpClient.post<Recipe>(`${environment.backendUrl}/recipe`, recipe);
     }
 
     getRecipeById(id: string): Observable<Recipe> {
-        if(RecipeService.testRecipe && id === RecipeService.testRecipe.Id){
-            return Observable.of(RecipeService.testRecipe);
+        var testRecipe = this.getTestRecipe();
+        console.log(id, testRecipe);
+        if((testRecipe) 
+            && (id === testRecipe.Id)){
+            return Observable.of(testRecipe);
         }
         else { return Observable.of(this.recipe); }
     }

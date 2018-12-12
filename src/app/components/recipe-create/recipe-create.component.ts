@@ -205,18 +205,21 @@ export class RecipeCreateComponent implements AfterViewInit {
   prepareTheRecipe()
   {
     var user = UserSessionService.getCurrentUser();
-    this.recipe.Id = this.testRecipe;
+    //this.recipe.Id = this.testRecipe;
     this.recipe.Source = `${user.LastName}, ${user.FirstName}`;
     this.recipeService.setTestRecipe(this.recipe);
   }
 
-  saveRecipe(){
+  saveRecipe() {
     this.prepareTheRecipe();
-    this.recipeService.createRecipe(this.recipe).subscribe(x => {
-      console.log(x);
-      var route = Routes.recipeDetail.replace(":id", x["id"]);
-      console.log(route);
-      this.router.navigate([route])
-    });
+    
+    var observable = this.recipe.Id ? this.recipeService.updateRecipe(this.recipe) : this.recipeService.createRecipe(this.recipe);
+
+    observable.subscribe(x => {
+        console.log(x);
+        var route = Routes.recipeDetail.replace(":id", x["id"]);
+        console.log(route);
+        this.router.navigate([route])
+      });
   }
 }

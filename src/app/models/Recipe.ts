@@ -1,7 +1,7 @@
 export class Recipe {
     constructor(id: string, name: string, description: RecipeDescription, ingredients: Array<Ingredient>,
         equipment: Array<string>, prep: Array<Stage>, cooking: Array<Stage>,
-        source: string, origin: string) {
+        source: string, origin: string, realId: string = "") {
         this.Name = name;
         this.Description = description;
         this.Ingredients = ingredients;
@@ -11,6 +11,7 @@ export class Recipe {
         this.Source = source;
         this.Origin = origin;
         this.Id = id;
+        this.RealId = realId;
     }
     public Name: string;
     public Description: RecipeDescription;
@@ -21,6 +22,7 @@ export class Recipe {
     public Source: string;
     public Origin: string;
     public Id: string;
+    public RealId: string;
 
     static fromJson(json: string): Recipe{
         var obj = JSON.parse(json);

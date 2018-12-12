@@ -17,15 +17,24 @@ export class RecipeService {
         //UserSessionService.setWorkingRecipe(recipe);
     }
 
-    private getTestRecipe() : Recipe {
-        var recipe = Recipe.fromJson(localStorage.getItem("testRecipe"));
-        console.log(recipe);
-        return recipe;
+    private getTestRecipe(): Recipe {
+        var localStorageItem = localStorage.getItem("testRecipe");
+        if (localStorageItem) {
+            var recipe = Recipe.fromJson(localStorageItem);
+            console.log(recipe);
+            return recipe;
+        }
+        return null;
     }
 
     createRecipe(recipe: Recipe): Observable<Recipe> {
         console.log(environment);
         return this.httpClient.post<Recipe>(`${environment.backendUrl}/recipe`, recipe);
+    }
+
+    updateRecipe(recipe: Recipe) : Observable<Recipe> {
+        console.log(environment);
+        return this.httpClient.put<Recipe>(`${environment.backendUrl}/recipe`, recipe);
     }
 
     getRecipeById(id: string): Promise<Recipe> {
@@ -59,7 +68,8 @@ export class RecipeService {
                         rawPrep, 
                         rawCook, 
                         x["source"], 
-                        x["origin"]
+                        x["origin"],
+                        x["realId"]
                     );
             });
             //return Observable.of(this.recipe); 
@@ -94,9 +104,39 @@ export class RecipeService {
             "Learned it from Sultan!"            
         );
     
-    getRecipesForUser(): Observable<Array<Recipe>> {
+    getRecipesForUser(): Promise<Array<Recipe>> {
         //var currentUser = this.authService.currentUser;
         console.log(JSON.stringify(this.recipe));
-        return Observable.of(Array.of(this.recipe));
+        return this.httpClient.get<Array<Recipe>>(`${environment.backendUrl}/recipe/all`).toPromise().then(x => {
+            return x.map(x => this.parseRecipe(x));
+        });
+        //return Observable.of(Array.of(this.recipe)).toPromise();
+    }
+
+    private parseRecipe(recipe: any) : Recipe {
+        var ingredients = <Array<Ingredient>> recipe["ingredients"];
+        ingredients = ingredients.map(y => new Ingredient(y["name"], y["url"], y["amount"], y["measure"], y["description"], y["extraInfo"]));
+        
+        var rawDesc = recipe["description"];
+        var desc = new RecipeDescription(rawDesc["images"], rawDesc["preparationTime"], rawDesc["servesHowMany"], rawDesc["portionSize"], rawDesc["tags"], rawDesc["text"]);
+
+        var rawPrep = <Array<Stage>> recipe["preparation"];
+        var rawCook = <Array<Stage>> recipe["actualCooking"];
+
+        rawPrep = rawPrep.map(x => new Stage(x["name"], (<Array<Step>> x["steps"]).map(y => new Step(y["instructions"]))));
+        rawCook = rawCook.map(x => new Stage(x["name"], (<Array<Step>> x["steps"]).map(y => new Step(y["instructions"]))));
+
+        console.log(rawPrep, rawCook);
+
+        return new Recipe(recipe["id"], 
+                recipe["name"], 
+                desc, 
+                ingredients, 
+                recipe["equipmentNeeded"], 
+                rawPrep, 
+                rawCook, 
+                recipe["source"], 
+                recipe["origin"]
+            );
     }
 }

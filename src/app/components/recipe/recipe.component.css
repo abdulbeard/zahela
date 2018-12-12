@@ -4,3 +4,16 @@
     padding-right: 1vw;
     margin-top: 0;
 }
+
+.ui.slide.masked.reveal.image :hover{
+    /* width: 250px; */
+    /* background-color: blue; */
+}
+
+.ui.blue.card {
+    /* width: 20vw; */
+}
+
+.editRecipeButton {
+    float: right;
+}

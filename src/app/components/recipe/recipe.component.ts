@@ -9,6 +9,8 @@ import { SlackReactionsService } from '../../services/SlackReactionsService';
 import { DisplayChannel } from '../../models/DisplayChannel';
 import { RecipeService } from '../../services/RecipeService';
 import { Recipe } from '../../models/Recipe';
+import { UserSessionService } from '../../services/UserSessionService';
+import { Routes } from '../../constants/Routes';
 
 @Component({
   selector: 'app-recipe',
@@ -21,12 +23,23 @@ export class RecipeComponent implements AfterViewInit {
   ngAfterViewInit(): void {
   }
   constructor(private recipeService: RecipeService) {
-    recipeService.getRecipesForUser().subscribe(
+    recipeService.getRecipesForUser().then(
       x => {this.recipes = x; console.log(x)}, 
       error => console.log(error));
   }
   recipes: Array<Recipe>
   getRecipeLink(recipe: Recipe): string {
     return `recipe/${recipe.Id}/detail`;
+  }
+
+  getEditLink(recipe: Recipe): string {
+    return `${Routes.recipeCreateWithId.replace(":recipeId", recipe.Id)}`;
+  }
+
+  isEditable(recipe: Recipe){
+    console.log(recipe);
+    var currentUser = UserSessionService.getCurrentUser();
+    console.log(currentUser);
+    return `${currentUser.LastName}, ${currentUser.FirstName}` === recipe.Source;
   }
 }

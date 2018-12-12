@@ -177,10 +177,7 @@ export class RecipeCreateComponent implements AfterViewInit {
   }
 
   preview(){
-    var user = UserSessionService.getCurrentUser();
-    this.recipe.Id = this.testRecipe;
-    this.recipe.Origin = `${user.LastName}, ${user.FirstName}`;
-    this.recipeService.setTestRecipe(this.recipe);
+    this.prepareTheRecipe();
 
     console.log(this.recipe);
 
@@ -217,6 +214,7 @@ export class RecipeCreateComponent implements AfterViewInit {
     this.prepareTheRecipe();
     this.recipeService.createRecipe(this.recipe).subscribe(x => {
       console.log(x);
+      this.router.navigate([Routes.recipeDetail.replace(":id", x.Id)])
     });
   }
 }

@@ -35,7 +35,10 @@ export class RecipeService {
             && (id === testRecipe.Id)){
             return Observable.of(testRecipe);
         }
-        else { return Observable.of(this.recipe); }
+        else {
+            return this.httpClient.get<Recipe>(`${environment.backendUrl}/recipe/${id}`); 
+            //return Observable.of(this.recipe); 
+        }
     }
 
     private recipe: Recipe = new Recipe("the-real-recipe",

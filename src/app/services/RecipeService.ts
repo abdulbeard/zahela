@@ -4,7 +4,7 @@ import { Recipe, Ingredient, IngredientMeasure, Stage, Step, RecipeDescription }
 import { Observable } from "rxjs/Observable";
 import { UserSessionService } from "./UserSessionService";
 import { HttpClient } from "@angular/common/http";
-import { environment } from "../../environments/environment.azure";
+import { environment } from "../../environments/environment";
 
 @Injectable()
 export class RecipeService {
@@ -24,6 +24,7 @@ export class RecipeService {
     }
 
     createRecipe(recipe: Recipe): Observable<Recipe> {
+        console.log(environment);
         return this.httpClient.post<Recipe>(`${environment.backendUrl}/recipe`, recipe);
     }
 

@@ -138,7 +138,7 @@ export class RecipeCreateComponent implements AfterViewInit {
     if(!this.prepStage || newOne){
       this.prepStage = new Stage("", []);
     }
-    else {
+    // else {
       var matchingPrepStage = this.recipe.Preparation.filter(x => x.Name === this.prepStage.Name);
       if(matchingPrepStage.length > 0){
         matchingPrepStage.forEach(x => x.Steps.push(new Step(this.step)));
@@ -146,28 +146,34 @@ export class RecipeCreateComponent implements AfterViewInit {
       else {
         this.recipe.Preparation.push(this.prepStage);
       }
-    }
+    // }
   }
 
   addPrepStep(){
-    this.prepStage.Steps.push(new Step(this.step));
+    //this.prepStage.Steps.push(new Step(this.step));
     this.addPrepStage(false);
     this.step = "";
     //this.recipe.Preparation.push(this.prepStage);
   }
 
-  addCookingStage(){
-    if(!this.cookingStage){
+  addCookingStage(newOne: boolean){
+    if(!this.cookingStage || newOne){
       this.cookingStage = new Stage("", []);
     }
-    else {
-      this.recipe.ActualCooking.push(this.cookingStage);
-    }
+    // else {
+      var matchingCookingStage = this.recipe.ActualCooking.filter(x => x.Name === this.cookingStage.Name);
+      if(matchingCookingStage.length > 0){
+        matchingCookingStage.forEach(x => x.Steps.push(new Step(this.cookingStep)));
+      }
+      else {
+        this.recipe.ActualCooking.push(this.cookingStage);
+      }
+    // }
   }
 
   addCookingStep(){
-    this.cookingStage.Steps.push(new Step(this.cookingStep));
-    this.recipe.ActualCooking.push(this.cookingStage);
+    this.addCookingStage(false);
+    this.cookingStep = "";
   }
 
   preview(){
@@ -197,5 +203,20 @@ export class RecipeCreateComponent implements AfterViewInit {
         setTimeout(() => {event.map(x => this.recipe.Description.Images.push(x));}, 10000)
         //event.map(x => this.recipe.Description.Images.push(x));
       });
+  }
+
+  prepareTheRecipe()
+  {
+    var user = UserSessionService.getCurrentUser();
+    this.recipe.Id = this.testRecipe;
+    this.recipe.Source = `${user.LastName}, ${user.FirstName}`;
+    this.recipeService.setTestRecipe(this.recipe);
+  }
+
+  saveRecipe(){
+    this.prepareTheRecipe();
+    this.recipeService.createRecipe(this.recipe).subscribe(x => {
+      console.log(x);
+    });
   }
 }

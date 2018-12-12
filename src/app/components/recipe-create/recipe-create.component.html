@@ -173,7 +173,7 @@
       <div *ngIf="prepStage">
         <!-- <div class="two fields"> -->
 
-          <div class="five wide field">
+          <div class="five wide field" *ngIf="!(prepStage.Steps.length > 0)">
             <label>Name</label>
             <input type="text" name="prep_stg_name" [(ngModel)]="prepStage.Name" placeholder="Preparing the chicken">
           </div>
@@ -195,8 +195,41 @@
       </div>
     </div>
 
+    <h4 class="ui dividing header">Cooking</h4>
+    <div class="cooking">
+      <div *ngFor="let ps of this.recipe.ActualCooking; let i = index;">
+        <div class="ui horizontal divider">{{ps.Name}}</div>
+        <ul class="ui list">
+          <li *ngFor="let step of ps.Steps">{{step.Instructions}}</li>
+        </ul>
+      </div>
+      <div *ngIf="cookingStage">
+        <!-- <div class="two fields"> -->
+
+          <div class="five wide field" *ngIf="!(cookingStage.Steps.length > 0)">
+            <label>Name</label>
+            <input type="text" name="cook_stg_name" [(ngModel)]="cookingStage.Name" placeholder="Place the chicken in the oven">
+          </div>
+          <div class="ten wide field">
+            <!-- <label>Steps</label>
+          <input type="text" name="prep_stg_step" [(ngModel)]="prepStage.Steps[0]" placeholder="Preparing the chicken"> -->
+          <label>What are the steps for this stage of cooking?</label>
+            <div class="ui action input">
+              <input type="text" name="cook_stg_step" [(ngModel)]="cookingStep" placeholder="">
+              <button class="ui blue button" (click)="addCookingStep()">Add Step</button>
+            </div>
+          </div>
+        <!-- </div> -->
+      </div>
+
+      <div class="field">
+        <label>&nbsp;</label>
+        <div class="ui blue button" (click)="addCookingStage(true)">Add Stage</div>
+      </div>
+    </div>
+
     <br /><br />
-    <div class="ui button" tabindex="0">Save</div>
+    <div class="ui button" tabindex="0" (click)="saveRecipe()">Save</div>
     <a class="ui button" tabindex="0" (click)="preview()" [href]="getPreviewHref()">Preview</a>
   <!-- </form> -->
   </div>

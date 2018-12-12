@@ -28,15 +28,40 @@ export class RecipeService {
         return this.httpClient.post<Recipe>(`${environment.backendUrl}/recipe`, recipe);
     }
 
-    getRecipeById(id: string): Observable<Recipe> {
+    getRecipeById(id: string): Promise<Recipe> {
         var testRecipe = this.getTestRecipe();
         console.log(id, testRecipe);
         if((testRecipe) 
             && (id === testRecipe.Id)){
-            return Observable.of(testRecipe);
+            return Observable.of(testRecipe).toPromise();
         }
         else {
-            return this.httpClient.get<Recipe>(`${environment.backendUrl}/recipe/${id}`); 
+            return this.httpClient.get<Recipe>(`${environment.backendUrl}/recipe/${id}`).toPromise().then(x => {
+                var ingredients = <Array<Ingredient>> x["ingredients"];
+                ingredients = ingredients.map(y => new Ingredient(y["name"], y["url"], y["amount"], y["measure"], y["description"], y["extraInfo"]));
+                
+                var rawDesc = x["description"];
+                var desc = new RecipeDescription(rawDesc["images"], rawDesc["preparationTime"], rawDesc["servesHowMany"], rawDesc["portionSize"], rawDesc["tags"], rawDesc["text"]);
+
+                var rawPrep = <Array<Stage>> x["preparation"];
+                var rawCook = <Array<Stage>> x["actualCooking"];
+
+                rawPrep = rawPrep.map(x => new Stage(x["name"], (<Array<Step>> x["steps"]).map(y => new Step(y["instructions"]))));
+                rawCook = rawCook.map(x => new Stage(x["name"], (<Array<Step>> x["steps"]).map(y => new Step(y["instructions"]))));
+
+                console.log(rawPrep, rawCook);
+
+                return new Recipe(x["id"], 
+                        x["name"], 
+                        desc, 
+                        ingredients, 
+                        x["equipmentNeeded"], 
+                        rawPrep, 
+                        rawCook, 
+                        x["source"], 
+                        x["origin"]
+                    );
+            });
             //return Observable.of(this.recipe); 
         }
     }

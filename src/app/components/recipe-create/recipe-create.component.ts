@@ -59,7 +59,7 @@ export class RecipeCreateComponent implements AfterViewInit {
       console.log(x);
       console.log('got recipeId: ', recipeId);
       if(recipeId){
-        this.recipeService.getRecipeById(recipeId).subscribe(y => {
+        this.recipeService.getRecipeById(recipeId).then(y => {
           console.log(y);
           this.recipe = y;
           this.tag = '';
@@ -214,7 +214,9 @@ export class RecipeCreateComponent implements AfterViewInit {
     this.prepareTheRecipe();
     this.recipeService.createRecipe(this.recipe).subscribe(x => {
       console.log(x);
-      this.router.navigate([Routes.recipeDetail.replace(":id", x.Id)])
+      var route = Routes.recipeDetail.replace(":id", x["id"]);
+      console.log(route);
+      this.router.navigate([route])
     });
   }
 }

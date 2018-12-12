@@ -26,7 +26,9 @@ export class RecipeDetailComponent implements AfterViewInit {
   constructor(private route: ActivatedRoute, private recipeService: RecipeService){
     route.params.subscribe(param => {
       this.recipeId = param["id"];
-      this.recipeService.getRecipeById(this.recipeId).subscribe(recipe => {
+      this.recipeService.getRecipeById(this.recipeId).then(recipe => {
+        console.log(recipe);
+        console.log(recipe.Ingredients[0]);
         this.recipe = recipe;
       }, (Error) => {
         console.log(Error);

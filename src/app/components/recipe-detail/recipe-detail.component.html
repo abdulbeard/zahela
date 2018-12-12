@@ -1,4 +1,4 @@
-<div class="ui container">
+<div class="ui container" *ngIf="this.recipe">
   <h1 class="recipeTitle">{{this.recipe.Name}}</h1>
   <div *ngFor="let tag of this.recipe.Description.Tags" class="ui small red horizontal label">{{tag}}</div>
   <br/>

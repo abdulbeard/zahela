@@ -42,6 +42,7 @@ export class RecipeCreateComponent implements AfterViewInit {
   public step: string;
   public cookingStage: Stage;
   public cookingStep: string;
+  public imageLoading: boolean = false;
 
   private testRecipe: string = "testRecipe";
 
@@ -195,9 +196,13 @@ export class RecipeCreateComponent implements AfterViewInit {
 
   onFileChanged(event) {
     let selectedFiles = event.target.files;
+    this.imageLoading = true;
     this.imageService.uploadMultiple(selectedFiles)
       .subscribe(event => {
-        setTimeout(() => {event.map(x => this.recipe.Description.Images.push(x));}, 10000)
+        setTimeout(() => {
+          event.map(x => this.recipe.Description.Images.push(x));
+          this.imageLoading = false;
+        }, 10000)
         //event.map(x => this.recipe.Description.Images.push(x));
       });
   }

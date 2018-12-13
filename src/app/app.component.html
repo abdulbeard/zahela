@@ -97,7 +97,10 @@
     </a>
     <a class="item mainMenuItem" [routerLink]="this.getRecipeRoute()" routerLinkActive="active" *ngIf="showRecipeLink" (click)="hideSidebar()">
         <i class="utensils icon"></i>Recipes
-    </a>    
+    </a>
+    <a class="item mainMenuItem" [routerLink]="this.getGalleryRoute()" routerLinkActive="active" *ngIf="showGalleryLink" (click)="hideSidebar()">
+        <i class="image outline icon"></i>Gallery
+    </a>
 
     <!-- <div *ngIf="this.authService.isLoggedIn()" class="right menu">
         <a class="ui item mainMenuItem">

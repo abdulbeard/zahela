@@ -17,3 +17,9 @@
 .ui.red.right.corner.mini.label {
     /* position: relative; */
 }
+
+.loaderCircle {
+    display: inline-block;
+    margin-left: 4vw;
+    background-color: transparent;
+}

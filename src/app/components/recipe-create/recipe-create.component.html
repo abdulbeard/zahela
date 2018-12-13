@@ -68,14 +68,23 @@
             </a>
             <img [src]="img">
           </div>
+          <!-- <div class="ui active text inline loader" *ngIf="imageLoading">Processing Files</div> -->
+
+          <div class="ui segment loaderCircle" *ngIf="imageLoading">
+            <div class="ui active text loader">Processing Files</div>
+            <p></p>
+          </div>
+
           <!-- <img class="ui image" *ngFor="let img of recipe.Description.Images" [src]="img"> -->
         </div>
         <div class="ui action input">
           <input type="text" name="desc_images" [(ngModel)]="image" placeholder="http://potato.com/selfie.jpg">
           <button class="ui blue button" (click)="addImage()">Add Image</button> &nbsp;
+        </div>
+      </div>
+      <div clas="field">
           <input class="imageUploadInput" type="file" (change)="onFileChanged($event)" multiple #fileInput>
           <button class="ui gray button" (click)="fileInput.click()">Upload Images</button>
-        </div>
       </div>
     </div>
     <h4 class="ui dividing header">Equipment</h4>

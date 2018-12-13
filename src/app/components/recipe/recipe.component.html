@@ -1,10 +1,23 @@
-<div class="ui stackable cards">
-  <div *ngFor="let recipe of recipes; let i = index;" class="ui blue card">
-    <a [attr.href]="this.getRecipeLink(recipe)">
-      <div class="ui slide masked reveal image">
-        <img [src]="recipe.Description.Images[0] | sanitizeUrl" class="visible content">
-        <img [src]="recipe.Description.Images[1] | sanitizeUrl" class="hidden content">
-        <!-- <div class="hidden content">
+<br /><br />
+<div class="ui centered grid">
+  <div>
+    <h2>Recipe</h2>
+    <p>Here are the recipes</p>
+    <a class="ui blue button" href="/recipe-create">Submit A Recipe</a>
+  </div>
+</div>
+
+<br /><br /><br /><br /><br />
+<div class="ui centered grid">
+  <div>
+    <h3>Submissions</h3>
+    <div class="ui stackable cards">
+      <div *ngFor="let recipe of recipes; let i = index;" class="ui blue card">
+        <a [attr.href]="this.getRecipeLink(recipe)">
+          <div class="ui slide masked reveal image">
+            <img [src]="recipe.Description.Images[0] | sanitizeUrl" class="visible content">
+            <img [src]="recipe.Description.Images[1] | sanitizeUrl" class="hidden content">
+            <!-- <div class="hidden content">
           <div class="ui container">
             <div class="ui blue button">More Info</div>
           </div>
@@ -12,24 +25,24 @@
             <span><img [src]="recipe.Description.Images[1] | sanitizeUrl" class=""></span><br/>
           </div>
         </div> -->
-      </div>
-    </a>
-    <div class="content">
-      <a class="header">{{recipe.name}}</a>
-      <div *ngFor="let tag of recipe.Description.Tags" class="ui mini gray horizontal label">{{tag}}</div>
-      <div class="meta">
-        Meta bro
-      </div>
-      <div class="description">
-        <p>PrepTime: {{recipe.Description.PreparationTime}}</p>
-        <p>Serves: {{recipe.Description.ServesHowMany}}</p>
-        <p>Porition: {{recipe.Description.PortionSize}}</p>
-      </div>
-    </div>
-    <div class="extra content">
-        <span>From: {{recipe.Source}}</span>
-        <p><i>{{recipe.Origin}}</i></p>
-      <!-- <div class="right floated">
+          </div>
+        </a>
+        <div class="content">
+          <a class="header">{{recipe.name}}</a>
+          <div *ngFor="let tag of recipe.Description.Tags" class="ui mini gray horizontal label">{{tag}}</div>
+          <div class="meta">
+            Meta bro
+          </div>
+          <div class="description">
+            <p>PrepTime: {{recipe.Description.PreparationTime}}</p>
+            <p>Serves: {{recipe.Description.ServesHowMany}}</p>
+            <p>Porition: {{recipe.Description.PortionSize}}</p>
+          </div>
+        </div>
+        <div class="extra content">
+          <span>From: {{recipe.Source}}</span>
+          <p><i>{{recipe.Origin}}</i></p>
+          <!-- <div class="right floated">
         <a *ngIf="friend.facebookUrl" [href]="friend.facebookUrl" target="_blank">
           <i class="facebook icon"></i>
         </a>
@@ -40,10 +53,12 @@
           <i class="mail icon"></i>
         </a>
       </div> -->
-      <a class="ui large editRecipeButton" data-inverted data-tooltip="Edit" *ngIf="isEditable(recipe)" [attr.href]="getEditLink(recipe)">
-        <i class="edit icon">
-        </i>
-      </a>
+          <a class="ui large editRecipeButton" data-inverted data-tooltip="Edit" *ngIf="isEditable(recipe)" [attr.href]="getEditLink(recipe)">
+            <i class="edit icon">
+            </i>
+          </a>
+        </div>
+      </div>
     </div>
   </div>
 </div>

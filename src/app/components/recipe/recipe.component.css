@@ -17,3 +17,7 @@
 .editRecipeButton {
     float: right;
 }
+
+.ui.centered.grid {
+    margin-top: 0;
+}

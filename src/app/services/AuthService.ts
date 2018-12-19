@@ -61,7 +61,7 @@ export class AuthService implements CanActivate, CanLoad {
                 }
                 else {
                     if(this.alreadyNavigatedToOriginalUrl){
-                        this.router.navigate([Routes.account, Routes.accountRsvp]);
+                        this.router.navigate([Routes.gallery]);
                     }
                     else {
                         this.alreadyNavigatedToOriginalUrl = true;

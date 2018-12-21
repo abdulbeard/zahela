@@ -6,6 +6,7 @@ import { UserService } from '../../services/UserService';
 import { SlackReactionsService } from '../../services/SlackReactionsService';
 import { GalleryService } from '../../services/GalleryService';
 import { GalleryImage } from '../../models/GalleryImage';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-gallery',
@@ -18,9 +19,14 @@ export class GalleryComponent implements AfterViewInit {
   ngAfterViewInit(): void {
   }
 
+  private legacy: boolean = false;
+
   private images: Array<GalleryImage> = [];
-  constructor(private galleryService: GalleryService){
-    this.galleryService.getAllEntries().subscribe(x => {
+  constructor(private galleryService: GalleryService, private activatedRoute: ActivatedRoute){
+    if(!!activatedRoute.snapshot.queryParams.legacy){
+      this.legacy = true;
+    }
+    this.galleryService.getAllEntries(this.legacy).subscribe(x => {
       console.log(x)
       this.images = x;
     });

@@ -44,6 +44,15 @@ export class RecipeCreateComponent implements AfterViewInit {
   public cookingStep: string;
   public imageLoading: boolean = false;
 
+  public prep: string = "";
+  public cooking: string = "";
+  public equipments: Array<any> = [{val:""},{val:""},{val:""}];
+  public ingredients: Array<Ingredient> = Array.of(
+    new Ingredient("", "", 0, IngredientMeasure.Count, "", ""),
+    new Ingredient("", "", 0, IngredientMeasure.Count, "", ""),
+    new Ingredient("", "", 0, IngredientMeasure.Count, "", "")
+  );
+
   private testRecipe: string = "testRecipe";
 
   ngAfterViewInit(): void {
@@ -71,7 +80,11 @@ export class RecipeCreateComponent implements AfterViewInit {
           this.cookingStage = new Stage("", []);
           this.step = '';
           this.cookingStep = '';
-        });
+          this.ingredients = y.Ingredients;
+          this.equipments = y.EquipmentNeeded.map(x => {return {val:x}});
+          this.prep = (y.Preparation && y.Preparation[0] && y.Preparation[0].Steps && y.Preparation[0].Steps[0]) ? y.Preparation[0].Steps[0].Instructions : "";
+          this.cooking = (y.ActualCooking && y.ActualCooking[0] && y.ActualCooking[0].Steps && y.ActualCooking[0].Steps[0]) ? y.ActualCooking[0].Steps[0].Instructions : "";
+        }).catch(x => {});
       }
   })
   }
@@ -113,11 +126,13 @@ export class RecipeCreateComponent implements AfterViewInit {
     this.image = '';
   }
 
-  removeImage(img: string){
-    this.recipe.Description.Images = this.recipe.Description.Images.filter(x => {return x !== img});
-    var url = new URL(img);
-    this.imageService.deleteImage(url.pathname).subscribe(x => {
-    });
+  removeImage(img: string) {
+    this.recipe.Description.Images = this.recipe.Description.Images.filter(x => { return x !== img });
+    if (url) {
+      var url = new URL(img);
+      this.imageService.deleteImage(url.pathname).subscribe(x => {
+      });
+    }
   }
 
   addIngredient(){
@@ -185,7 +200,7 @@ export class RecipeCreateComponent implements AfterViewInit {
     //this.router.navigate([`${Routes.recipeCreateWithId.replace(':recipeId', this.testRecipe)}`], {replaceUrl: true});
 
     this.location.replaceState(`${Routes.recipeCreateWithId.replace(':recipeId', this.testRecipe)}`);
-
+    this.router.navigate([this.getPreviewHref()]);
     return true;
     //this.router.navigate([Routes.recipeDetail.replace(':id', 'testRecipe')]);
   }
@@ -210,15 +225,21 @@ export class RecipeCreateComponent implements AfterViewInit {
   prepareTheRecipe()
   {
     var user = UserSessionService.getCurrentUser();
-    //this.recipe.Id = this.testRecipe;
+    this.recipe.Id = this.testRecipe;
     this.recipe.Source = `${user.LastName}, ${user.FirstName}`;
+    this.recipe.ActualCooking = Array.of(new Stage("", Array.of(new Step(this.cooking))));
+    this.recipe.Preparation = Array.of(new Stage("", Array.of(new Step(this.prep))));
+    console.log(this.recipe.EquipmentNeeded);
+    this.recipe.EquipmentNeeded = this.equipments.filter(x => x.val).map(x => x.val);
+    console.log(this.recipe.EquipmentNeeded);
+    this.recipe.Ingredients = this.ingredients.filter(x => x.Name);
     this.recipeService.setTestRecipe(this.recipe);
   }
 
   saveRecipe() {
     this.prepareTheRecipe();
     
-    var observable = this.recipe.Id ? this.recipeService.updateRecipe(this.recipe) : this.recipeService.createRecipe(this.recipe);
+    var observable = (this.recipe.Id && this.recipe.Id !== this.testRecipe) ? this.recipeService.updateRecipe(this.recipe) : this.recipeService.createRecipe(this.recipe);
 
     observable.subscribe(x => {
         console.log(x);
@@ -227,4 +248,41 @@ export class RecipeCreateComponent implements AfterViewInit {
         this.router.navigate([route])
       });
   }
+
+  textAreaKeyPress(elem: any){
+    console.log(elem);
+    var element = <HTMLElement> elem.srcElement;
+    var rows = parseInt(element.getAttribute("rows"));
+    console.log(element.scrollHeight, element.clientHeight, rows);
+    console.log(elem.inputType);
+    if(element.scrollHeight > element.clientHeight && elem.inputType !== "deleteContentBackward"){
+      rows = rows + 2;
+      console.log('increasing');
+    }
+    // else if(element.scrollHeight <= element.clientHeight && rows > 3 && elem.inputType === "deleteContentBackward"){
+    //   rows = rows - 2;
+    //   console.log('decreasing');
+    // }
+    element.setAttribute("rows", `${rows}`);
+    // console.log('just resized');
+  }
+
+  moreEquipments(){
+    this.equipments.push({val:""});
+    this.equipments.push({val:""});
+    this.equipments.push({val:""});
+  }
+  moreIngredients(){
+    this.ingredients.push(new Ingredient("", "", 0, IngredientMeasure.Count, "", ""));
+    this.ingredients.push(new Ingredient("", "", 0, IngredientMeasure.Count, "", ""));
+    this.ingredients.push(new Ingredient("", "", 0, IngredientMeasure.Count, "", ""));
+  }
+
+  delay = (function () {
+    var timer = 0;
+    return function (callback, ms) {
+      clearTimeout(timer);
+      timer = setTimeout(callback, ms);
+    };
+  })();
 }

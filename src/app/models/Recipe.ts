@@ -98,7 +98,7 @@ export class Ingredient {
             case IngredientMeasure.Pinch: { return "pinch"; }
             case IngredientMeasure.Teaspoon: { return "tsp"; }
             case IngredientMeasure.Tablespoon: { return "tbs"; }
-            default: { return this.Measure; }
+            default: { return ""; }
         }
     }
 }

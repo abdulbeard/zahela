@@ -1,7 +1,170 @@
 <br /><br />
 <div class="ui centered grid">
-  <!-- <form class="ui form"> -->
-      <div class="ui form">
+  <div class="ui form">
+    <h4 class="ui dividing header">Recipe Details</h4>
+    <div class="details">
+      <div class="field">
+        <div class="two fields">
+          <div class="field">
+            <label>Name</label>
+            <input type="text" name="name" [(ngModel)]="recipe.Name" placeholder="e.g. Shirataki stirfry">
+          </div>
+          <div class="field">
+            <label>Images</label>
+            <div class="ui images" *ngIf="recipe.Description.Images">
+              <div class="ui tiny image" *ngFor="let img of recipe.Description.Images">
+                <a class="ui red right corner mini label" (click)="removeImage(img)">
+                  <i class="delete icon"></i>
+                </a>
+                <img [src]="img">
+              </div>    
+              <div class="ui segment loaderCircle" *ngIf="imageLoading">
+                <div class="ui active text loader">Processing Files</div>
+                <p></p>
+              </div>    
+            </div>
+            <input class="imageUploadInput" type="file" (change)="onFileChanged($event)" multiple #fileInput>
+            <button class="ui gray button" (click)="fileInput.click()">Upload Images</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <h4 class="ui dividing header">Description</h4>
+    <div class="recipeDescription">
+      <div class="field">
+        <textarea name="desc_text" 
+          [(ngModel)]="recipe.Description.Text" 
+          rows="3" 
+          placeholder="e.g. Bubby's famous chicken. This is absolutely delicious grilled chicken on bed of rice..." 
+          (input)="textAreaKeyPress($event)"
+        >
+      </textarea>
+      </div>
+      <div class="three fields">
+        <div class="field">
+          <label>Prep Time</label>
+          <input type="text" name="desc_prepTime" [(ngModel)]="recipe.Description.PreparationTime" placeholder="e.g. 3hrs">
+        </div>
+        <div class="field">
+          <label>Portion Size</label>
+          <input type="text" name="desc_portSize" [(ngModel)]="recipe.Description.PortionSize" placeholder="e.g. 6pcs of grilled chicken">
+        </div>
+        <div class="field">
+          <label># of Servings</label>
+          <input type="text" name="desc_numServed" [(ngModel)]="recipe.Description.ServesHowMany" placeholder="e.g. 6">
+        </div>
+      </div>
+    </div>
+    <h4 class="ui dividing header">Equipment</h4>
+    <div class="equipment">
+      <div class="field" *ngFor="let equips of equipments; let i = index">
+        <div class="ui action input">
+          <input type="text" name="huh" [(ngModel)]="equips.val" placeholder="e.g. 1 Large Saucepan">
+        </div>
+      </div>
+      <div class="field">
+        <label>&nbsp;</label>
+        <div class="ui blue button" (click)="moreEquipments()">Add More</div>
+      </div>
+    </div>
+
+    <h4 class="ui dividing header">Ingredients</h4>
+    <br />
+    <div class="ingredients">
+      <div class="three fields" *ngFor="let ingr of ingredients; let i = index">
+        <div class="eight wide field">
+          <label *ngIf="i === 0">Name</label>
+          <input type="text" name="ingr_name" [(ngModel)]="ingr.Name" placeholder="Cantaloupe">
+        </div>
+        <div class="four wide field">
+          <label *ngIf="i === 0">Amount</label>
+          <input type="text" name="ingr_amount" [(ngModel)]="ingr.Amount" placeholder="1 Large">
+        </div>
+        <div class="eight wide field">
+          <label *ngIf="i === 0">Notes</label>
+          <textarea name="ingr_xtrainfo" 
+            [(ngModel)]="ingr.ExtraInfo" 
+            rows="1" 
+            placeholder="e.g. Get a fragrant one" 
+            (input)="textAreaKeyPress($event)"
+          >
+          </textarea>
+        </div>
+      </div>
+      <div class="field">
+        <label>&nbsp;</label>
+        <div class="ui blue button" (click)="moreIngredients()">Add More</div>
+      </div>
+    </div>
+
+    <h4 class="ui dividing header">Preparation</h4>
+    <div class="preparation">
+      <div class="field">
+          <textarea name="prep" 
+          [(ngModel)]="prep" 
+          rows="3" 
+          placeholder="e.g. Get a fragrant one" 
+          (input)="textAreaKeyPress($event)"
+        >
+        </textarea>
+      </div>
+      <!-- <div class="field">
+        <label>&nbsp;</label>
+        <div class="ui blue button" (click)="addPrepStage(true)">Add Stage</div>
+      </div> -->
+    </div>
+
+    <h4 class="ui dividing header">Cooking</h4>
+    <div class="cooking">
+        <div class="field">
+            <textarea name="cooking" 
+            [(ngModel)]="cooking" 
+            rows="3" 
+            placeholder="e.g. Get a fragrant one" 
+            (input)="textAreaKeyPress($event)"
+          >
+          </textarea>
+        </div>
+    </div>
+
+    <br /><br />
+    <div class="ui button" tabindex="0" (click)="saveRecipe()">Save</div>
+    <a class="ui button" tabindex="0" (click)="preview()">Preview</a>
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- ************************************************************************************************************************************************* -->
+
+
+
+
+
+<!-- <br /><br />
+<div class="ui centered grid">
+  <div class="ui form">
     <h4 class="ui dividing header">Recipe Details</h4>
     <div class="details">
       <div class="field">
@@ -16,7 +179,6 @@
           </div>
         </div>
       </div>
-      <!-- <br /> -->
     </div>
     <h4 class="ui dividing header">Description</h4>
     <div class="recipeDescription">
@@ -53,14 +215,6 @@
       </div>
       <div class="field">
         <label>Images</label>
-        <!-- <div class="ui fade reveal">
-          <div class="visible content">
-            <img src="/assets/profile_pic_1.jpg" class="ui tiny image">
-          </div>
-          <div class="hidden content">
-            asdf
-          </div>
-        </div> -->
         <div class="ui images" *ngIf="recipe.Description.Images">
           <div class="ui tiny image" *ngFor="let img of recipe.Description.Images">
             <a class="ui red right corner mini label" (click)="removeImage(img)">
@@ -68,14 +222,12 @@
             </a>
             <img [src]="img">
           </div>
-          <!-- <div class="ui active text inline loader" *ngIf="imageLoading">Processing Files</div> -->
 
           <div class="ui segment loaderCircle" *ngIf="imageLoading">
             <div class="ui active text loader">Processing Files</div>
             <p></p>
           </div>
 
-          <!-- <img class="ui image" *ngFor="let img of recipe.Description.Images" [src]="img"> -->
         </div>
         <div class="ui action input">
           <input type="text" name="desc_images" [(ngModel)]="image" placeholder="http://potato.com/selfie.jpg">
@@ -83,19 +235,19 @@
         </div>
       </div>
       <div clas="field">
-          <input class="imageUploadInput" type="file" (change)="onFileChanged($event)" multiple #fileInput>
-          <button class="ui gray button" (click)="fileInput.click()">Upload Images</button>
+        <input class="imageUploadInput" type="file" (change)="onFileChanged($event)" multiple #fileInput>
+        <button class="ui gray button" (click)="fileInput.click()">Upload Images</button>
       </div>
     </div>
     <h4 class="ui dividing header">Equipment</h4>
     <div class="equipment">
       <div class="field">
-          <div class="tags" *ngIf="recipe.EquipmentNeeded && recipe.EquipmentNeeded.length > 0">
-            <div class="ui blue small label" *ngFor="let en of recipe.EquipmentNeeded">{{en}}
-              <i class="delete icon" (click)="removeEquipment(en)"></i>
-            </div>
-            <br /><br />
+        <div class="tags" *ngIf="recipe.EquipmentNeeded && recipe.EquipmentNeeded.length > 0">
+          <div class="ui blue small label" *ngFor="let en of recipe.EquipmentNeeded">{{en}}
+            <i class="delete icon" (click)="removeEquipment(en)"></i>
           </div>
+          <br /><br />
+        </div>
         <div class="ui action input">
           <input type="text" name="equipment" [(ngModel)]="equipment" placeholder="e.g. 1 Large Saucepan">
           <button class="ui blue button" (click)="addEquipment()">Add Equipment</button>
@@ -110,7 +262,6 @@
           <div class="header">{{ingr.Name}}&nbsp;&nbsp;[{{ingr.Amount}} {{getMeasureName(ingr.Measure)}}]</div>
           <div class="meta">{{ingr.ExtraInfo}}</div>
           <div class="description">
-            <!-- <h3>{{ingr.Amount}} {{getMeasureName(ingr.Measure)}}</h3> -->
             <p>{{ingr.Description}}</p>
           </div>
         </div>
@@ -180,22 +331,17 @@
         </ul>
       </div>
       <div *ngIf="prepStage">
-        <!-- <div class="two fields"> -->
-
-          <div class="five wide field" *ngIf="!(prepStage.Steps.length > 0)">
-            <label>Name</label>
-            <input type="text" name="prep_stg_name" [(ngModel)]="prepStage.Name" placeholder="Preparing the chicken">
-          </div>
-          <div class="ten wide field">
-            <!-- <label>Steps</label>
-          <input type="text" name="prep_stg_step" [(ngModel)]="prepStage.Steps[0]" placeholder="Preparing the chicken"> -->
+        <div class="five wide field" *ngIf="!(prepStage.Steps.length > 0)">
+          <label>Name</label>
+          <input type="text" name="prep_stg_name" [(ngModel)]="prepStage.Name" placeholder="Preparing the chicken">
+        </div>
+        <div class="ten wide field">
           <label>What are the steps for this stage of preparation?</label>
-            <div class="ui action input">
-              <input type="text" name="prep_stg_step" [(ngModel)]="step" placeholder="">
-              <button class="ui blue button" (click)="addPrepStep()">Add Step</button>
-            </div>
+          <div class="ui action input">
+            <input type="text" name="prep_stg_step" [(ngModel)]="step" placeholder="">
+            <button class="ui blue button" (click)="addPrepStep()">Add Step</button>
           </div>
-        <!-- </div> -->
+        </div>
       </div>
 
       <div class="field">
@@ -213,22 +359,17 @@
         </ul>
       </div>
       <div *ngIf="cookingStage">
-        <!-- <div class="two fields"> -->
-
-          <div class="five wide field" *ngIf="!(cookingStage.Steps.length > 0)">
-            <label>Name</label>
-            <input type="text" name="cook_stg_name" [(ngModel)]="cookingStage.Name" placeholder="Place the chicken in the oven">
-          </div>
-          <div class="ten wide field">
-            <!-- <label>Steps</label>
-          <input type="text" name="prep_stg_step" [(ngModel)]="prepStage.Steps[0]" placeholder="Preparing the chicken"> -->
+        <div class="five wide field" *ngIf="!(cookingStage.Steps.length > 0)">
+          <label>Name</label>
+          <input type="text" name="cook_stg_name" [(ngModel)]="cookingStage.Name" placeholder="Place the chicken in the oven">
+        </div>
+        <div class="ten wide field">
           <label>What are the steps for this stage of cooking?</label>
-            <div class="ui action input">
-              <input type="text" name="cook_stg_step" [(ngModel)]="cookingStep" placeholder="">
-              <button class="ui blue button" (click)="addCookingStep()">Add Step</button>
-            </div>
+          <div class="ui action input">
+            <input type="text" name="cook_stg_step" [(ngModel)]="cookingStep" placeholder="">
+            <button class="ui blue button" (click)="addCookingStep()">Add Step</button>
           </div>
-        <!-- </div> -->
+        </div>
       </div>
 
       <div class="field">
@@ -240,6 +381,5 @@
     <br /><br />
     <div class="ui button" tabindex="0" (click)="saveRecipe()">Save</div>
     <a class="ui button" tabindex="0" (click)="preview()" [href]="getPreviewHref()">Preview</a>
-  <!-- </form> -->
   </div>
-</div>
+</div> -->

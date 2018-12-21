@@ -27,21 +27,21 @@
         </div> -->
           </div>
         </a>
-        <div class="content">
+        <div class="content" >
           <a class="header">{{recipe.name}}</a>
-          <div *ngFor="let tag of recipe.Description.Tags" class="ui mini gray horizontal label">{{tag}}</div>
-          <div class="meta">
-            Meta bro
-          </div>
-          <div class="description">
-            <p>PrepTime: {{recipe.Description.PreparationTime}}</p>
-            <p>Serves: {{recipe.Description.ServesHowMany}}</p>
-            <p>Porition: {{recipe.Description.PortionSize}}</p>
+          <div *ngIf="recipe.Description">
+            <div *ngFor="let tag of recipe.Description.Tags" class="ui mini gray horizontal label">{{tag}}</div>
+            <div class="meta"></div>
+            <div class="description">
+              <p *ngIf="recipe.Description.PreparationTime">PrepTime: {{recipe.Description.PreparationTime}}</p>
+              <p *ngIf="recipe.Description.ServesHowMany">Serves: {{recipe.Description.ServesHowMany}}</p>
+              <p *ngIf="recipe.Description.PortionSize">Porition: {{recipe.Description.PortionSize}}</p>
+            </div>
           </div>
         </div>
         <div class="extra content">
-          <span>From: {{recipe.Source}}</span>
-          <p><i>{{recipe.Origin}}</i></p>
+          <span *ngIf="recipe.Source">From: {{recipe.Source}}</span>
+          <p *ngIf="recipe.Origin"><i>{{recipe.Origin}}</i></p>
           <!-- <div class="right floated">
         <a *ngIf="friend.facebookUrl" [href]="friend.facebookUrl" target="_blank">
           <i class="facebook icon"></i>

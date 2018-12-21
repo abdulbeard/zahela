@@ -9,5 +9,6 @@ export const environment = {
   slackAppClientId: "",
   slackAppClientSecret: "",
   backendUrl: "http://localhost:55330",
-  currentVersion: "1.0.4"
+  currentVersion: "1.0.4",
+  getLegacyGallery: true  
 };

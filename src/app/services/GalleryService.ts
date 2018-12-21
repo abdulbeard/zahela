@@ -8,7 +8,8 @@ import { GalleryImage } from "../models/GalleryImage";
 export class GalleryService {
     constructor(private httpClient: HttpClient){}
 
-    getAllEntries(): Observable<Array<GalleryImage>> {
-        return this.httpClient.get<Array<GalleryImage>>(`${environment.backendUrl}/gallery`);
+    getAllEntries(legacy: boolean = false): Observable<Array<GalleryImage>> {
+        var url = `${environment.backendUrl}/gallery${legacy ? "?legacy=true" : ""}`;
+        return this.httpClient.get<Array<GalleryImage>>(url);
     }
 }

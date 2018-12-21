@@ -5,12 +5,12 @@
   <br/>
   <div>
     <strong>Contributed By:</strong>
-    <a href="#">
+    <a href="/">
       <img class="ui avatar image" src="assets/1484648039_male3.svg" />
       <span>{{this.recipe.Source}}</span>
     </a>
   </div>
-  <div>
+  <div *ngIf="this.recipe.Origin">
     <strong>Origin:</strong>
     <span>{{this.recipe.Origin}}</span>
   </div>
@@ -59,7 +59,7 @@
         <div class="list">
           <a *ngIf="ingredient.Url" class="item" [href]="ingredient.getUrl()" target="__blank">Example</a>
           <div class="item" [attr.title]="ingredient.getTitle()">{{ingredient.Amount}}&nbsp;{{ingredient.getAbbreviatedMeasure()}}</div>
-          <div class="item">{{ingredient.Description}}</div>
+          <div *ngIf="ingredient.Description" class="item">{{ingredient.Description}}</div>
           <div *ngIf="ingredient.ExtraInfo" class="item">{{ingredient.ExtraInfo}}</div>
         </div>
       </div>

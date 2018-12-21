@@ -1,0 +1,38 @@
+.ui.container {
+    height: 90vh;
+    max-height: 90vh;
+    /* margin-top: 5vh; */
+    width: 70vw;
+    max-width: 70vw;
+    padding-top: 1vw;
+}
+
+.ui.container img{
+    max-height: 100%;
+}
+
+.ui.centered.grid p{
+    color: white;
+}
+
+.ui.centered.grid{
+    margin-top: 0;
+}
+
+.ui.centered.grid.close {
+    float: right;
+    margin-bottom: 1vh;
+}
+
+.ui.centered.grid.close.mobile {
+    float: none;
+}
+
+.ui.centered.grid.infoNav {
+    position: fixed;
+    bottom: 3vh;
+}
+
+.ui.small.icon.button.close {
+    float: right;
+}

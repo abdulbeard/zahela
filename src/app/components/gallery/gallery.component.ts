@@ -7,6 +7,9 @@ import { SlackReactionsService } from '../../services/SlackReactionsService';
 import { GalleryService } from '../../services/GalleryService';
 import { GalleryImage } from '../../models/GalleryImage';
 import { ActivatedRoute } from '@angular/router';
+import { ModalService, ModalConfigBase } from '../../services/ModalService';
+import { ModalComponent } from '../modals/recipe/modal.component';
+import { GalleryModalComponent } from '../modals/gallery/gallery-modal.component';
 
 @Component({
   selector: 'app-gallery',
@@ -36,4 +39,20 @@ export class GalleryComponent implements AfterViewInit {
     return `ui ${galleryImage["size"]} image`
   }
 
+  imgClicked(index: number = 0) {
+    this.launchGalleryMode(index+1);
+    return false;
+  }
+
+  launchGalleryMode(index: number = 1){
+    ModalService.showModal(new ModalConfigBase({
+      imagesList: this.images,
+      startingPosition: index
+    },
+    GalleryModalComponent,
+    (success: boolean) => {
+      console.log(this, success);
+      return true;
+    }));
+  }
 }

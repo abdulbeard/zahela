@@ -52,6 +52,7 @@ import { GalleryComponent } from './components/gallery/gallery.component';
 import { GalleryService } from './services/GalleryService';
 import { RecipeCreateComponent } from './components/recipe-create/recipe-create.component';
 import { ImageService } from './services/ImageService';
+import { GalleryModalComponent } from './components/modals/gallery/gallery-modal.component';
 
 const appRoutes: Routes = [
   { path: AppRoutes.home, component: HomeComponent },
@@ -97,7 +98,8 @@ const appRoutes: Routes = [
     // ImageCropperComponent, 
     ProfileComponent, UpdatesComponent, RsvpComponent, DietaryRestrictionsComponent,
     PoloComponent, ModalComponent, GuestCardComponent, GuestDetailComponent, ComingSoonComponent,
-    InvitationComponent, RegistryComponent, ScheduleComponent, GalleryComponent, RecipeCreateComponent
+    InvitationComponent, RegistryComponent, ScheduleComponent, GalleryComponent, RecipeCreateComponent,
+    GalleryModalComponent
   ],
   imports: [
     BrowserModule, HttpModule, FormsModule, RouterModule.forRoot(
@@ -125,6 +127,7 @@ const appRoutes: Routes = [
   ],
   entryComponents: [
     ModalComponent,
+    GalleryModalComponent
   ],
   exports: [RouterModule],
   providers: [

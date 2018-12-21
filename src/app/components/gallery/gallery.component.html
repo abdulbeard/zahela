@@ -5,6 +5,7 @@
     <a class="ui blue button" target="__blank" href="https://drive.google.com/drive/folders/1RvSE3ZNaawNeQNBoSAs07T51xKCt4qjn?usp=sharing">
       <i class="upload icon"></i>
     </a>
+    <a class="ui blue button" (click)="launchGalleryMode()">Gallery Mode</a>
   </div>
 </div>
 <br /><br />
@@ -16,8 +17,8 @@
       <br /><br /><br />
       <div class="ui centered stackable grid">
         <div class="ui images" *ngIf="images">
-          <ng-container *ngFor="let image of images">
-            <a [attr.href]="image.url" target="__blank">
+          <ng-container *ngFor="let image of images; let i = index">
+            <a [attr.href]="image.url" target="__blank" (click)="imgClicked(i)">
               <img [class]="getImageClass(image)" [src]="image.url">
             </a>
           </ng-container>

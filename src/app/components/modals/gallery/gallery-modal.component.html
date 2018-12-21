@@ -1,0 +1,22 @@
+<!-- <div class="ui centered grid"> -->
+<div class="ui container">
+
+  <div class="ui centered grid close" [class.mobile]="isMobile">
+    <div class="ui small icon button close" (click)="dismissModal('true')">
+      <i class="ui x icon"></i>Close
+    </div>
+  </div>
+  <img id="imgId" class="ui image" [src]="imgSrc" />
+  <br />
+  <div class="ui centered grid infoNav">
+    <p>{{currImageNum}} of {{numTotalImages}}</p>
+    <div class="ui small icon blue button" (click)="arrowLeft()">
+      <i class="ui left arrow icon"></i>
+    </div>
+    <div class="ui small icon blue button" (click)="arrowRight()">
+      <i class="ui right arrow icon"></i>
+    </div>
+  </div>
+  <br /><br />
+</div>
+<!-- </div> -->

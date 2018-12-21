@@ -54,7 +54,7 @@ export class AppComponent implements AfterViewChecked, AfterContentChecked {
 
     ModalService.modalObservable.subscribe(x => {
       if (x.visible) {
-        let componentFactory = this.componentFactoryResolver.resolveComponentFactory(ModalComponent);
+        let componentFactory = this.componentFactoryResolver.resolveComponentFactory(x.type);
         this.modalContent.clear();
         let componentRef = this.modalContent.createComponent(componentFactory);
         componentRef.instance['data'] = x.data;

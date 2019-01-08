@@ -71,7 +71,6 @@ export class RecipeService {
                         x["origin"],
                         x["realId"]
                     );
-                    console.log(x, recipe);
                     return recipe;
             });
             //return Observable.of(this.recipe); 
@@ -137,7 +136,7 @@ export class RecipeService {
                 recipe["equipmentNeeded"], 
                 rawPrep, 
                 rawCook, 
-                recipe["sourceUserId"], 
+                recipe["source"], 
                 recipe["origin"]
             );
     }

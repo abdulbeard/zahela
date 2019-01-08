@@ -60,17 +60,19 @@ export class RecipeService {
 
                 console.log(rawPrep, rawCook);
 
-                return new Recipe(x["id"], 
+                var recipe = new Recipe(x["id"], 
                         x["name"], 
                         desc, 
                         ingredients, 
                         x["equipmentNeeded"], 
                         rawPrep, 
                         rawCook, 
-                        x["source"], 
+                        x["sourceUserId"], 
                         x["origin"],
                         x["realId"]
                     );
+                    console.log(x, recipe);
+                    return recipe;
             });
             //return Observable.of(this.recipe); 
         }
@@ -135,7 +137,7 @@ export class RecipeService {
                 recipe["equipmentNeeded"], 
                 rawPrep, 
                 rawCook, 
-                recipe["source"], 
+                recipe["sourceUserId"], 
                 recipe["origin"]
             );
     }

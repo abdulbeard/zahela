@@ -5,7 +5,7 @@
   <br/>
   <div>
     <strong>Contributed By:</strong>
-    <a href="/">
+    <a>
       <img class="ui avatar image" src="assets/1484648039_male3.svg" />
       <span>{{this.recipe.Source}}</span>
     </a>
@@ -17,19 +17,19 @@
   <div class="ui horizontal divider">Description</div>
   <div class="recipeDescription">
     <div class="ui large horizontal divided list recipeMetadata">
-      <div class="item">
+      <div class="item" *ngIf="this.recipe.Description.PreparationTime">
         <div class="content">
           <div class="header">PrepTime: </div>
           {{this.recipe.Description.PreparationTime}}
         </div>
       </div>
-      <div class="item">
+      <div class="item" *ngIf="this.recipe.Description.ServesHowMany">
         <div class="content">
           <div class="header">Serves: </div>
           {{this.recipe.Description.ServesHowMany}}
         </div>
       </div>
-      <div class="item">
+      <div class="item" *ngIf="this.recipe.Description.PortionSize">
         <div class="content">
           <div class="header">Portion Size: </div>
           {{this.recipe.Description.PortionSize}}
@@ -58,7 +58,7 @@
         <div>{{ingredient.Name}}</div>
         <div class="list">
           <a *ngIf="ingredient.Url" class="item" [href]="ingredient.getUrl()" target="__blank">Example</a>
-          <div class="item" [attr.title]="ingredient.getTitle()">{{ingredient.Amount}}&nbsp;{{ingredient.getAbbreviatedMeasure()}}</div>
+          <div class="item" [attr.title]="ingredient.getTitle()">{{ingredient.Amount}}</div>
           <div *ngIf="ingredient.Description" class="item">{{ingredient.Description}}</div>
           <div *ngIf="ingredient.ExtraInfo" class="item">{{ingredient.ExtraInfo}}</div>
         </div>
@@ -69,7 +69,7 @@
     <div class="ui horizontal divider">Preparation</div>
     <div class="ui inverted blue segment prep">
       <div *ngFor="let prepStage of this.recipe.Preparation; let i = index;">
-        <div class="ui horizontal divider">{{getDividerSymbol(i)}}</div>
+        <div class="ui horizontal divider">{{getDividerSymbol(i, this.recipe.Preparation)}}</div>
         <ul class="ui list">
           <li *ngFor="let step of prepStage.Steps">{{step.Instructions}}</li>
         </ul>
@@ -81,7 +81,7 @@
       <div class="ui horizontal divider">Cooking</div>
       <div class="ui inverted blue segment prep">
         <div *ngFor="let prepStage of this.recipe.ActualCooking; let i = index;">
-          <div class="ui horizontal divider">{{getDividerSymbol(i)}}</div>
+          <div class="ui horizontal divider">{{getDividerSymbol(i, this.recipe.ActualCooking)}}</div>
           <ul class="ui list">
             <li *ngFor="let step of prepStage.Steps">{{step.Instructions}}</li>
           </ul>

@@ -8,7 +8,7 @@ import * as $ from 'jquery';
 import { SlackReactionsService } from '../../services/SlackReactionsService';
 import { DisplayChannel } from '../../models/DisplayChannel';
 import { ActivatedRoute } from '@angular/router';
-import { Recipe } from '../../models/Recipe';
+import { Recipe, Stage } from '../../models/Recipe';
 import { RecipeService } from '../../services/RecipeService';
 
 @Component({
@@ -38,11 +38,16 @@ export class RecipeDetailComponent implements AfterViewInit {
     })
   }
 
-  getDividerSymbol(numberOfStars: number): string {
-    var result = "*";
-    for(var i = 0; i < numberOfStars; i++){
-      result += "*";
+  getDividerSymbol(numberOfStars: number, data?: Array<Stage>): string {
+    if (data) { 
+      return data[numberOfStars].Name;
     }
-    return result;
+    else {
+      var result = "*";
+      for (var i = 0; i < numberOfStars; i++) {
+        result += "*";
+      }
+      return result;
+    }
   }
 }

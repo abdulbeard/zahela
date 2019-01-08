@@ -23,9 +23,9 @@ export class RecipeCreateComponent implements AfterViewInit {
   
   public recipe: Recipe = new Recipe(
     null, null, new RecipeDescription([
-      "/assets/profile_pic_1.jpg",
-      "/assets/profile_pic_1.jpg",
-      "/assets/profile_pic_1.jpg",
+      // "/assets/profile_pic_1.jpg",
+      // "/assets/profile_pic_1.jpg",
+      // "/assets/profile_pic_1.jpg",
       // "/assets/profile_pic_1.jpg",
       // "/assets/profile_pic_1.jpg",
       // "/assets/profile_pic_1.jpg",

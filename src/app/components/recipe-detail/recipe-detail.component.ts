@@ -39,7 +39,7 @@ export class RecipeDetailComponent implements AfterViewInit {
   }
 
   getDividerSymbol(numberOfStars: number, data?: Array<Stage>): string {
-    if (data) { 
+    if (data && data[numberOfStars].Name) { 
       return data[numberOfStars].Name;
     }
     else {
